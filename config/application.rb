@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'yaml'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -19,5 +20,17 @@ module Contest
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
+
+
+    EMAIL_CONFIG = YAML.load(File.read(File.expand_path('../email.yml', __FILE__)))
+    ActionMailer::Base.smtp_settings = {
+      address:              EMAIL_CONFIG['address'],
+      port:                 EMAIL_CONFIG['port'], 
+      domain:               EMAIL_CONFIG['domain'],
+      user_name:            EMAIL_CONFIG['user_name'],
+      password:             EMAIL_CONFIG['password'],
+      authentication:       EMAIL_CONFIG['authentication'],
+      enable_starttls_auto: EMAIL_CONFIG['enable_starttls_auto']
+    }
   end
 end
