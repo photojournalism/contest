@@ -8,12 +8,18 @@
 </head>
 <body>
 
-<div class="alert alert-info">
-  <%= notice %>
-</div>
+<% if notice %>
+  <div class="alert alert-info">
+    <%= notice %>
+  </div>
+<% end %>
+
+<% if alert %>
 <div class="alert alert-danger">
   <%= alert %>
 </div>
+<% end %>
+
 <%= yield %>
 
 </body>
