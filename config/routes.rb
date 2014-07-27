@@ -6,7 +6,11 @@ Rails.application.routes.draw do
   root 'home#index'
 
   # Override default Devise registrations controller
-  devise_for :users, :controllers => {:registrations => "registrations"}
+  devise_for :users, :controllers => {:registrations => 'registrations'}
+
+  scope '/admin' do
+    resources :users
+  end
 
   get 'states/select/:country_id' => 'states#get_select_for_country'
 

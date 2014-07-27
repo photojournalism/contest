@@ -1,0 +1,22 @@
+<table class="table table-bordered table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Created At</th>
+      <th>Last Signed In</th>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= link_to "#{user.first_name} #{user.last_name}", user_path(user) %></td>
+        <td><%= mail_to user.email %></td>
+        <td><%= user.created_at.strftime('%B %d, %Y at %l:%M%P') %></td>
+        <td><%= user.last_sign_in_at.strftime('%B %d, %Y at %l:%M%P') %></td>
+        <td></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table> 
