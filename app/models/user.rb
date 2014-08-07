@@ -1,3 +1,5 @@
+require 'biggs'
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -8,5 +10,18 @@ class User < ActiveRecord::Base
 
   def full_name
     "#{first_name} #{last_name}"
+  end
+
+  def address
+    country = Country.find(country_id)
+    state   = State.find(state_id)
+    
+    f = Biggs::Formatter.new
+    f.format(country.iso.downcase,
+      :street     => street,
+      :city       => city,
+      :zip        => zip,
+      :state      => state.name
+    )
   end
 end

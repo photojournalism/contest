@@ -1,3 +1,3 @@
 class Country < ActiveRecord::Base
-  has_many :orders, dependent: :destroy
+  has_many :states, dependent: :destroy
 end
