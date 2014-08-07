@@ -21,7 +21,6 @@ module Contest
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-
     EMAIL_CONFIG = YAML.load(File.read(File.expand_path('../email.yml', __FILE__)))
     ActionMailer::Base.smtp_settings = {
       address:              EMAIL_CONFIG['address'],

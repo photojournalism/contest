@@ -1,0 +1,13 @@
+<div class="row">
+  <div class="col-md-3 col-md-offset-1">
+    <%= raw(gravatar_for(@user, 400, 'img-thumbnail')) %>
+  </div>
+  <div class="col-md-7">
+    <ul class="list-group">
+      <li class="list-group-item"><label>Name</label><span class="pull-right"><%= @user.full_name %></span></li>
+      <li class="list-group-item"><label>Email</label><span class="pull-right"><%= mail_to @user.email %></span></li>
+      <li class="list-group-item"><label>Address</label><span class="pull-right"><%= @user.address %></span></li>
+      <li class="list-group-item"><label>Day Phone</label><span class="pull-right"><%= @user.day_phone %></span></li>
+      <li class="list-group-item"><label>Evening Phone</label><span class="pull-right"><%= @user.evening_phone %></span></li>
+    </ul> 
+  </div> 
