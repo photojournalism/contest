@@ -6,7 +6,6 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    @countries = Country.order('name ASC').all
     super
   end
 

@@ -49,7 +49,7 @@
 
   <div class="form-group">
     <%= f.label :country_id %>
-    <select class="form-control" id="user_country_id" name="user[country_id]">
+    <select class="form-control" id="user_country_id">
       <% @countries.each do |country| %>
         <option value="<%= country.id %>"><%= country.name %></option>
       <% end %>
