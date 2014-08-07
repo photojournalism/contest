@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Contest, :type => :model do
-  describe "validation" do
+  describe 'validation' do
     let(:contest) { FactoryGirl.build(:contest) }
 
     it 'has a valid factory' do
@@ -31,6 +31,10 @@ RSpec.describe Contest, :type => :model do
     it 'should be invalid if close date is before open date' do
       contest.open_date = DateTime.now
       expect(contest).to be_invalid
+    end
+
+    it 'should respond to categories' do
+      expect(contest).to respond_to(:categories)
     end
   end
 end
