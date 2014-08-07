@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140807164941) do
+ActiveRecord::Schema.define(version: 20140807172216) do
+
+  create_table "categories", force: true do |t|
+    t.string   "name"
+    t.integer  "contest_id"
+    t.string   "description"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "categories", ["contest_id"], name: "index_categories_on_contest_id"
 
   create_table "contests", force: true do |t|
     t.integer  "year"
@@ -27,6 +38,18 @@ ActiveRecord::Schema.define(version: 20140807164941) do
     t.string   "iso"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "file_types", force: true do |t|
+    t.string   "name"
+    t.string   "extension"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "file_types_categories", id: false, force: true do |t|
+    t.integer "file_type_id"
+    t.integer "part_id"
   end
 
   create_table "states", force: true do |t|
