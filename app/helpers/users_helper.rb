@@ -2,10 +2,16 @@ require 'digest'
 
 module UsersHelper
   
+  def gravatar_id_for(user)
+    md5 = Digest::MD5.new
+    md5 << user.email.downcase
+    md5.hexdigest
+  end
+  
   def gravatar_url_for(user)
     md5 = Digest::MD5.new
     md5 << user.email.downcase
-    "http://www.gravatar.com/avatar/#{md5.hexdigest}?s=400"
+    "http://www.gravatar.com/avatar/#{gravatar_id_for(user)}?s=400"
   end
 
   def gravatar_for(user, width=400, css_class='')
