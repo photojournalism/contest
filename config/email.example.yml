@@ -1,0 +1,7 @@
+address: 'smtp.server.com'
+port: 1234
+domain: 'domain.com'
+user_name: 'user@domain.com'
+password: 'password'
+authentication: 'plain'
+enable_starttls_auto: true

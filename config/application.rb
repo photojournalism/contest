@@ -21,16 +21,19 @@ module ApsContest
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    EMAIL_CONFIG = YAML.load(File.read(File.expand_path('../email.yml', __FILE__)))
-    ActionMailer::Base.smtp_settings = {
-      address:              EMAIL_CONFIG['address'],
-      port:                 EMAIL_CONFIG['port'], 
-      domain:               EMAIL_CONFIG['domain'],
-      user_name:            EMAIL_CONFIG['user_name'],
-      password:             EMAIL_CONFIG['password'],
-      authentication:       EMAIL_CONFIG['authentication'],
-      enable_starttls_auto: EMAIL_CONFIG['enable_starttls_auto']
-    }
+    email_config_file = File.expand_path('../email.yml', __FILE__)
+    if (File.file?(email_config_file))
+      EMAIL_CONFIG = YAML.load(File.read(email_config_file))
+      ActionMailer::Base.smtp_settings = {
+        address:              EMAIL_CONFIG['address'],
+        port:                 EMAIL_CONFIG['port'], 
+        domain:               EMAIL_CONFIG['domain'],
+        user_name:            EMAIL_CONFIG['user_name'],
+        password:             EMAIL_CONFIG['password'],
+        authentication:       EMAIL_CONFIG['authentication'],
+        enable_starttls_auto: EMAIL_CONFIG['enable_starttls_auto']
+      }
+    end
 
     config.generators do |g|
       g.test_framework :rspec,
