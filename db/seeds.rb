@@ -14,6 +14,12 @@ puts "Creating file types..."
 FileType.delete_all
 jpeg = FileType.create(:name => 'JPEG', :extension => 'jpg')
 
+puts "Creating places..."
+Place.create(:name => "First Place", order: 1)
+Place.create(:name => "Second Place", order: 2)
+Place.create(:name => "Third Place", order: 3)
+Place.create(:name => "Honorable Mention", order: 4)
+
 puts "Creating categories..."
 Category.delete_all
 category = Category.create(:name => "Spot News", :description => "A single picture of an unscheduled event for which no advance planning was possible.", :active => true)

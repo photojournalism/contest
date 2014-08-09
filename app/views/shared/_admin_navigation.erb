@@ -1,0 +1,5 @@
+<ul class="nav nav-pills nav-stacked">
+  <li<% if params[:controller] == 'users' %> class="active"<% end %>><%= link_to 'Users', users_path %></li>
+  <li<% if params[:controller] == 'categories' %> class="active"<% end %>><%= link_to 'Categories', categories_path %></li>
+  <li<% if params[:controller] == 'places' %> class="active"<% end %>><%= link_to 'Places', places_path %></li>
+</ul>

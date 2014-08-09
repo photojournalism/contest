@@ -10,6 +10,8 @@ Rails.application.routes.draw do
 
   scope '/admin' do
     resources :users
+    resources :categories
+    resources :places
   end
 
   get 'states/select/:country_id' => 'states#get_select_for_country'

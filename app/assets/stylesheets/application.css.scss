@@ -17,3 +17,9 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+h1.heading {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
