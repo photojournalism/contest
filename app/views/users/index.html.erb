@@ -20,7 +20,9 @@
             <td><%= link_to "#{user.first_name} #{user.last_name}", user_path(user) %></td>
             <td><%= mail_to user.email %></td>
             <td><%= user.created_at.strftime('%B %d, %Y at %l:%M%P') %></td>
-            <td><%= user.last_sign_in_at.strftime('%B %d, %Y at %l:%M%P') %></td>
+            <td>
+              <%= user.last_sign_in_at ? user.last_sign_in_at.strftime('%B %d, %Y at %l:%M%P') : 'Never' %>
+            </td>
             <td></td>
           </tr>
         <% end %>

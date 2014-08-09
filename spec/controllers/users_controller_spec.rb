@@ -1,15 +1,15 @@
 require 'rails_helper'
 
-RSpec.describe CategoriesController, :type => :controller do
+RSpec.describe UsersController, :type => :controller do
   render_views
 
   describe "GET index" do
     before(:each) { controller.class.skip_before_filter :require_admin }
 
-    it "assigns @categories" do
-      category = FactoryGirl.create(:category)
+    it "assigns @users" do
+      user = FactoryGirl.create(:user)
       get :index
-      expect(assigns(:categories)).to eq([category])
+      expect(assigns(:users)).to eq([user])
     end
 
     it "renders the index template" do
@@ -22,9 +22,9 @@ RSpec.describe CategoriesController, :type => :controller do
       expect(response.body).to match "Administration"
     end
 
-    it "has active Categories navigation" do
+    it "has active Users navigation" do
       get :index
-      expect(response.body).to match '<li class="active"><a href="/admin/categories">Categories</a></li>'
+      expect(response.body).to match '<li class="active"><a href="/admin/users">Users</a></li>'
     end
   end
 end
