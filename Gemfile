@@ -54,6 +54,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'database_cleaner'
   gem 'faker'
   gem 'capybara'
   gem 'guard-rspec'
