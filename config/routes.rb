@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :categories
     resources :places
   end
+  resources :entries
 
   get 'states/select/:country_id' => 'states#get_select_for_country'
 
