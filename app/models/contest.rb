@@ -1,7 +1,7 @@
 class Contest < ActiveRecord::Base
   validates_presence_of :year, :name, :open_date, :close_date
   validate :close_date_is_after_open_date
-  has_many :categories, :through => :contests_categories
+  has_and_belongs_to_many :categories
 
   def close_date_is_after_open_date
     if close_date && open_date

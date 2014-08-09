@@ -16,9 +16,9 @@ class CreateFileTypesAndCategories < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table :file_types_categories, id: false do |t|
+    create_table :categories_file_types, id: false do |t|
       t.belongs_to :file_type
-      t.belongs_to :part
+      t.belongs_to :category
     end
   end
 end

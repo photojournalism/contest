@@ -26,6 +26,11 @@ ActiveRecord::Schema.define(version: 20140807175834) do
     t.integer "contest_id"
   end
 
+  create_table "categories_file_types", id: false, force: true do |t|
+    t.integer "file_type_id"
+    t.integer "category_id"
+  end
+
   create_table "contests", force: true do |t|
     t.integer  "year"
     t.string   "name"
@@ -47,11 +52,6 @@ ActiveRecord::Schema.define(version: 20140807175834) do
     t.string   "extension"
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "file_types_categories", id: false, force: true do |t|
-    t.integer "file_type_id"
-    t.integer "part_id"
   end
 
   create_table "states", force: true do |t|

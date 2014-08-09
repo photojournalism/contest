@@ -6,6 +6,77 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+puts "Creating initial contest..."
+Contest.delete_all
+contest = Contest.create(:year => '2014', :name => 'Atlanta Photojournalism Seminar Contest', :open_date => '2014-09-01 00:00:00', :close_date => '2014-10-15 23:59:59')
+
+puts "Creating file types..."
+FileType.delete_all
+jpeg = FileType.create(:name => 'JPEG', :extension => 'jpg')
+
+puts "Creating categories..."
+Category.delete_all
+category = Category.create(:name => "Spot News", :description => "A single picture of an unscheduled event for which no advance planning was possible.", :active => true)
+category.file_types << jpeg
+contest.categories << category
+
+category = Category.create(:name => "General News", :description => "A picture of a scheduled or organized event for which advance planning was possible.", :active => true)
+category.file_types << jpeg
+contest.categories << category
+
+category = Category.create(:name => "Feature", :description => "Usually a found situation with strong human interest; a fresh view of an everyday scene.", :active => true)
+category.file_types << jpeg
+contest.categories << category
+
+category = Category.create(:name => "Sports Action", :description => "A single picture showing participation in a game or athletic event.", :active => true)
+category.file_types << jpeg
+contest.categories << category
+
+category = Category.create(:name => "Sports Feature", :description => "A feature picture that is sports related.", :active => true)
+category.file_types << jpeg
+contest.categories << category
+
+category = Category.create(:name => "Portrait/Personality", :description => "A picture that captures an aspect of the subject's character.", :active => true)
+category.file_types << jpeg
+contest.categories << category
+
+category = Category.create(:name => "Pictorial", :description => "A picture that exploits the graphic aesthetic qualities of the subject with emphasis on composition.", :active => true)
+category.file_types << jpeg
+contest.categories << category
+
+category = Category.create(:name => "News Picture Story", :description => "A collection of photos with a single theme that fits the description of the Spot News or General News category. 12 image maximum.", :active => true)
+category.file_types << jpeg
+contest.categories << category
+
+category = Category.create(:name => "Chris Hondros Memorial International News", :description => "This category is in memory of Getty Images staff photographer Chris Hondros, who died on April 20, 2011 while covering conflict in Libya. Images should be a collection of photos with a single theme that have been taken outside of U.S. territory. 12 image maximum.", :active => true)
+category.file_types << jpeg
+contest.categories << category
+
+category = Category.create(:name => "Feature Picture Story/Essay", :description => "A collection of photos with a single theme that fits the description of the Feature category. 12 image maximum.", :active => true)
+category.file_types << jpeg
+contest.categories << category
+
+category = Category.create(:name => "Sports Picture Story", :description => "A collection of photos with a single theme that fits the description of the Sports Action or Sports Feature category. 12 image maximum.", :active => true)
+category.file_types << jpeg
+contest.categories << category
+
+category = Category.create(:name => "Product Illustration", :description => "A photograph that illustrates any product, including clothing and food.", :active => true)
+category.file_types << jpeg
+contest.categories << category
+
+category = Category.create(:name => "Issue Illustration", :description => "A photograph conceived to illustrate a particular idea or editorial concept.", :active => true)
+category.file_types << jpeg
+contest.categories << category
+
+category = Category.create(:name => "Multimedia Slideshow", :description => "A single slideshow that may consist of still photos, audio or video and requires no user interaction other than start/stop, next/previous, or image number buttons to view.", :active => true)
+category.file_types << jpeg
+contest.categories << category
+
+category = Category.create(:name => "Multimedia Interactive Presentation", :description => "A multi-layered presentation that may consist of still photos, graphics, animation, audio or video that incorporates hyperlinks to delineate chapters or sections.", :active => true)
+category.file_types << jpeg
+contest.categories << category
+
+puts "Creating countries..."
 Country.delete_all
 Country.create(:id=>1,:iso=>"AD",:name=>"Andorra")
 Country.create(:id=>2,:iso=>"AE",:name=>"United Arab Emirates")
@@ -259,6 +330,7 @@ Country.create(:id=>249,:iso=>"ZW",:name=>"Zimbabwe")
 Country.create(:id=>250,:iso=>"CS",:name=>"Serbia and Montenegro")
 Country.create(:id=>251,:iso=>"AN",:name=>"Netherlands Antilles")
 
+puts "Creating states..."
 State.delete_all
 State.create(:id=>1,:iso=>"06",:name=>"Parròquia de Sant Julià de Lòria",:country_id=>1)
 State.create(:id=>2,:iso=>"05",:name=>"Parròquia d'Ordino",:country_id=>1)
