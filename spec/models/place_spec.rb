@@ -1,5 +1,25 @@
 require 'rails_helper'
 
 RSpec.describe Place, :type => :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'validation' do
+    let(:place) { FactoryGirl.create(:place) }
+
+    it 'should have a valid factory' do
+      expect(place).to be_valid
+    end
+
+    it 'should be invalid without a name' do
+      place.name = nil
+      expect(place).to be_invalid
+    end
+
+    it 'should be invalid without an order' do
+      place.order = nil
+      expect(place).to be_invalid
+    end
+
+    it 'should respond to entries' do
+      expect(place).to respond_to(:entries)
+    end
+  end
 end

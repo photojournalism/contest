@@ -2,9 +2,10 @@
 
 FactoryGirl.define do
   factory :entry do
-    category FactoryGirl.create(:category)
-    user FactoryGirl.create(:user)
     judged false
-    place FactoryGirl.create(:place)
+
+    association :category, :factory => :category
+    association :user, :factory => :user
+    association :place, :factory => :place
   end
 end
