@@ -3,6 +3,8 @@ class Contest < ActiveRecord::Base
   validate :close_date_is_after_open_date
   has_and_belongs_to_many :categories
 
+  DATE_FORMAT = "%A, %b. %-d, %Y at %-I:%M%P"
+
   def close_date_is_after_open_date
     if close_date && open_date
       errors.add(:close_date, "Close date must be after open date") if close_date < open_date
@@ -10,7 +12,7 @@ class Contest < ActiveRecord::Base
   end
 
   def is_open?
-    now = Date.new
+    now = Time.now
     if open_date < now && close_date > now
       return true
     end
@@ -18,7 +20,7 @@ class Contest < ActiveRecord::Base
   end
 
   def has_started?
-    now = Date.new
+    now = Time.now
     if open_date < now
       return true
     end
@@ -26,7 +28,7 @@ class Contest < ActiveRecord::Base
   end
 
   def has_ended?
-    now = Date.new
+    now = Time.now
     if close_date < now
       return true
     end
@@ -34,11 +36,11 @@ class Contest < ActiveRecord::Base
   end
 
   def formatted_open_date
-    open_date.strftime("%A, %b. %-d, %Y at %-I:%M%P")
+    open_date.strftime(DATE_FORMAT)
   end
 
   def formatted_close_date
-    close_date.strftime("%A, %b. %-d, %Y at %-I:%M%P")
+    close_date.strftime(DATE_FORMAT)
   end
 
   def self.current

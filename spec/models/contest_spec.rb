@@ -37,4 +37,50 @@ RSpec.describe Contest, :type => :model do
       expect(contest).to respond_to(:categories)
     end
   end
+
+  describe 'methods' do
+    let(:contest) { FactoryGirl.build(:contest) }
+
+    describe 'is_open?' do
+      it 'should return false when the contest has not started' do
+        contest.open_date = 1.day.from_now
+        expect(contest.is_open?).to eq(false)
+      end
+
+      it 'should return false when the contest has ended' do
+        contest.close_date = 1.day.ago
+        expect(contest.is_open?).to eq(false)
+      end
+
+      it 'should return true when the contest is open' do
+        contest.open_date  = 1.day.ago
+        contest.close_date = 1.day.from_now
+        expect(contest.is_open?).to eq(true)
+      end
+    end
+
+    describe 'has_started?' do
+      it 'should return false when the contest has not started' do
+        contest.open_date = 1.day.from_now
+        expect(contest.has_started?).to eq(false)
+      end
+
+      it 'should return true when the contest has started' do
+        contest.open_date = 1.day.ago
+        expect(contest.has_started?).to eq(true)
+      end
+    end
+
+    describe 'has_ended?' do
+      it 'should return false when the contest has not ended' do
+        contest.close_date = 1.day.from_now
+        expect(contest.has_ended?).to eq(false)
+      end
+
+      it 'should return true when the contest has ended' do
+        contest.close_date = 1.day.ago
+        expect(contest.has_ended?).to eq(true)
+      end
+    end
+  end 
 end
