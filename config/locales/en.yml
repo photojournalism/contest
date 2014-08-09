@@ -20,4 +20,6 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  contest:
+    not_open: 'The <strong>%{contest}</strong> will open on <strong>%{open_date}</strong>.'
+    ended: 'The <strong>%{contest}</strong> has ended.'
