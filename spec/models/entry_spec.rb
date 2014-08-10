@@ -27,5 +27,15 @@ RSpec.describe Entry, :type => :model do
       entry.judged = nil
       expect(entry).to be_invalid
     end
+
+    it 'should be valid without url' do
+      entry.url = nil
+      expect(entry).to be_valid
+    end
+
+    it 'should be valid without order number' do
+      entry.order_number = nil
+      expect(entry).to be_valid
+    end
   end
 end
