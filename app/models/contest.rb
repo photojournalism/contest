@@ -37,6 +37,11 @@ class Contest < ActiveRecord::Base
     return false
   end
 
+  def has_agreement_for?(user)
+    agreement = Agreement.where(:user => user, :contest => self).first
+    return (agreement ? true : false)
+  end
+
   def formatted_open_date
     open_date.strftime(DATE_FORMAT)
   end

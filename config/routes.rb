@@ -14,6 +14,7 @@ Rails.application.routes.draw do
     resources :places
   end
   resources :entries
+  resources :agreements
 
   get 'states/select/:country_id' => 'states#get_select_for_country'
 
