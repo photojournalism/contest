@@ -29,11 +29,6 @@ ActiveRecord::Schema.define(version: 20140810000205) do
     t.integer "contest_id"
   end
 
-  create_table "categories_file_types", id: false, force: true do |t|
-    t.integer "file_type_id"
-    t.integer "category_id"
-  end
-
   create_table "category_types", force: true do |t|
     t.string   "name"
     t.string   "description"
@@ -46,8 +41,8 @@ ActiveRecord::Schema.define(version: 20140810000205) do
   end
 
   create_table "category_types_file_types", force: true do |t|
-    t.integer "category_types_id"
-    t.integer "file_types_id"
+    t.integer "category_type_id"
+    t.integer "file_type_id"
   end
 
   create_table "contests", force: true do |t|

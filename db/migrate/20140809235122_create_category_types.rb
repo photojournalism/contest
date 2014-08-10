@@ -14,8 +14,8 @@ class CreateCategoryTypes < ActiveRecord::Migration
     end
 
     create_table :category_types_file_types do |t|
-      t.belongs_to :category_types
-      t.belongs_to :file_types
+      t.belongs_to :category_type
+      t.belongs_to :file_type
     end
   end
 end

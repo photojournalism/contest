@@ -10,12 +10,20 @@
 
       <select class="form-control" id="category-select">
       <% @categories.each do |category| %>
-        <option value="<%= category.id %>" data-category-description="<%= category.description %>"><%= category.name %></option>
+        <option value="<%= category.id %>"
+          data-category-description="<%= category.description %>"
+          data-category-type="<%= category.category_type.name %>"
+          data-category-type-description="<%= category.category_type.description %>"
+          data-minimum-files="<%= category.category_type.minimum_files %>"
+          data-maximum-files="<%= category.category_type.maximum_files %>"
+          data-has-url="<%= category.category_type.has_url %>"
+          data-file-types="<% category.category_type.file_types.each_with_index do |t, i| %><%= "#{t.extension}," %><% end %>"><%= category.name %></option>
       <% end %>
       </select>
       <p id="category-description">
         <strong><span id="category-description-title"><%= @categories.first.name %></span></strong><br>
-        <em><span id="category-description-description"><%= @categories.first.description %></span></em>
+        <span id="category-description-description"><%= @categories.first.description %></span><br><br>
+        <em><span id="category-type-description"><%= @categories.first.category_type.description %></span></em>
       </p>
     <% end %>
   </div>
