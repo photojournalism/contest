@@ -1,6 +1,8 @@
 <div class="col-md-8 col-md-offset-2">
 <h2>Register</h2>
 
+<p><em>Please use the following form to register to enter the <strong>Atlanta Photojournalism Seminar</strong>.</em></p>
+
 <%= render partial: 'shared/messages' %>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
@@ -9,33 +11,33 @@
   <div class="row">
     <div class="col-md-6">
         <div class="form-group">
-          <%= f.label :first_name %>
-          <%= f.text_field :first_name, autofocus: true, class: 'form-control', required: 'required' %>
+          <%= f.label :first_name, 'First Name' %>
+          <%= f.text_field :first_name, autofocus: true, class: 'form-control', required: 'required', placeholder: 'First Name' %>
         </div>
     </div>
     <div class="col-md-6">
       <div class="form-group">
-        <%= f.label :last_name %>
-        <%= f.text_field :last_name, class: 'form-control', required: 'required' %>
+        <%= f.label :last_name, 'Last Name' %>
+        <%= f.text_field :last_name, class: 'form-control', required: 'required', placeholder: 'Last Name' %>
       </div>
     </div>
   </div>
 
   <div class="form-group">
     <%= f.label :street %>
-    <%= f.text_field :street, class: 'form-control', required: 'required' %>
+    <%= f.text_field :street, class: 'form-control', required: 'required', placeholder: 'Street Address' %>
   </div>
 
   <div class="row">
     <div class="col-md-4">
       <div class="form-group">
         <%= f.label :city %>
-        <%= f.text_field :city, class: 'form-control', required: 'required' %>
+        <%= f.text_field :city, class: 'form-control', required: 'required', placeholder: 'City' %>
       </div>
     </div>
     <div class="col-md-4">
       <div class="form-group">
-        <%= f.label :state_id %>
+        <%= f.label :state_id, 'State/Province' %>
         <select class="form-control" id="user_state_id" name="user[state_id]">
           <% @states.each do |state| %>
             <option value="<%= state.id %>"><%= state.name %></option>
@@ -46,8 +48,8 @@
 
     <div class="col-md-4">
       <div class="form-group">
-        <%= f.label :zip %>
-        <%= f.text_field :zip, class: 'form-control' %>
+        <%= f.label :zip, 'Zip Code (if applicable)' %>
+        <%= f.text_field :zip, class: 'form-control', placeholder: 'Zip Code' %>
       </div>
     </div>
   </div>
@@ -61,29 +63,49 @@
     </select>
   </div>
 
-  <div class="form-group">
-    <%= f.label :day_phone %>
-    <%= f.text_field :day_phone, class: 'form-control', required: 'required' %>
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= f.label :day_phone %>
+        <%= f.text_field :day_phone, class: 'form-control', required: 'required', placeholder: 'Day Phone' %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= f.label :evening_phone %>
+        <%= f.text_field :evening_phone, class: 'form-control', required: 'required', placeholder: 'Evening Phone' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= f.label :employer, 'Employer (if applicable)' %> 
+        <%= f.text_field :employer, class: 'form-control', placeholder: 'Employer' %>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <%= f.label :school, 'School (if applicable)' %>
+        <%= f.text_field :school, class: 'form-control', placeholder: 'School' %>
+      </div>
+    </div>
   </div>
 
   <div class="form-group">
-    <%= f.label :evening_phone %>
-    <%= f.text_field :evening_phone, class: 'form-control', required: 'required' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :email %>
-    <%= f.email_field :email, class: 'form-control', required: 'required' %>
+    <%= f.label :email, 'Email Address' %>
+    <%= f.email_field :email, class: 'form-control', required: 'required', placeholder: 'Email Address' %>
   </div>
 
   <div class="form-group">
     <%= f.label :password %>
-    <%= f.password_field :password, autocomplete: "off", class: 'form-control', required: 'required' %>
+    <%= f.password_field :password, autocomplete: "off", class: 'form-control', required: 'required', placeholder: 'Password' %>
   </div>
 
   <div class="form-group">
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', required: 'required' %>
+    <%= f.label :password_confirmation, 'Password Confirmation' %>
+    <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', required: 'required', placeholder: 'Password Confirmation' %>
   </div>
 
   <div class="form-group">

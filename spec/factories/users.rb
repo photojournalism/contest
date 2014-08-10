@@ -10,6 +10,8 @@ FactoryGirl.define do
     f.zip { Faker::Address.zip }
     f.day_phone { Faker::PhoneNumber.phone_number }
     f.evening_phone  { Faker::PhoneNumber.phone_number }
+    f.employer "Employer"
+    f.school "School"
     f.password "password"
     f.password_confirmation "password"
 

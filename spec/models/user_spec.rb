@@ -23,14 +23,17 @@ describe 'User' do
       user.last_name = nil
       expect(user).to be_invalid
     end
+
     it 'should be invalid without a street' do
       user.street = nil
       expect(user).to be_invalid
     end
+
     it 'should be invalid without a city' do
       user.city = nil
       expect(user).to be_invalid
     end
+
     it 'should be invalid without a state' do
       user.state = nil
       expect(user).to be_invalid
@@ -44,6 +47,16 @@ describe 'User' do
     it 'should be invalid without a evening phone' do
       user.evening_phone = nil
       expect(user).to be_invalid
+    end
+
+    it 'should be valid without an employer' do
+      user.employer = nil
+      expect(user).to be_valid
+    end
+
+    it 'should be valid without a school' do
+      user.school = nil
+      expect(user).to be_valid
     end
 
     it 'should respond to country' do

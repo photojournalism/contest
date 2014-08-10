@@ -91,16 +91,16 @@ feature 'sign up' do
   def sign_up(user)
     visit new_user_registration_path
 
-    fill_in 'First name', with: user.first_name
-    fill_in 'Last name', with: user.last_name
+    fill_in 'First Name', with: user.first_name
+    fill_in 'Last Name', with: user.last_name
     fill_in 'Street', with: user.street
     fill_in 'City', with: user.city
-    fill_in 'Zip', with: user.zip
-    fill_in 'Day phone', with: user.day_phone
-    fill_in 'Evening phone', with: user.evening_phone
-    fill_in 'Email', with: user.email
+    fill_in 'Zip Code', with: user.zip
+    fill_in 'Day Phone', with: user.day_phone
+    fill_in 'Evening Phone', with: user.evening_phone
+    fill_in 'Email Address', with: user.email
     fill_in 'Password', with: user.password
-    fill_in 'Password confirmation', with: user.password_confirmation
+    fill_in 'Password Confirmation', with: user.password_confirmation
     click_button 'Register'
   end
 end
