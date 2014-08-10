@@ -9,8 +9,6 @@ Registrations = do($ = jQuery) ->
       $("#user_state_id").html(data)
 
   obj.init = ->
-    $("#user_country_id").val(233)
-    obj.getStates()
     $("#user_country_id").change ->
       obj.getStates($(this).val())
 
