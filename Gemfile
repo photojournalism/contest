@@ -47,7 +47,6 @@ gem 'spring',        group: :development
 gem 'devise'
 # Biggs for address formatting
 gem 'biggs'
-gem 'jquery.fileupload-rails'
 
 group :development, :test do
   gem 'rspec-rails'
