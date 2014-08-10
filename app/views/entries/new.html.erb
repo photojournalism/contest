@@ -4,6 +4,13 @@
     <%= render :partial => 'shared/messages' %>
 
     <% if @contest.is_open? %>
+      <p><em>The following form is used to create a new entry for the <strong><%= @contest %></strong>. You may use this form as many times as you'd like to enter multiple categories.</em></p><br>
+
+      <h4>Order Number</h4>
+      <p>Use the box below to enter your order number for your payment on <a href="http://photojournalism.eventbrite.com" target="_blank">EventBrite</a>. If someone paid on your behalf, please enter the name of the person or company that paid on your behalf.</p>
+
+      <input type="text" class="form-control" placeholder="Order Number, e.g., 123456789 or Associated Press" id="entry-order-number"><br>
+
       <h4>Category</h4>
 
       <p>Use the dropdown list below to select the category you would like to enter. A description of the category is shown upon selection.</p>
