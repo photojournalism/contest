@@ -24,6 +24,7 @@ RSpec.describe AgreementsController, :type => :controller do
       get :new
       expect(response).to render_template(:new)
     end
+    after(:all) { Contest.delete_all }
   end
 
   describe 'POST create' do
@@ -36,12 +37,14 @@ RSpec.describe AgreementsController, :type => :controller do
       sign_in user
       post :create
       expect(Agreement.count).to eq(1)
+      sign_out user
     end
 
     it 'redirects to new_entry_path' do
       sign_in user
       post :create
       expect(response).to redirect_to(new_entry_path)
+      sign_out user
     end
   end
 end

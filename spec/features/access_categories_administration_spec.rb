@@ -2,11 +2,13 @@ require 'rails_helper'
 
 feature 'access categories administration' do
 
+  before(:all) { User.delete_all }
   let(:user) { FactoryGirl.create(:user) }
   let(:category) { FactoryGirl.create(:category) }
 
   describe 'as not logged in user' do
     scenario 'visit categories url' do
+      sign_out user
       visit categories_path
       expect(page).to have_content('Please log in first')
     end
@@ -16,6 +18,7 @@ feature 'access categories administration' do
     scenario 'visit categories url' do
       user.admin = false
       user.save
+
       sign_in(user.email, user.password)
       visit categories_path
       expect(page).to have_content('not authorized')
@@ -43,5 +46,10 @@ feature 'access categories administration' do
     fill_in 'Email', with: email
     fill_in 'Password', with: password
     click_button 'Sign in'
+  end
+
+  def sign_out(user)
+    sign_in(user.email, user.password)
+    click_link 'Logout'
   end
 end

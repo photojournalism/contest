@@ -7,6 +7,7 @@ feature 'access places administration' do
 
   describe 'as not logged in user' do
     scenario 'visit places url' do
+      sign_out user
       visit places_path
       expect(page).to have_content('Please log in first')
     end
@@ -16,8 +17,8 @@ feature 'access places administration' do
     scenario 'visit places url' do
       user.admin = false
       user.save
+
       sign_in(user.email, user.password)
-      
       visit places_path
       expect(page).to have_content('not authorized')
     end
@@ -27,7 +28,7 @@ feature 'access places administration' do
     before(:each) do
       user.admin = true
       user.save
-
+      
       sign_in(user.email, user.password)
     end
 
@@ -44,5 +45,10 @@ feature 'access places administration' do
     fill_in 'Email', with: email
     fill_in 'Password', with: password
     click_button 'Sign in'
+  end
+
+  def sign_out(user)
+    sign_in(user.email, user.password)
+    click_link 'Logout'
   end
 end

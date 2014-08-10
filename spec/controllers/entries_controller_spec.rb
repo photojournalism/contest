@@ -19,6 +19,7 @@ RSpec.describe EntriesController, :type => :controller do
       set_contest_dates(1.day.from_now, 3.days.from_now)
       get :new
       expect(response.body).to match 'will open on'
+      sign_out user
     end
 
     it 'should display notification when contest has ended' do
@@ -26,6 +27,7 @@ RSpec.describe EntriesController, :type => :controller do
       set_contest_dates(3.days.ago, 1.day.ago)
       get :new
       expect(response.body).to match 'ended'
+      sign_out user
     end
 
     it 'assigns @categories when contest is open and an agreement for user exists' do
@@ -37,6 +39,7 @@ RSpec.describe EntriesController, :type => :controller do
 
       get :new
       expect(assigns(:categories)).to eq([category])
+      sign_out user
     end
 
     it 'renders new template when contest is open and an agreement for user exists' do
@@ -48,6 +51,7 @@ RSpec.describe EntriesController, :type => :controller do
 
       get :new
       expect(response).to render_template(:new)
+      sign_out user
     end
 
     it "redirects to new agreement when one doesn't exist" do
@@ -55,6 +59,7 @@ RSpec.describe EntriesController, :type => :controller do
       set_contest_dates(3.days.ago, 1.day.from_now)
       get :new
       expect(response).to redirect_to(new_agreement_path)
+      sign_out user
     end
 
     def set_contest_dates(open_date, close_date)
@@ -62,5 +67,7 @@ RSpec.describe EntriesController, :type => :controller do
       contest.close_date = close_date
       contest.save
     end
+    
+    after(:all) { Contest.delete_all }
   end
 end
