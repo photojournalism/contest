@@ -13,11 +13,12 @@ class EntriesController < ApplicationController
       return
     end
 
-    if (@contest.has_agreement_for?(current_user))
-      @categories = @contest.categories
-    else
+    if (!@contest.has_agreement_for?(current_user))
       session[:return_to] = request.fullpath
       redirect_to controller: 'agreements', action: 'new'
+      return
     end
+    
+    @categories = @contest.categories
   end
 end
