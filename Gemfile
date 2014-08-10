@@ -60,4 +60,5 @@ group :test do
   gem 'capybara'
   gem 'guard-rspec'
   gem 'launchy'
+  gem 'simplecov', :require => false
 end
