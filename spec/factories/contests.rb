@@ -4,5 +4,7 @@ FactoryGirl.define do
     c.name "Contest Name"
     c.open_date "2014-08-07 12:49:41"
     c.close_date "2014-08-07 12:49:41"
+
+    association :contest_rules, :factory => :contest_rules
   end
 end

@@ -6,9 +6,13 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+puts "Creating contest rules..."
+ContestRules.delete_all
+contest_rules = ContestRules.create(:text => "These are some contest rules.")
+
 puts "Creating initial contest..."
 Contest.delete_all
-contest = Contest.create(:year => '2014', :name => 'Atlanta Photojournalism Seminar Contest', :open_date => 1.day.ago, :close_date => 3.years.from_now)
+contest = Contest.create(:year => '2014', :name => 'Atlanta Photojournalism Seminar Contest', :open_date => 1.day.ago, :close_date => 3.years.from_now, :contest_rules => contest_rules)
 
 puts "Creating file types..."
 FileType.delete_all

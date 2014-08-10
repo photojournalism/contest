@@ -33,6 +33,11 @@ RSpec.describe Contest, :type => :model do
       expect(contest).to be_invalid
     end
 
+    it 'should be invalid without rules' do
+      contest.contest_rules = nil
+      expect(contest).to be_invalid
+    end
+
     it 'should respond to categories' do
       expect(contest).to respond_to(:categories)
     end

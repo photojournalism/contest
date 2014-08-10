@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140810162038) do
+ActiveRecord::Schema.define(version: 20140810165226) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -45,6 +45,12 @@ ActiveRecord::Schema.define(version: 20140810162038) do
     t.integer "file_type_id"
   end
 
+  create_table "contest_rules", force: true do |t|
+    t.string   "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "contests", force: true do |t|
     t.integer  "year"
     t.string   "name"
@@ -54,6 +60,7 @@ ActiveRecord::Schema.define(version: 20140810162038) do
     t.datetime "updated_at"
     t.string   "url"
     t.string   "order_number"
+    t.integer  "contest_rules_id"
   end
 
   create_table "countries", force: true do |t|

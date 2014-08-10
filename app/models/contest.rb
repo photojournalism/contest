@@ -1,7 +1,8 @@
 class Contest < ActiveRecord::Base
-  validates_presence_of :year, :name, :open_date, :close_date
+  validates_presence_of :year, :name, :open_date, :close_date, :contest_rules
   validate :close_date_is_after_open_date
   has_and_belongs_to_many :categories
+  belongs_to :contest_rules
 
   DATE_FORMAT = "%A, %b. %-d, %Y at %-I:%M%P"
 
