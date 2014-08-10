@@ -3,6 +3,7 @@ class Contest < ActiveRecord::Base
   validate :close_date_is_after_open_date
   has_and_belongs_to_many :categories
   belongs_to :contest_rules
+  has_many :agreements
 
   DATE_FORMAT = "%A, %b. %-d, %Y at %-I:%M%P"
 

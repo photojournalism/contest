@@ -41,6 +41,10 @@ RSpec.describe Contest, :type => :model do
     it 'should respond to categories' do
       expect(contest).to respond_to(:categories)
     end
+
+    it 'should respond to agreements' do
+      expect(contest).to respond_to(:agreements)
+    end
   end
 
   describe 'methods' do
@@ -87,5 +91,23 @@ RSpec.describe Contest, :type => :model do
         expect(contest.has_ended?).to eq(true)
       end
     end
-  end 
+
+    describe 'formatted_open_date' do
+      it 'should return the right formatted date' do
+        expect(contest.formatted_open_date).to eq(contest.open_date.strftime("%A, %b. %-d, %Y at %-I:%M%P"))
+      end
+    end
+
+    describe 'formatted_close_date' do
+      it 'should return the right formatted date' do
+        expect(contest.formatted_close_date).to eq(contest.close_date.strftime("%A, %b. %-d, %Y at %-I:%M%P"))
+      end
+    end
+
+    describe 'to_s' do
+      it 'should return the year and name' do
+        expect(contest.to_s).to eq("#{contest.year} #{contest.name}")
+      end
+    end
+  end
 end

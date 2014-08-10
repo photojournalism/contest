@@ -62,6 +62,10 @@ describe 'User' do
     it 'should respond to country' do
       expect(user).to respond_to(:country)
     end
+
+    it 'should respond to agreements' do
+      expect(user).to respond_to(:agreements)
+    end
   end
 
   describe 'methods' do
