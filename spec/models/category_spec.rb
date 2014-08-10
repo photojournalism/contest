@@ -23,12 +23,17 @@ RSpec.describe Category, :type => :model do
       expect(category).to be_invalid
     end
 
+    it 'should be invalid without a category type' do
+      category.category_type = nil
+      expect(category).to be_invalid
+    end
+
     it 'should respond to contests' do
       expect(category).to respond_to(:contests)
     end
 
-    it 'should respond to file_types' do
-      expect(category).to respond_to(:file_types)
+    it 'should respond to category_type' do
+      expect(category).to respond_to(:category_type)
     end
   end
 end

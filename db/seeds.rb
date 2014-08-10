@@ -8,7 +8,7 @@
 
 puts "Creating initial contest..."
 Contest.delete_all
-contest = Contest.create(:year => '2014', :name => 'Atlanta Photojournalism Seminar Contest', :open_date => '2014-09-01 00:00:00', :close_date => '2014-10-15 23:59:59')
+contest = Contest.create(:year => '2014', :name => 'Atlanta Photojournalism Seminar Contest', :open_date => 1.day.ago, :close_date => 3.years.from_now)
 
 puts "Creating file types..."
 FileType.delete_all

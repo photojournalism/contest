@@ -17,9 +17,5 @@ RSpec.describe FileType, :type => :model do
       file_type.extension = nil
       expect(file_type).to be_invalid
     end
-
-    it 'should respond to categories' do
-      expect(file_type).to respond_to(:categories)
-    end
   end
 end

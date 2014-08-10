@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140809160349) do
+ActiveRecord::Schema.define(version: 20140810000205) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
@@ -19,7 +19,10 @@ ActiveRecord::Schema.define(version: 20140809160349) do
     t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "category_type_id"
   end
+
+  add_index "categories", ["category_type_id"], name: "index_categories_on_category_type_id"
 
   create_table "categories_contests", id: false, force: true do |t|
     t.integer "category_id"
@@ -29,6 +32,22 @@ ActiveRecord::Schema.define(version: 20140809160349) do
   create_table "categories_file_types", id: false, force: true do |t|
     t.integer "file_type_id"
     t.integer "category_id"
+  end
+
+  create_table "category_types", force: true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.integer  "minimum_files"
+    t.integer  "maximum_files"
+    t.boolean  "has_url"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "category_types_file_types", force: true do |t|
+    t.integer "category_types_id"
+    t.integer "file_types_id"
   end
 
   create_table "contests", force: true do |t|
