@@ -3,11 +3,16 @@ class RegistrationsController < Devise::RegistrationsController
   def new
     @countries = Country.order('name ASC').all
     @us = Country.where(:name => 'United States').first
-    @states = State.where(:country => @us).order('name ASC')
+    @states = @us ? @us.states : State.where(:country => @countries.first)
+    @states = @states.order('name ASC')
     super
   end
 
   def create
+    @countries = Country.order('name ASC').all
+    @us = Country.where(:name => 'United States').first
+    @states = @us ? @us.states : State.where(:country => @countries.first)
+    @states = @states.order('name ASC')
     super
   end
 
