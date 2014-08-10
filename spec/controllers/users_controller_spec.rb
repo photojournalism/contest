@@ -27,4 +27,14 @@ RSpec.describe UsersController, :type => :controller do
       expect(response.body).to match '<li class="active"><a href="/admin/users">Users</a></li>'
     end
   end
+
+  describe 'GET show' do
+    before(:each) { controller.class.skip_before_filter :require_admin }
+
+    it 'assigns @user' do
+      user = FactoryGirl.create(:user)
+      get :show, :id => user.id
+      expect(assigns(:user)).to eq(user)
+    end
+  end
 end
