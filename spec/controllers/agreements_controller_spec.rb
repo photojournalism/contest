@@ -24,6 +24,7 @@ RSpec.describe AgreementsController, :type => :controller do
       get :new
       expect(response).to render_template(:new)
     end
+    
     after(:all) { Contest.delete_all }
   end
 

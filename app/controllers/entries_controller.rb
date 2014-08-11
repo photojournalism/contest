@@ -21,4 +21,32 @@ class EntriesController < ApplicationController
     
     @categories = @contest.categories
   end
+
+  def create
+    category = Category.find(entry_params[:category])
+    entry = Entry.new(
+      :user => current_user,
+      :category => category,
+      :uuid => SecureRandom.uuid,
+      :order_number => entry_params[:order_number],
+      :judged => false
+    )
+
+    if entry.valid?
+      entry.save
+      render :json => { :url => "/entries/#{entry.uuid}/images" }
+    else
+      render :json => { :message => entry.errors }, :status => 500
+    end
+  end
+
+  def images
+    @entry = Entry.where(:uuid => params[:uuid]).first
+  end
+
+  private
+
+  def entry_params
+    params.require(:entry).permit(:category, :order_number)
+  end
 end

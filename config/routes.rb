@@ -13,10 +13,13 @@ Rails.application.routes.draw do
     resources :categories
     resources :places
   end
-  resources :entries
   resources :agreements
+  resources :images
+  resources :entries
 
   get 'states/select/:country_id' => 'states#get_select_for_country'
+  get 'entries/:uuid/images' => 'entries#images'
+  post 'images/upload' => 'images#upload'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
