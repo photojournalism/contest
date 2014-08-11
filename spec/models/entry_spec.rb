@@ -33,6 +33,11 @@ RSpec.describe Entry, :type => :model do
       expect(entry).to be_valid
     end
 
+    it 'should be invalid without uuid' do
+      entry.uuid = nil
+      expect(entry).to be_invalid
+    end
+
     it 'should be valid without order number' do
       entry.order_number = nil
       expect(entry).to be_valid

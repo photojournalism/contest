@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140810170207) do
+ActiveRecord::Schema.define(version: 20140811221545) do
 
   create_table "agreements", force: true do |t|
     t.integer  "user_id"
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 20140810170207) do
     t.datetime "updated_at"
     t.string   "url"
     t.string   "order_number"
+    t.string   "uuid"
   end
 
   add_index "entries", ["category_id"], name: "index_entries_on_category_id"
