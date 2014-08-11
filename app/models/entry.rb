@@ -1,5 +1,5 @@
 class Entry < ActiveRecord::Base
-  validates_presence_of :category, :user, :place, :uuid
+  validates_presence_of :category, :user, :uuid
   validates :judged, :inclusion => {:in => [true, false]}
   
   belongs_to :category

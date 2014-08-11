@@ -13,9 +13,9 @@ RSpec.describe Entry, :type => :model do
       expect(entry).to be_invalid
     end
 
-    it 'should be invalid without a place' do
+    it 'should be valid without a place' do
       entry.place = nil
-      expect(entry).to be_invalid
+      expect(entry).to be_valid
     end
 
     it 'should be invalid without a user' do
