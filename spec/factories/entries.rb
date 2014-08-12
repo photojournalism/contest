@@ -8,5 +8,6 @@ FactoryGirl.define do
     association :category, :factory => :category
     association :user, :factory => :user
     association :place, :factory => :place
+    association :contest, :factory => :contest
   end
 end

@@ -45,6 +45,10 @@ RSpec.describe Contest, :type => :model do
     it 'should respond to agreements' do
       expect(contest).to respond_to(:agreements)
     end
+
+    it 'should respond to entries' do
+      expect(contest).to respond_to(:entries)
+    end
   end
 
   describe 'methods' do

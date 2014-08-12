@@ -29,7 +29,8 @@ class EntriesController < ApplicationController
       :category => category,
       :uuid => SecureRandom.uuid,
       :order_number => entry_params[:order_number],
-      :judged => false
+      :judged => false,
+      :contest => Contest.current
     )
 
     if entry.valid?

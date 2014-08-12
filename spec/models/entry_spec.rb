@@ -38,6 +38,11 @@ RSpec.describe Entry, :type => :model do
       expect(entry).to be_invalid
     end
 
+    it 'should be invalid without a contest' do
+      entry.contest = nil
+      expect(entry).to be_invalid
+    end
+
     it 'should be valid without order number' do
       entry.order_number = nil
       expect(entry).to be_valid

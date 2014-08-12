@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140812010604) do
+ActiveRecord::Schema.define(version: 20140812011533) do
 
   create_table "agreements", force: true do |t|
     t.integer  "user_id"
@@ -88,9 +88,11 @@ ActiveRecord::Schema.define(version: 20140812010604) do
     t.string   "url"
     t.string   "order_number"
     t.string   "uuid"
+    t.integer  "contest_id"
   end
 
   add_index "entries", ["category_id"], name: "index_entries_on_category_id"
+  add_index "entries", ["contest_id"], name: "index_entries_on_contest_id"
   add_index "entries", ["place_id"], name: "index_entries_on_place_id"
   add_index "entries", ["user_id"], name: "index_entries_on_user_id"
 
