@@ -6,4 +6,5 @@ class Entry < ActiveRecord::Base
   belongs_to :user
   belongs_to :place
   belongs_to :contest
+  has_many :images
 end

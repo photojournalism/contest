@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get 'states/select/:country_id' => 'states#get_select_for_country'
   get 'entries/:uuid/images' => 'entries#images'
   post 'images/upload' => 'images#upload'
+  get 'images/upload' => 'images#for_entry'
   get 'images/download/:hash' => 'images#download'
   get 'images/thumbnail/:hash' => 'images#thumbnail'
   delete 'images/:hash' => 'images#destroy'

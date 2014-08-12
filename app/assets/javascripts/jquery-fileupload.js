@@ -6,4 +6,3 @@
 //= require jquery-fileupload/jquery.fileupload-video.js
 //= require jquery-fileupload/jquery.fileupload-validate.js
 //= require jquery-fileupload/jquery.fileupload-ui.js
-//= require jquery-fileupload/main.js
