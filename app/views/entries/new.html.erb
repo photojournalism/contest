@@ -1,6 +1,8 @@
+<% title 'Contest Entry' %>
+
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <h1 class="heading">Contest Entry</h1>
+    <h1 class="heading"><%= yield(:title) %></h1>
     <%= render :partial => 'shared/messages' %>
 
     <% if @contest.is_open? %>
@@ -9,7 +11,9 @@
       <h4>Order Number</h4>
       <p>Use the box below to enter your order number for your payment on <a href="http://photojournalism.eventbrite.com" target="_blank">EventBrite</a>. If someone paid on your behalf, please enter the name of the person or company that paid on your behalf.</p>
 
-      <input type="text" class="form-control" placeholder="Order Number, e.g., 123456789 or Associated Press" id="entry-order-number"><br>
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Order Number, e.g., 123456789 or Associated Press" id="entry-order-number"><br>
+      </div>
 
       <h4>Category</h4>
 
@@ -33,7 +37,8 @@
         <em><span id="category-type-description"><%= @categories.first.category_type.description %></span></em>
       </p>
       <br>
-      <button type="button" class="btn btn-primary btn-lg" id="entry-continue-button">Continue</button><br><br><br>
+      <button type="button" class="btn btn-primary btn-lg pull-right" id="entry-continue-button">Continue&nbsp;&nbsp;<i class="glyphicon glyphicon-arrow-right"></i></button>
+      <div class="clearfix"></div><br>
     <% end %>
   </div>
 </div>

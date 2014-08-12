@@ -44,6 +44,7 @@ Entries = do($ = jQuery) ->
           console.log(data.responseJSON.message)
       });
     else
+      orderNumber.parent().addClass('has-error')
       orderNumber.focus()
 
   obj

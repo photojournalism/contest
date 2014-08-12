@@ -1,6 +1,7 @@
+<% title 'Contest Rules Agreement' %>
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
-    <h1 class="heading">Contest Rules Agreement</h1>
+    <h1 class="heading"><%= yield(:title) %></h1>
     <%= render :partial => 'shared/messages' %>
 
     <p><em>Before entering the <strong><%= @contest %></strong>, you must agree to the rules of the contest.</em></p>

@@ -15,4 +15,8 @@ module ApplicationHelper
   def redirect_back_or_to(path)
     redirect_to(request.referer || path)
   end
+
+  def title(page_title)
+    content_for(:title) { page_title }
+  end
 end

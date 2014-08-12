@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Contest</title>
+  <title><%= "#{yield(:title)} &middot; ".html_safe if !yield(:title).empty? %>Atlanta Photojournalism Seminar Contest</title>
   <%= stylesheet_link_tag    'application', media: 'all' %>
   <%= javascript_include_tag 'application' %>
   <%= csrf_meta_tags %>
