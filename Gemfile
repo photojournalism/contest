@@ -47,6 +47,7 @@ gem 'spring',        group: :development
 gem 'devise'
 # Biggs for address formatting
 gem 'biggs'
+gem 'rmagick'
 
 group :development, :test do
   gem 'rspec-rails'
