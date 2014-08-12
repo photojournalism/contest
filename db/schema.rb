@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140811221545) do
+ActiveRecord::Schema.define(version: 20140812010604) do
 
   create_table "agreements", force: true do |t|
     t.integer  "user_id"
@@ -109,6 +109,7 @@ ActiveRecord::Schema.define(version: 20140811221545) do
     t.integer  "entry_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "unique_hash"
   end
 
   create_table "places", force: true do |t|

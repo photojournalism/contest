@@ -23,6 +23,11 @@ RSpec.describe Image, :type => :model do
       expect(image).to be_invalid
     end
 
+    it 'should be invalid without a hash' do
+      image.unique_hash = nil
+      expect(image).to be_invalid
+    end
+
     it 'should be invalid without a location' do
       image.location = nil
       expect(image).to be_invalid

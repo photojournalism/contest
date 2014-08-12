@@ -4,6 +4,7 @@ FactoryGirl.define do
     original_filename "original_filename.jpg"
     size 3000
     location "/tmp"
+    unique_hash SecureRandom.hex
 
     association :entry, :factory => :entry
   end
