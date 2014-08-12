@@ -36,4 +36,20 @@ RSpec.describe Category, :type => :model do
       expect(category).to respond_to(:category_type)
     end
   end
+
+  describe 'methods' do
+    let(:category) { FactoryGirl.build(:category) }
+
+    describe 'to_s' do
+      it 'should return the name' do
+        expect(category.to_s).to eq(category.name)
+      end
+    end
+
+    describe 'slug' do
+      it 'should return lowercase name with dashes' do
+        expect(category.slug).to eq(category.name.downcase.gsub(' ', '-'))
+      end
+    end
+  end
 end

@@ -1,3 +1,4 @@
+require 'fileutils'
 require 'rmagick'
 
 class Image < ActiveRecord::Base
@@ -6,21 +7,23 @@ class Image < ActiveRecord::Base
   belongs_to :entry
 
   def self.upload(image, entry)
-    upload_dir = "app/assets/images/contest/#{entry.contest.year}/#{entry.uuid}"
+    upload_dir = "app/assets/images/contest/#{entry.contest.year}/#{entry.category.slug}/#{entry.uuid}"
     i = Image.new(
       :filename => image.original_filename,
       :original_filename => image.original_filename,
       :location => upload_dir,
       :entry => entry,
-      :unique_hash => SecureRandom.hex
+      :unique_hash => SecureRandom.hex,
+      :size => 0
     )
 
-    `mkdir -p #{upload_dir}`
-    f = File.open("#{i.location}/#{i.filename}",'wb')
-    f.write(image.read)
-    i.size = f.size
     i.validate!
     if i.errors.empty?
+      FileUtils::mkdir_p upload_dir
+      f = File.open("#{i.location}/#{i.filename}",'wb')
+      f.write(image.read)
+      i.size = f.size
+
       i.save
       i.create_thumbnail
       return { :success => true, :image => i }
@@ -39,7 +42,7 @@ class Image < ActiveRecord::Base
   end
 
   def create_thumbnail
-    `mkdir -p #{location}/thumbnails`
+    FileUtils::mkdir_p "#{location}/thumbnails"
     image = Magick::Image.read(path).first
     image.change_geometry!('80x80') do |cols, rows, img|
       img.resize!(cols,rows)
@@ -52,7 +55,7 @@ class Image < ActiveRecord::Base
   end
   
   def public_url
-    "/assets/contest/#{entry.contest.year}/#{entry.uuid}/#{filename}"
+    "/assets/contest/#{entry.contest.year}/#{entry.category.slug}/#{entry.uuid}/#{filename}"
   end
 
   def to_hash

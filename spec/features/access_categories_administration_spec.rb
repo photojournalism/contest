@@ -45,7 +45,7 @@ feature 'access categories administration' do
 
     fill_in 'Email', with: email
     fill_in 'Password', with: password
-    click_button 'Sign in'
+    click_button 'Login'
   end
 
   def sign_out(user)

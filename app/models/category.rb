@@ -12,6 +12,10 @@ class Category < ActiveRecord::Base
     output
   end
 
+  def slug
+    name.downcase.gsub(' ', '-')
+  end
+
   def to_s
     name
   end
