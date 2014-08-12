@@ -3,4 +3,16 @@ class Category < ActiveRecord::Base
 
   belongs_to :category_type
   has_and_belongs_to_many :contests
+
+  def file_types
+    output = []
+    category_type.file_types.each_with_index do |ft, i|
+      output << ft.extension
+    end
+    output
+  end
+
+  def to_s
+    name
+  end
 end

@@ -14,12 +14,14 @@ Rails.application.routes.draw do
     resources :places
   end
   resources :agreements
-  resources :images
   resources :entries
 
   get 'states/select/:country_id' => 'states#get_select_for_country'
   get 'entries/:uuid/images' => 'entries#images'
   post 'images/upload' => 'images#upload'
+  get 'images/download/:hash' => 'images#download'
+  get 'images/thumbnail/:hash' => 'images#thumbnail'
+  delete 'images/:hash' => 'images#destroy'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
