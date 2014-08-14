@@ -19,6 +19,8 @@ Rails.application.routes.draw do
   get 'entries/new' => 'entries#new', :as => :new_entry
   post 'entries' => 'entries#create'
   get 'entries/:hash' => 'entries#show'
+  delete 'entries/:hash' => 'entries#destroy'
+  put 'entries/:hash' => 'entries#update'
   post 'images/upload' => 'images#upload'
   get 'images/upload' => 'images#for_entry'
   get 'images/download/:hash' => 'images#download'

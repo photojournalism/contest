@@ -71,7 +71,7 @@
     <!-- The table listing the files available for upload/download -->
     <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
 </form><br>
-<button type="button" class="btn btn-danger btn-lg pull-left" id="entry-delete-button"><i class="glyphicon glyphicon-remove"></i> Delete Entry</button>
+<button type="button" class="btn btn-danger pull-left" id="entry-delete-button"><i class="glyphicon glyphicon-remove"></i> Delete Entry</button>
 <div class="clearfix"></div><br>
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
@@ -171,15 +171,23 @@ $(function() {
     });
 });
 </script>
+
 <% elsif @entry.category.category_type.has_url %>
-<p><em>The <strong><%= @entry.category %></strong> category requires a URL to your media. Use the following input box to paste your URL, and save.</em></p>
-<div class="form-group">
-    <label for="entry-url">Entry URL</label>
-    <input type="text" id="entry-url" placeholder="Entry URL, i.e. http://vimeo.com/71135385" class="form-control">
-</div><br>
-<button type="button" class="btn btn-danger btn-lg pull-left" id="entry-delete-button"><i class="glyphicon glyphicon-remove"></i> Delete Entry</button>
-<button type="button" class="btn btn-primary btn-lg pull-right" id="entry-save-button"><i class="glyphicon glyphicon-save"></i> Save Entry</button>
-<div class="clearfix"></div>
+
+    <p>The <strong><%= @entry.category %></strong> category requires a URL to your media. Use the following input box to paste your URL, and save.</p>
+
+    <p><strong>Please ensure that the URL is valid, or your entry cannot be judged properly.</strong></p>
+    
+    <div class="form-group">
+        <label for="entry-url">Entry URL</label>
+        <input type="text" id="entry-url" placeholder="Entry URL, i.e. http://vimeo.com/71135385" class="form-control" value="<%= @entry.url %>">
+    </div>
+    
+    <button type="button" class="btn btn-danger pull-left" id="entry-delete-button"><i class="glyphicon glyphicon-remove"></i> Delete Entry</button>
+    
+    <button type="button" class="btn btn-primary pull-right" id="entry-save-button"><i class="glyphicon glyphicon-save"></i> Save Entry</button>
+    
+    <div class="clearfix"></div>
 <% end %>
 </div>
 </div>

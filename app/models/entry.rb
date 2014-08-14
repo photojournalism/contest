@@ -10,7 +10,7 @@ class Entry < ActiveRecord::Base
   belongs_to :contest
   has_many :images
 
-  DATE_FORMAT = "%A, %b. %-d, %Y at %-I:%M%P"
+  DATE_FORMAT = "%A, %b. %-d, %Y at %-I:%M%P %Z"
 
   def formatted_created_at
     created_at.strftime(DATE_FORMAT)
@@ -18,9 +18,13 @@ class Entry < ActiveRecord::Base
 
   def self.delete_all
     Entry.all.each do |entry|
-      FileUtils.rm_rf(entry.images_location)
-      entry.destroy!
+      entry.delete
     end
+  end
+
+  def delete
+    FileUtils.rm_rf(images_location)
+    destroy!
   end
 
   def images_location

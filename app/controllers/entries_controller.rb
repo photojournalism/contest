@@ -56,6 +56,28 @@ class EntriesController < ApplicationController
     end
   end
 
+  def update
+    @entry = Entry.where(:unique_hash => params[:hash]).first
+    if ((@entry.user = current_user || current_user.admin) && @entry.contest.is_open?)
+      @entry.url = params[:url]
+      @entry.save
+      render :json => { :message => "Successfully updated entry." }, :status => 200
+      return
+    end
+    render :json => { :message => "This entry is no longer allowed to be updated." }, :status => 500
+  end
+
+  def destroy
+    @entry = Entry.where(:unique_hash => params[:hash]).first
+    if ((@entry.user = current_user || current_user.admin) && @entry.contest.is_open?)
+      logger.info "Deleting entry with hash #{params[:hash]}"
+      @entry.delete
+      render :json => { :message => "Successfully deleted entry." }, :status => 200
+      return
+    end
+    render :json => { :message => "This entry is no longer allowed to be updated." }, :status => 500
+  end
+
   private
 
   def entry_params
