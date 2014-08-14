@@ -2,7 +2,7 @@
 
 <div class="container">
 <div class="row">
-<div class="col-md-8 col-md-offset-2">
+<div class="col-md-10 col-md-offset-1">
     <h1 class="heading"><%= @entry.contest.year %> <%= @entry.category %> Entry</h1>
     <p class="entry-info">
         <span id="entry-hash" style="display:none"><%= @entry.unique_hash %></span>
@@ -12,184 +12,25 @@
         <em><%= @entry.category.description %></em><br><br>
         <em><%= @entry.category.category_type.description.html_safe %></em>
     </p>
-<% if @entry.category.category_type.minimum_files > 0 %>
-<%= stylesheet_link_tag 'jquery-fileupload' %>
-<h3>File Type and Number of Images</h3>
-<p>The <strong><%= @entry.category %></strong> category requires you to upload images of the following <%= 'file type'.pluralize(@entry.category.file_types.length) %>: <strong><% @entry.category.file_types.each do |c| %><%= c %><% end %></strong>.</p>
-<p>You may upload a maximum of <strong><%= @entry.category.category_type.readable_max_files %></strong> <%= 'image'.pluralize(@entry.category.category_type.maximum_files) %> for this category.</p>
-<h3>Naming Protocol</h3>
 
-<p>The only restriction for naming your images, is that they must end with an underscore, and the number of the image for the category.</p>
-<p>For categories with a single image, filenames should end with "<strong>_01</strong>". Categories with multiple images should have the images sequentially ordered, such as: <strong>filename_01.jpg</strong>, <strong>filename_02.jpg</strong>, and <strong>filename_03.jpg</strong>.</p>
+    <% if @entry.category.category_type.minimum_files > 0 %>
+        <%= render :partial => 'jquery_fileupload_form' %>
+    <% elsif @entry.category.category_type.has_url %>
+        <p>The <strong><%= @entry.category %></strong> category requires a URL to your media. Use the following input box to paste your URL, and save.</p>
 
-<h3>Captioning</h3>
-
-<p>Using <a href="http://www.camerabits.com/products/" target="_blank">Photo Mechanic</a> or <a href="http://www.adobe.com/products/photoshopfamily.html" target="_blank">Adobe Photoshop</a>'s <strong>File Info</strong> option (under the <strong>File</strong> menu), caption the photo using a concise description. In Photo Mechanic, the caption should be in the <strong>caption</strong> field. In Photoshop, the caption should be in the <strong>Description</strong> field.</p>
-
-<p>When captioning picture stories, the caption of the first photo in the picture story should be a very brief summary of the story.</p>
-
-<p><strong>Please ensure that your name does not appear in any of the IPTC fields.</strong></p>
-
-<h3>Upload Images</h3>
-<!-- The file upload form used as target for the file upload widget -->
-<form id="fileupload" method="POST" enctype="multipart/form-data">
-    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-    <input type="hidden" name="entry" value="<%= @entry.id %>">
-    <div class="row fileupload-buttonbar">
-        <div class="col-md-7">
-            <!-- The fileinput-button span is used to style the file input field as button -->
-            <span class="btn btn-success btn-sm fileinput-button">
-                <i class="glyphicon glyphicon-plus"></i>
-                <span>Add Images</span>
-                <input type="file" name="files[]" multiple>
-            </span>
-            <button type="submit" class="btn btn-primary btn-sm start">
-                <i class="glyphicon glyphicon-upload"></i>
-                <span>Start Upload</span>
-            </button>
-            <button type="reset" class="btn btn-warning btn-sm cancel">
-                <i class="glyphicon glyphicon-ban-circle"></i>
-                <span>Cancel Upload</span>
-            </button>
-            <button type="button" class="btn btn-danger btn-sm delete">
-                <i class="glyphicon glyphicon-trash"></i>
-                <span>Delete</span>
-            </button>
-            <input type="checkbox" class="toggle">
-            <!-- The global file processing state -->
-            <span class="fileupload-process"></span>
+        <p><strong>Please ensure that the URL is valid, or your entry cannot be judged properly.</strong></p>
+        
+        <div class="form-group">
+            <label for="entry-url">Entry URL</label>
+            <input type="text" id="entry-url" placeholder="Entry URL, i.e. http://vimeo.com/71135385" class="form-control" value="<%= @entry.url %>">
         </div>
-        <!-- The global progress state -->
-        <div class="col-md-5 fileupload-progress fade">
-            <!-- The global progress bar -->
-            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar progress-bar-success" style="width:0%;"></div>
-            </div>
-            <!-- The extended global progress state -->
-            <small class="progress-extended">&nbsp;</small>
-        </div>
-    </div>
-    <!-- The table listing the files available for upload/download -->
-    <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
-</form><br>
-<button type="button" class="btn btn-danger pull-left" id="entry-delete-button"><i class="glyphicon glyphicon-remove"></i> Delete Entry</button>
-<div class="clearfix"></div><br>
-<script id="template-upload" type="text/x-tmpl">
-{% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-upload fade">
-        <td>
-            <span class="preview"></span>
-        </td>
-        <td>
-            <p class="name">{%=file.name%}</p>
-            <strong class="error text-danger"></strong>
-        </td>
-        <td>
-            <p class="size">Processing...</p>
-            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
-        </td>
-        <td>
-            {% if (!i && !o.options.autoUpload) { %}
-                <button class="btn btn-primary btn-sm start" disabled>
-                    <i class="glyphicon glyphicon-upload"></i>
-                    <span>Start</span>
-                </button>
-            {% } %}
-            {% if (!i) { %}
-                <button class="btn btn-warning btn-sm cancel">
-                    <i class="glyphicon glyphicon-ban-circle"></i>
-                    <span>Cancel</span>
-                </button>
-            {% } %}
-        </td>
-    </tr>
-{% } %}
-</script>
-<!-- The template to display files available for download -->
-<script id="template-download" type="text/x-tmpl">
-{% for (var i=0, file; file=o.files[i]; i++) { %}
-    <tr class="template-download fade">
-        <td>
-            <span class="preview">
-                {% if (file.thumbnailUrl) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
-                {% } %}
-            </span>
-        </td>
-        <td>
-            <p class="name">
-                {% if (file.url) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
-                {% } else { %}
-                    <span>{%=file.name%}</span>
-                {% } %}
-            </p>
-            {% if (file.error) { %}
-                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
-            {% } %}
-        </td>
-        <td>
-            <span class="size">{%=o.formatFileSize(file.size)%}</span>
-        </td>
-        <td>
-            {% if (file.deleteUrl) { %}
-                <button class="btn btn-danger btn-sm delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-                    <i class="glyphicon glyphicon-trash"></i>
-                    <span>Delete</span>
-                </button>
-                <input type="checkbox" name="delete" value="1" class="toggle">
-            {% } else { %}
-                <button class="btn btn-warning btn-sm cancel">
-                    <i class="glyphicon glyphicon-ban-circle"></i>
-                    <span>Cancel</span>
-                </button>
-            {% } %}
-        </td>
-    </tr>
-{% } %}
-</script>
-<%= javascript_include_tag 'jquery-fileupload' %>
-<script>
-$(function() {
-    $('#fileupload').fileupload({
-        url: '/images/upload?unique_hash=<%= @entry.unique_hash %>',
-        maxNumberOfFiles: <%= @entry.category.category_type.maximum_files %>
-    });
-
-    // Load existing files:
-    $('#fileupload').addClass('fileupload-processing');
-    $.ajax({
-        // Uncomment the following to send cross-domain cookies:
-        //xhrFields: {withCredentials: true},
-        url: $('#fileupload').fileupload('option', 'url'),
-        dataType: 'json',
-        context: $('#fileupload')[0]
-    }).always(function () {
-        $(this).removeClass('fileupload-processing');
-    }).done(function (result) {
-        $(this).fileupload('option', 'done')
-            .call(this, $.Event('done'), {result: result});
-    });
-});
-</script>
-
-<% elsif @entry.category.category_type.has_url %>
-
-    <p>The <strong><%= @entry.category %></strong> category requires a URL to your media. Use the following input box to paste your URL, and save.</p>
-
-    <p><strong>Please ensure that the URL is valid, or your entry cannot be judged properly.</strong></p>
-    
-    <div class="form-group">
-        <label for="entry-url">Entry URL</label>
-        <input type="text" id="entry-url" placeholder="Entry URL, i.e. http://vimeo.com/71135385" class="form-control" value="<%= @entry.url %>">
-    </div>
-    
-    <button type="button" class="btn btn-danger pull-left" id="entry-delete-button"><i class="glyphicon glyphicon-remove"></i> Delete Entry</button>
-    
-    <button type="button" class="btn btn-primary pull-right" id="entry-save-button"><i class="glyphicon glyphicon-save"></i> Save Entry</button>
-    
-    <div class="clearfix"></div>
-<% end %>
+        
+        <button type="button" class="btn btn-danger pull-left" id="entry-delete-button"><i class="glyphicon glyphicon-remove"></i> Delete Entry</button>
+        
+        <button type="button" class="btn btn-primary pull-right" id="entry-save-button"><i class="glyphicon glyphicon-save"></i> Save Entry</button>
+        
+        <div class="clearfix"></div>
+    <% end %>
 </div>
 </div>
 </div>

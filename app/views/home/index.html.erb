@@ -11,11 +11,17 @@
   <% else %>
     <% if current_user.entries.length > 0 %>
       <p>You have submitted the following entries:</p>
-      <ul>
         <% current_user.entries.each do |entry| %>
-          <li id="entry-<%= entry.unique_hash %>"><%= link_to "#{entry.category}", "/entries/#{entry.unique_hash}" %></li>
+          <p id="entry-<%= entry.unique_hash %>" class="entry">
+          <%= link_to "#{entry.category}", "/entries/#{entry.unique_hash}" %><br>
+          <% if entry.category.category_type.maximum_files > 0 %>
+            <small>
+              <%= entry.images.length %> <%= 'image'.pluralize(entry.images.length) %> have been uploaded for this category.
+              <% if entry.images.length <= entry.category.category_type.minimum_files %> Please upload your images now.<% end %>
+            </small>
+          <% end %>
+          </p>
         <% end %>
-      </ul>
     <% else %>
       <p>You have not yet submitted any entries. Begin by <%= link_to 'submitting an entry', new_entry_path %>.</p>
     <% end %>

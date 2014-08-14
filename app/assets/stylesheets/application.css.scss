@@ -11,8 +11,8 @@
  * file per style scope.
  *
  *= require font-awesome
- *= require_tree ./app/
  *= require_self
+ *= require_tree ./app/
  */
 
 @import "bootstrap-sprockets";
@@ -25,15 +25,7 @@ h1.heading {
 }
 
 h2, h3, h4 {
-  margin-bottom: 20px;
-}
-
-p {
-  margin-bottom: 15px;
-}
-
-.jumbotron {
-  background-color: white;
+  margin-top: 25px;
 }
 
 .spin {
