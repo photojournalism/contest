@@ -29,6 +29,9 @@ picture_story.file_types << jpeg
 
 multimedia = CategoryType.create(:name => 'Multimedia', :description => 'This category is for multimedia, and requires a URL to your video entry, preferably to Vimeo.', :minimum_files => 0, :maximum_files => 0, :has_url => true, :active => true)
 
+portfolio = CategoryType.create(:name => 'Portfolio', :description => 'This category is for a portfolio of images.<ul><li>The entry must contain an entry from one multiple picture category (News Picture Story, Feature Picture Story, Sports Picture Story) and from one news category (Spot News, General News, News Picture Story).</li><li>The portfolio may contain no more than 40 images total, and no more than 10 entries.</li><li>A picture story counts (12 images max per story) as one entry.</li><li>Only students who have not yet graduated are eligible for the Student category.</li><li>Students may enter either the <strong>Best Portfolio</strong> or the <strong>Rich Mahan Student Portfolio</strong> competition, but not both.</li></ul>', :minimum_files => 1, :maximum_files => 40, :has_url => false, :active => true)
+portfolio.file_types << jpeg
+
 puts "Creating places..."
 Place.create(:name => "First Place", order: 1)
 Place.create(:name => "Second Place", order: 2)
@@ -80,6 +83,12 @@ category = Category.create(:name => "Multimedia Slideshow", :description => "A s
 contest.categories << category
 
 category = Category.create(:name => "Multimedia Interactive Presentation", :description => "A multi-layered presentation that may consist of still photos, graphics, animation, audio or video that incorporates hyperlinks to delineate chapters or sections.", :active => true, :category_type => multimedia)
+contest.categories << category
+
+category = Category.create(:name => "Best Portfolio", :description => "A portfolio of images.", :active => true, :category_type => portfolio)
+contest.categories << category
+
+category = Category.create(:name => "Rich Mahan Best Student Portfolio", :description => "A portfolio of images from a student.", :active => true, :category_type => portfolio)
 contest.categories << category
 
 puts "Creating countries..."

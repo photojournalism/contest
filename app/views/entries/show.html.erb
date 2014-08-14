@@ -9,7 +9,8 @@
         <label>Entrant</label>: <%= @entry.user.full_name %><br>
         <label>Date Entered</label>: <%= @entry.formatted_created_at %><br>
         <label>Category Description</label><br>
-        <em><%= @entry.category.description %></em>
+        <em><%= @entry.category.description %></em><br><br>
+        <em><%= @entry.category.category_type.description.html_safe %></em>
     </p>
 <% if @entry.category.category_type.minimum_files > 0 %>
 <%= stylesheet_link_tag 'jquery-fileupload' %>
