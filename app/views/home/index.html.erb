@@ -17,7 +17,7 @@
           <% if entry.category.category_type.maximum_files > 0 %>
             <small>
               <%= entry.images.length %> <%= 'image'.pluralize(entry.images.length) %> have been uploaded for this category.
-              <% if entry.images.length <= entry.category.category_type.minimum_files %> Please upload your images now.<% end %>
+              <% if entry.images.length < entry.category.category_type.minimum_files %> Please upload your images now.<% end %>
             </small>
           <% end %>
           </p>
