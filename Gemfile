@@ -48,6 +48,7 @@ gem 'devise'
 # Biggs for address formatting
 gem 'biggs'
 gem 'rmagick'
+gem 'exifr'
 
 group :development, :test do
   gem 'rspec-rails'
