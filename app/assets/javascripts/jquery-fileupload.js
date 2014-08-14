@@ -1,3 +1,5 @@
+//= require blueimp/load-image.min.js
+//= require blueimp/tmpl.min.js
 //= require jquery-fileupload/jquery.ui.widget.js
 //= require jquery-fileupload/jquery.iframe-transport.js
 //= require jquery-fileupload/jquery.fileupload.js
