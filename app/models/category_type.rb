@@ -1,3 +1,5 @@
+require 'humanize'
+
 class CategoryType < ActiveRecord::Base
   validates_presence_of :name, :description, :minimum_files, :maximum_files
   validates :active,  :inclusion => {:in => [true, false]}
@@ -12,4 +14,12 @@ class CategoryType < ActiveRecord::Base
 
   has_and_belongs_to_many :categories
   has_and_belongs_to_many :file_types
+
+  def readable_max_files
+    maximum_files.humanize
+  end
+
+  def readable_min_files
+    minimum_files.humanize
+  end
 end
