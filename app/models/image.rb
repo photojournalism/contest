@@ -115,7 +115,7 @@ class Image < ActiveRecord::Base
     end
 
     if !entry.category.category_type.file_types.include? file_type
-      errors.add(:filename, "Unsupported filetype for the #{entry.category} category.")
+      errors.add(:filename, "Unsupported filetype. The #{entry.category} category requires one of the following: #{entry.category.file_types}")
       return
     end
   end

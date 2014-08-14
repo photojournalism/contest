@@ -13,7 +13,7 @@ class Category < ActiveRecord::Base
   end
 
   def slug
-    name.downcase.gsub(' ', '-')
+    name.downcase.gsub(' ', '-').gsub('/', '-')
   end
 
   def to_s

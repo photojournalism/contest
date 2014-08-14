@@ -50,7 +50,7 @@ class EntriesController < ApplicationController
       return
     end
 
-    if @entry.user != current_user
+    if @entry.user != current_user && !current_user.admin
       flash[:alert] = "An error has occurred processing your request. Please try again."
       redirect_to(:action => 'new')
     end

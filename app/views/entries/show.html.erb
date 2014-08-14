@@ -1,56 +1,78 @@
-<% title 'Entry Images' %>
+<% title 'Entry' %>
 
-<%= stylesheet_link_tag 'jquery-fileupload' %>
 <div class="container">
-    <div class="row">
-    <div class="col-md-10 col-md-offset-1">
-    <h1>Upload Images</h1>
-    <br>
-    <!-- The file upload form used as target for the file upload widget -->
-    <form id="fileupload" method="POST" enctype="multipart/form-data">
-        <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-        <input type="hidden" name="entry" value="<%= @entry.id %>">
-        <div class="row fileupload-buttonbar">
-            <div class="col-md-7">
-                <!-- The fileinput-button span is used to style the file input field as button -->
-                <span class="btn btn-success fileinput-button">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    <span>Add Images</span>
-                    <input type="file" name="files[]" multiple>
-                </span>
-                <button type="submit" class="btn btn-primary start">
-                    <i class="glyphicon glyphicon-upload"></i>
-                    <span>Start Upload</span>
-                </button>
-                <button type="reset" class="btn btn-warning cancel">
-                    <i class="glyphicon glyphicon-ban-circle"></i>
-                    <span>Cancel Upload</span>
-                </button>
-                <button type="button" class="btn btn-danger delete">
-                    <i class="glyphicon glyphicon-trash"></i>
-                    <span>Delete</span>
-                </button>
-                <input type="checkbox" class="toggle">
-                <!-- The global file processing state -->
-                <span class="fileupload-process"></span>
-            </div>
-            <!-- The global progress state -->
-            <div class="col-md-5 fileupload-progress fade">
-                <!-- The global progress bar -->
-                <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                    <div class="progress-bar progress-bar-success" style="width:0%;"></div>
-                </div>
-                <!-- The extended global progress state -->
-                <small class="progress-extended">&nbsp;</small>
-            </div>
+<div class="row">
+<div class="col-md-8 col-md-offset-2">
+    <h1 class="heading"><%= @entry.contest.year %> <%= @entry.category %> Entry</h1>
+    <p class="entry-info">
+        <span id="entry-hash" style="display:none"><%= @entry.unique_hash %></span>
+        <label>Entrant</label>: <%= @entry.user.full_name %><br>
+        <label>Date Entered</label>: <%= @entry.formatted_created_at %><br>
+        <label>Category Description</label><br>
+        <em><%= @entry.category.description %></em>
+    </p>
+<% if @entry.category.category_type.minimum_files > 0 %>
+<%= stylesheet_link_tag 'jquery-fileupload' %>
+<h3>File Type and Number of Images</h3>
+<p>The <strong><%= @entry.category %></strong> category requires you to upload images of the following <%= 'file type'.pluralize(@entry.category.file_types.length) %>: <strong><% @entry.category.file_types.each do |c| %><%= c %><% end %></strong>.</p>
+<p>You may upload a maximum of <strong><%= @entry.category.category_type.readable_max_files %></strong> <%= 'image'.pluralize(@entry.category.category_type.maximum_files) %> for this category.</p>
+<h3>Naming Protocol</h3>
+
+<p>The only restriction for naming your images, is that they must end with an underscore, and the number of the image for the category.</p>
+<p>For categories with a single image, filenames should end with "<strong>_01</strong>". Categories with multiple images should have the images sequentially ordered, such as: <strong>filename_01.jpg</strong>, <strong>filename_02.jpg</strong>, and <strong>filename_03.jpg</strong>.</p>
+
+<h3>Captioning</h3>
+
+<p>Using <a href="http://www.camerabits.com/products/" target="_blank">Photo Mechanic</a> or <a href="http://www.adobe.com/products/photoshopfamily.html" target="_blank">Adobe Photoshop</a>'s <strong>File Info</strong> option (under the <strong>File</strong> menu), caption the photo using a concise description. In Photo Mechanic, the caption should be in the <strong>caption</strong> field. In Photoshop, the caption should be in the <strong>Description</strong> field.</p>
+
+<p>When captioning picture stories, the caption of the first photo in the picture story should be a very brief summary of the story.</p>
+
+<p><strong>Please ensure that your name does not appear in any of the IPTC fields.</strong></p>
+
+<h3>Upload Images</h3>
+<!-- The file upload form used as target for the file upload widget -->
+<form id="fileupload" method="POST" enctype="multipart/form-data">
+    <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
+    <input type="hidden" name="entry" value="<%= @entry.id %>">
+    <div class="row fileupload-buttonbar">
+        <div class="col-md-7">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+            <span class="btn btn-success btn-sm fileinput-button">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>Add Images</span>
+                <input type="file" name="files[]" multiple>
+            </span>
+            <button type="submit" class="btn btn-primary btn-sm start">
+                <i class="glyphicon glyphicon-upload"></i>
+                <span>Start Upload</span>
+            </button>
+            <button type="reset" class="btn btn-warning btn-sm cancel">
+                <i class="glyphicon glyphicon-ban-circle"></i>
+                <span>Cancel Upload</span>
+            </button>
+            <button type="button" class="btn btn-danger btn-sm delete">
+                <i class="glyphicon glyphicon-trash"></i>
+                <span>Delete</span>
+            </button>
+            <input type="checkbox" class="toggle">
+            <!-- The global file processing state -->
+            <span class="fileupload-process"></span>
         </div>
-        <!-- The table listing the files available for upload/download -->
-        <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
-    </form>
+        <!-- The global progress state -->
+        <div class="col-md-5 fileupload-progress fade">
+            <!-- The global progress bar -->
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar progress-bar-success" style="width:0%;"></div>
+            </div>
+            <!-- The extended global progress state -->
+            <small class="progress-extended">&nbsp;</small>
+        </div>
     </div>
-    </div>
-    <br>
-</div>
+    <!-- The table listing the files available for upload/download -->
+    <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+</form><br>
+<button type="button" class="btn btn-danger btn-lg pull-left" id="entry-delete-button"><i class="glyphicon glyphicon-remove"></i> Delete Entry</button>
+<div class="clearfix"></div>
 <script id="template-upload" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <tr class="template-upload fade">
@@ -125,15 +147,12 @@
     </tr>
 {% } %}
 </script>
-<!-- The Templates plugin is included to render the upload/download listings -->
-<script src="http://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
-<!-- The Load Image plugin is included for the preview images and image resizing functionality -->
-<script src="http://blueimp.github.io/JavaScript-Load-Image/js/load-image.min.js"></script>
 <%= javascript_include_tag 'jquery-fileupload' %>
 <script>
 $(function() {
     $('#fileupload').fileupload({
-        url: '/images/upload?unique_hash=<%= @entry.unique_hash %>'
+        url: '/images/upload?unique_hash=<%= @entry.unique_hash %>',
+        maxNumberOfFiles: <%= @entry.category.category_type.maximum_files %>
     });
 
     // Load existing files:
@@ -152,3 +171,16 @@ $(function() {
     });
 });
 </script>
+<% elsif @entry.category.category_type.has_url %>
+<p><em>The <strong><%= @entry.category %></strong> category requires a URL to your media. Use the following input box to paste your URL, and save.</em></p>
+<div class="form-group">
+    <label for="entry-url">Entry URL</label>
+    <input type="text" id="entry-url" placeholder="Entry URL, i.e. http://vimeo.com/71135385" class="form-control">
+</div><br>
+<button type="button" class="btn btn-danger btn-lg pull-left" id="entry-delete-button"><i class="glyphicon glyphicon-remove"></i> Delete Entry</button>
+<button type="button" class="btn btn-primary btn-lg pull-right" id="entry-save-button"><i class="glyphicon glyphicon-save"></i> Save Entry</button>
+<div class="clearfix"></div>
+<% end %>
+</div>
+</div>
+</div>

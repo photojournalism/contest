@@ -40,10 +40,8 @@ class ImagesController < ApplicationController
   def destroy
     image = Image.where(:unique_hash => params[:hash]).first
 
-    if image.entry.user == current_user
-      File.delete(image.path)
-      File.delete(image.thumbnail_path)
-      image.destroy
+    if image.entry.user == current_user || current_user.admin
+      image.delete
       render :json => { :files => Hash[image.filename, true]}
       return
     end

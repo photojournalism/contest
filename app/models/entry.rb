@@ -7,4 +7,10 @@ class Entry < ActiveRecord::Base
   belongs_to :place
   belongs_to :contest
   has_many :images
+
+  DATE_FORMAT = "%A, %b. %-d, %Y at %-I:%M%P"
+
+  def formatted_created_at
+    created_at.strftime(DATE_FORMAT)
+  end
 end
