@@ -27,7 +27,7 @@ class EntriesController < ApplicationController
     entry = Entry.new(
       :user => current_user,
       :category => category,
-      :uuid => SecureRandom.uuid,
+      :unique_hash => SecureRandom.hex,
       :order_number => entry_params[:order_number],
       :judged => false,
       :contest => Contest.current
@@ -35,14 +35,25 @@ class EntriesController < ApplicationController
 
     if entry.valid?
       entry.save
-      render :json => { :url => "/entries/#{entry.uuid}/images" }
+      render :json => { :url => "/entries/#{entry.unique_hash}" }
     else
       render :json => { :message => entry.errors }, :status => 500
     end
   end
 
-  def images
-    @entry = Entry.where(:uuid => params[:uuid]).first
+  def show
+    logger.debug "Looking up entry with hash: #{params[:hash]}"
+    @entry = Entry.where(:unique_hash => params[:hash]).first
+    if @entry.blank?
+      logger.debug "Entry wasn't found. Redirecting..."
+      redirect_to(:action => 'new')
+      return
+    end
+
+    if @entry.user != current_user
+      flash[:alert] = "An error has occurred processing your request. Please try again."
+      redirect_to(:action => 'new')
+    end
   end
 
   private

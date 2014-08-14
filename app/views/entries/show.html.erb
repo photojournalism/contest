@@ -133,7 +133,7 @@
 <script>
 $(function() {
     $('#fileupload').fileupload({
-        url: '/images/upload?uuid=<%= @entry.uuid %>'
+        url: '/images/upload?unique_hash=<%= @entry.unique_hash %>'
     });
 
     // Load existing files:

@@ -16,8 +16,8 @@ class ImagesController < ApplicationController
   end
 
   def for_entry
-    entry = Entry.where(:uuid => params[:uuid]).first
-    puts params[:uuid]
+    entry = Entry.where(:unique_hash => params[:unique_hash]).first
+    puts params[:unique_hash]
     output = { :files => [] }
     entry.images.each do |image|
       output[:files] << image.to_hash
@@ -32,7 +32,7 @@ class ImagesController < ApplicationController
     if result[:success]
       output[:files] << result[:image].to_hash
     else
-      output[:files] << { :name => result[:image].filename, :size => result[:image].size, :error => result[:error] }
+      output[:files] << { :error => result[:error] }
     end
     render :json => output
   end

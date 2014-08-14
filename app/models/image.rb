@@ -1,28 +1,57 @@
 require 'fileutils'
 require 'rmagick'
+require 'exifr'
 
 class Image < ActiveRecord::Base
-  validates_presence_of :filename, :original_filename, :size, :location, :entry, :unique_hash
+  validates_presence_of :filename, :original_filename, :size, :location, :entry, :unique_hash, :caption, :number
 
   belongs_to :entry
 
+  def self.delete_all
+    Image.all.each do |image|
+      image.delete
+    end
+  end
+
   def self.upload(image, entry)
-    upload_dir = "app/assets/images/contest/#{entry.contest.year}/#{entry.category.slug}/#{entry.uuid}"
+    image_number = File.basename(image.original_filename, ".*")[-2..-1]
+    if !(image_number =~ /\d\d/)
+      return { :success => false, :error => "Image filename must end with underscore, then two-digit number. i.e., 'filename_01.jpg'"}
+    end
+
+    upload_dir = "#{Rails.root}/public/images/contest/#{entry.contest.year.to_s}/#{entry.category.slug}/#{entry.unique_hash}"
     i = Image.new(
-      :filename => image.original_filename,
+      :filename => "#{entry.unique_hash}-#{entry.category.slug}-#{image_number}#{File.extname(image.original_filename)}",
       :original_filename => image.original_filename,
       :location => upload_dir,
       :entry => entry,
       :unique_hash => SecureRandom.hex,
-      :size => 0
+      :size => 0,
+      :number => image_number.to_i
     )
 
     i.validate!
     if i.errors.empty?
+      # Write to filesystem
       FileUtils::mkdir_p upload_dir
       f = File.open("#{i.location}/#{i.filename}",'wb')
       f.write(image.read)
-      i.size = f.size
+      f.close
+
+      # Get caption data
+      exif = EXIFR::JPEG.new(i.path)
+      i.caption = "#{exif.image_description.to_s}".force_encoding("utf-8")
+
+      if i.caption.blank?
+        i.delete
+        return { :success => false, :error => 'No caption data was found. Please ensure that the caption has been set using Photoshop or Photo Mechanic.' }
+      end
+
+      # Reduce quality
+      image = Magick::Image::read(i.path).first
+      image.write(i.path) { self.quality = 50 }
+      i.size = image.filesize
+      image.destroy!
 
       i.save
       i.create_thumbnail
@@ -38,7 +67,7 @@ class Image < ActiveRecord::Base
   end
 
   def extension
-    File.extname(filename)
+    File.extname(filename).downcase.gsub('.', '')
   end
 
   def create_thumbnail
@@ -55,7 +84,7 @@ class Image < ActiveRecord::Base
   end
   
   def public_url
-    "/assets/contest/#{entry.contest.year}/#{entry.category.slug}/#{entry.uuid}/#{filename}"
+    "/assets/contest/#{entry.contest.year}/#{entry.category.slug}/#{entry.unique_hash}/#{filename}"
   end
 
   def to_hash
@@ -69,9 +98,18 @@ class Image < ActiveRecord::Base
     }
   end
 
+  def delete
+    begin
+      File.delete(path)
+      File.delete(thumbnail_path)
+    rescue
+    end
+    destroy!
+  end
+
   def validate!
-    file_type = FileType.where('lower(extension) = ?', extension.downcase.gsub('.', '')).first
-    if !file_type
+    file_type = FileType.where('lower(extension) = ?', extension).first
+    if file_type.blank?
       errors.add(:filename, "Unsupported filetype. The #{entry.category} category requires one of the following: #{entry.category.file_types}")
       return
     end

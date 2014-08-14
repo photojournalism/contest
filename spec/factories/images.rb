@@ -5,6 +5,8 @@ FactoryGirl.define do
     size 3000
     location "/tmp"
     unique_hash SecureRandom.hex
+    caption "This is a caption"
+    number 1
 
     association :entry, :factory => :entry
   end

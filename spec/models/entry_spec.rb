@@ -33,8 +33,8 @@ RSpec.describe Entry, :type => :model do
       expect(entry).to be_valid
     end
 
-    it 'should be invalid without uuid' do
-      entry.uuid = nil
+    it 'should be invalid without unique_hash' do
+      entry.unique_hash = nil
       expect(entry).to be_invalid
     end
 

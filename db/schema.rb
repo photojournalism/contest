@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140812011533) do
+ActiveRecord::Schema.define(version: 20140814160347) do
 
   create_table "agreements", force: true do |t|
     t.integer  "user_id"
@@ -87,8 +87,8 @@ ActiveRecord::Schema.define(version: 20140812011533) do
     t.datetime "updated_at"
     t.string   "url"
     t.string   "order_number"
-    t.string   "uuid"
     t.integer  "contest_id"
+    t.string   "unique_hash"
   end
 
   add_index "entries", ["category_id"], name: "index_entries_on_category_id"
@@ -112,6 +112,8 @@ ActiveRecord::Schema.define(version: 20140812011533) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "unique_hash"
+    t.string   "caption"
+    t.integer  "number"
   end
 
   create_table "places", force: true do |t|

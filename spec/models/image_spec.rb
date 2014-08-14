@@ -37,5 +37,15 @@ RSpec.describe Image, :type => :model do
       image.entry = nil
       expect(image).to be_invalid
     end
+
+    it 'should be invalid without a caption' do
+      image.caption = nil
+      expect(image).to be_invalid
+    end
+
+    it 'should be invalid without a number' do
+      image.number = nil
+      expect(image).to be_invalid
+    end
   end
 end

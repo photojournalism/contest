@@ -14,10 +14,11 @@ Rails.application.routes.draw do
     resources :places
   end
   resources :agreements
-  resources :entries
 
   get 'states/select/:country_id' => 'states#get_select_for_country'
-  get 'entries/:uuid/images' => 'entries#images'
+  get 'entries/new' => 'entries#new', :as => :new_entry
+  post 'entries' => 'entries#create'
+  get 'entries/:hash' => 'entries#show'
   post 'images/upload' => 'images#upload'
   get 'images/upload' => 'images#for_entry'
   get 'images/download/:hash' => 'images#download'

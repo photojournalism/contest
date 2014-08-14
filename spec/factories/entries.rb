@@ -3,7 +3,7 @@ FactoryGirl.define do
     judged false
     url 'https://google.com'
     order_number '12345'
-    uuid SecureRandom.uuid
+    unique_hash SecureRandom.hex
 
     association :category, :factory => :category
     association :user, :factory => :user
