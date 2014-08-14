@@ -49,6 +49,7 @@ gem 'devise'
 gem 'biggs'
 gem 'rmagick'
 gem 'exifr'
+gem 'humanize'
 
 group :development, :test do
   gem 'rspec-rails'
