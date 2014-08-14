@@ -19,7 +19,7 @@ class Image < ActiveRecord::Base
       return { :success => false, :error => "Image filename must end with underscore, then two-digit number. i.e., 'filename_01.jpg'"}
     end
 
-    upload_dir = "#{Rails.root}/public/images/contest/#{entry.contest.year.to_s}/#{entry.category.slug}/#{entry.unique_hash}"
+    upload_dir = entry.images_location
     i = Image.new(
       :filename => "#{entry.unique_hash}-#{entry.category.slug}-#{image_number}#{File.extname(image.original_filename)}",
       :original_filename => image.original_filename,
@@ -84,7 +84,7 @@ class Image < ActiveRecord::Base
   end
   
   def public_url
-    "/assets/contest/#{entry.contest.year}/#{entry.category.slug}/#{entry.unique_hash}/#{filename}"
+    "/images/contest/#{entry.contest.year}/#{entry.category.slug}/#{entry.unique_hash}/#{filename}"
   end
 
   def to_hash

@@ -6,13 +6,13 @@
     <%= render :partial => 'shared/messages' %>
 
     <% if @contest.is_open? %>
-      <p><em>The following form is used to create a new entry for the <strong><%= @contest %></strong>. You may use this form as many times as you'd like to enter multiple categories.</em></p><br>
+      <p><em>The following form is used to create a new entry for the <strong><%= @contest %></strong>. You may use this form as many times as you'd like to enter multiple categories.</em></p>
 
       <h4>Order Number</h4>
       <p>Use the box below to enter your order number for your payment on <a href="http://photojournalism.eventbrite.com" target="_blank">EventBrite</a>. If someone paid on your behalf, please enter the name of the person or company that paid on your behalf.</p>
 
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Order Number, e.g., 123456789 or Associated Press" id="entry-order-number"><br>
+        <input type="text" class="form-control" placeholder="Order Number, e.g., 123456789 or Associated Press" id="entry-order-number">
       </div>
 
       <h4>Category</h4>
@@ -36,7 +36,6 @@
         <span id="category-description-description"><%= @categories.first.description %></span><br><br>
         <em><span id="category-type-description"><%= @categories.first.category_type.description %></span></em>
       </p>
-      <br>
       <button type="button" class="btn btn-primary btn-lg pull-right" id="entry-continue-button">Continue&nbsp;&nbsp;<i class="glyphicon glyphicon-arrow-right"></i></button>
       <div class="clearfix"></div><br>
     <% end %>

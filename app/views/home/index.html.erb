@@ -1,1 +1,26 @@
 <%= render partial: 'shared/messages' %>
+
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+  <div class="jumbotron">
+  <img src="http://www.photojournalism.org/images/logos/atlpj_logo_circle_text-dc279d57.png" alt="Atlanta Photojournalism Seminar Logo" style="max-width: 90%"><br><br>
+  <h3>Welcome to the Atlanta Photojournalism Seminar Contest application.</h3>
+  <% if !current_user %>
+  <p>To enter the contest, begin by <%= link_to 'logging in', new_user_session_path %> or <%= link_to 'registering', new_user_registration_path %>.</p>
+  <% else %>
+    <% if current_user.entries.length > 0 %>
+      <p>You have submitted the following entries:</p>
+      <ul>
+        <% current_user.entries.each do |entry| %>
+          <li id="entry-<%= entry.unique_hash %>"><%= link_to "#{entry.category}", "/entries/#{entry.unique_hash}" %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>You have not yet submitted any entries. Begin by <%= link_to 'submitting an entry', new_entry_path %>.</p>
+    <% end %>
+  <% end %>
+  </div>
+</div>
+</div>
+</div>
