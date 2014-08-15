@@ -1,9 +1,7 @@
 class ImagesController < ApplicationController
 
+  before_action :authenticate_user!
   protect_from_forgery except: :upload
-  
-  def index
-  end
 
   def download
     image = Image.where(:unique_hash => params[:hash]).first
@@ -16,13 +14,16 @@ class ImagesController < ApplicationController
   end
 
   def for_entry
-    entry = Entry.where(:unique_hash => params[:unique_hash]).first
-    puts params[:unique_hash]
-    output = { :files => [] }
-    entry.images.each do |image|
-      output[:files] << image.to_hash
+    entry = Entry.where(:unique_hash => params[:hash]).first
+    if entry.user == current_user || current_user.admin
+      output = { :files => [] }
+      entry.images.each do |image|
+        output[:files] << image.to_hash
+      end
+      render :json => output
+      return
     end
-    render :json => output
+    render :nothing => true, :status => 404
   end
 
   def upload
@@ -45,5 +46,6 @@ class ImagesController < ApplicationController
       render :json => { :files => Hash[image.filename, true]}
       return
     end
+    render :nothing => true, :status => 404
   end
 end

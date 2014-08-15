@@ -44,4 +44,22 @@ RSpec.describe CategoryType, :type => :model do
       expect(category_type).to be_invalid
     end
   end
+
+  describe 'methods' do
+    let(:category_type) { FactoryGirl.create(:category_type) }
+
+    describe 'readable_max_files' do
+      it 'should display a human readable word for max files' do
+        category_type.maximum_files = 3
+        expect(category_type.readable_max_files).to eq("three")
+      end
+    end
+
+    describe 'readable_min_files' do
+      it 'should display a human readable word for min files' do
+        category_type.minimum_files = 13
+        expect(category_type.readable_min_files).to eq("thirteen")
+      end
+    end
+  end
 end

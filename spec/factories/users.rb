@@ -14,6 +14,7 @@ FactoryGirl.define do
     f.school "School"
     f.password "password"
     f.password_confirmation "password"
+    f.admin false
 
     association :state, :factory => :state
   end

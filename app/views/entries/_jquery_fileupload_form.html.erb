@@ -140,7 +140,7 @@
 <script>
 $(function() {
     $('#fileupload').fileupload({
-        url: '/images/upload?unique_hash=<%= @entry.unique_hash %>',
+        url: '/images/upload?hash=<%= @entry.unique_hash %>',
         maxNumberOfFiles: <%= @entry.category.category_type.maximum_files %>
     });
 

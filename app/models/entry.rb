@@ -23,6 +23,10 @@ class Entry < ActiveRecord::Base
   end
 
   def delete
+    images.each do |image|
+      image.delete
+    end
+    
     FileUtils.rm_rf(images_location)
     destroy!
   end

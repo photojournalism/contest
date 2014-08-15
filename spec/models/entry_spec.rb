@@ -48,4 +48,60 @@ RSpec.describe Entry, :type => :model do
       expect(entry).to be_valid
     end
   end
+
+  describe 'methods' do
+    describe 'delete' do
+
+      it 'should delete entry' do
+        entry = FactoryGirl.create(:entry)
+
+        expect {
+          entry.delete
+        }.to change(Entry, :count).by(-1)
+      end
+
+      it 'should delete images' do
+        entry = FactoryGirl.create(:entry)
+        FactoryGirl.create(:image, :entry => entry)
+
+        expect {
+          entry.delete
+        }.to change(Image, :count).by(-1)
+      end
+    end
+
+    describe 'delete_all' do
+
+      it 'should delete all entries' do
+        entry1 = FactoryGirl.create(:entry)
+        entry2 = FactoryGirl.create(:entry)
+        entry3 = FactoryGirl.create(:entry)
+
+        expect {
+          Entry.delete_all
+        }.to change(Entry, :count).by(-3)
+      end
+
+      it 'should delete all images' do
+        entry1 = FactoryGirl.create(:entry)
+        FactoryGirl.create(:image, :entry => entry1)
+        FactoryGirl.create(:image, :entry => entry1)
+
+        entry2 = FactoryGirl.create(:entry)
+        FactoryGirl.create(:image, :entry => entry2)
+        FactoryGirl.create(:image, :entry => entry2)
+
+        expect {
+          Entry.delete_all
+        }.to change(Image, :count).by(-4)
+      end
+    end
+
+    describe 'formatted_created_at' do
+      it 'should display formatted date' do
+        entry = FactoryGirl.create(:entry)
+        expect(entry.formatted_created_at).to eq(entry.created_at.strftime("%A, %b. %-d, %Y at %-I:%M%P %Z"))
+      end
+    end
+  end
 end

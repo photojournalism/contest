@@ -5,11 +5,7 @@ class Category < ActiveRecord::Base
   has_and_belongs_to_many :contests
 
   def file_types
-    output = []
-    category_type.file_types.each_with_index do |ft, i|
-      output << ft.extension
-    end
-    output
+    category_type.file_types
   end
 
   def slug

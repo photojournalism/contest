@@ -51,5 +51,15 @@ RSpec.describe Category, :type => :model do
         expect(category.slug).to eq(category.name.downcase.gsub(' ', '-'))
       end
     end
+
+    describe 'file_types' do
+      it 'should return an array of file types' do
+        ft1 = FactoryGirl.create(:file_type)
+        ft2 = FactoryGirl.create(:file_type)
+        ft3 = FactoryGirl.create(:file_type)
+        category.category_type.file_types = [ft1, ft2, ft3]
+        expect(category.file_types).to eq(category.category_type.file_types)
+      end
+    end
   end
 end
