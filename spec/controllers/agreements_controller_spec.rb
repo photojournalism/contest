@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AgreementsController, :type => :controller do
   before(:all) { FactoryGirl.create(:contest) }
-  after(:all) { contest.destroy! }
+  after(:all) { Contest.current.destroy! }
   
   let(:user) { FactoryGirl.create(:user) }
 
