@@ -13,6 +13,10 @@ require 'coveralls'
 Coveralls.wear!
 
 require 'simplecov'
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+  Coveralls::SimpleCov::Formatter,
+  SimpleCov::Formatter::HTMLFormatter
+]
 SimpleCov.start
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
