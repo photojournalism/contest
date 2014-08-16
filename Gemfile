@@ -50,6 +50,7 @@ gem 'biggs'
 gem 'rmagick', :require => 'RMagick'
 gem 'exifr'
 gem 'humanize'
+gem 'coveralls', :require => false
 
 group :development do
   gem 'better_errors'

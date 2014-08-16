@@ -2,10 +2,16 @@
 ENV["RAILS_ENV"] ||= 'test'
 require 'spec_helper'
 require 'factory_girl_rails'
-
 require File.expand_path("../../config/environment", __FILE__)
+
+# Testing
 require 'rspec/rails'
 require 'capybara/rspec'
+
+# Coverage
+require 'coveralls'
+Coveralls.wear!
+
 require 'simplecov'
 SimpleCov.start
 
