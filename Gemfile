@@ -47,7 +47,7 @@ gem 'spring',        group: :development
 gem 'devise'
 # Biggs for address formatting
 gem 'biggs'
-gem 'rmagick'
+gem 'rmagick', :require => 'RMagick'
 gem 'exifr'
 gem 'humanize'
 
