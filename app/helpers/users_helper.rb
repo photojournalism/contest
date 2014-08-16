@@ -1,5 +1,3 @@
-require 'digest'
-
 module UsersHelper
   
   def gravatar_id_for(user)

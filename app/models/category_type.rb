@@ -1,5 +1,3 @@
-require 'humanize'
-
 class CategoryType < ActiveRecord::Base
   validates_presence_of :name, :description, :minimum_files, :maximum_files
   validates :active,  :inclusion => {:in => [true, false]}

@@ -1,7 +1,3 @@
-require 'fileutils'
-require 'rmagick'
-require 'exifr'
-
 class Image < ActiveRecord::Base
   validates_presence_of :filename, :original_filename, :size, :location, :entry, :unique_hash, :caption, :number
 
