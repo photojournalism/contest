@@ -1,7 +1,3 @@
-# Place all the behaviors and hooks related to the matching controller here.
-# All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
-
 Entries = do($ = jQuery) ->
   
   obj = {}
@@ -24,14 +20,9 @@ Entries = do($ = jQuery) ->
       typeDescription = selected.attr("data-category-type-description")
       _updateCategoryDescription(name, description, typeDescription)
 
-    $("#entry-continue-button").click ->
-      obj.create()
-
-    $("#entry-delete-button").click ->
-      obj.delete()
-
-    $("#entry-save-button").click ->
-      obj.update()
+    $("#entry-continue-button").click -> obj.create()
+    $("#entry-delete-button").click -> obj.delete()
+    $("#entry-save-button").click -> obj.update()
       
   
   obj.create = ->
@@ -60,30 +51,28 @@ Entries = do($ = jQuery) ->
     hash = $("#entry-hash").html()
     if (confirm('Are you sure you want to delete this entry?'))
       initLoadingButton("#entry-delete-button")
-      $.ajax({
-        url: "/entries/#{hash}",
-        type: 'delete',
+      $.ajax "/entries/#{hash}",
+        type: 'delete'
         success: (data) ->
           window.location.href = '/'
         error: (data) ->
           alert(data.responseJSON.message)
-      }).done( ->
+      .done( ->
         endLoadingButton("#entry-delete-button", '<i class="glyphicon glyphicon-remove"></i> Delete Entry')
       )
 
   obj.update = ->
     hash = $("#entry-hash").html()
-    url = $("#entry-url")
+    url  = $("#entry-url")
     if ($.trim(url.val()) != '')
       initLoadingButton("#entry-save-button")
-      $.ajax({
-        url: "/entries/#{hash}",
-        type: 'put',
-        data: { url: url.val() },
+      $.ajax "/entries/#{hash}",
+        type: 'put'
+        data: { url: url.val() }
         error: (data) ->
           alert(data.responseJSON.message)
-      }).done( ->
-        endLoadingButton("#entry-save-button", '<i class="glyphicon glyphicon-save"></i> Save')
+      .done( ->
+        endLoadingButton("#entry-save-button", '<i class="glyphicon glyphicon-save"></i> Save Entry')
       )
     else
       url.parent().addClass('has-error')

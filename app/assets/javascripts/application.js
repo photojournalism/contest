@@ -13,16 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap-sprockets
-//= require_tree ./app/
-
-function initLoadingButton(selector) {
-  var button = $(selector);
-  button.empty().append('<i class="glyphicon glyphicon-refresh spin"></i>');
-  button.attr('disabled', 'disabled');
-}
-
-function endLoadingButton(selector, text) {
-  var button = $(selector);
-  button.empty().append(text);
-  button.removeAttr('disabled');
-}
+//= require main
+//= require_tree ./app
