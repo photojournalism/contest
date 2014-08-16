@@ -51,6 +51,11 @@ gem 'rmagick'
 gem 'exifr'
 gem 'humanize'
 
+group :development do
+  gem 'better_errors'
+  gem 'quiet_assets'
+end
+
 group :development, :test do
   gem 'rspec-rails'
   gem 'factory_girl_rails'
