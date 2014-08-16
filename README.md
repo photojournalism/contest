@@ -1,5 +1,7 @@
 # Atlanta PJ Seminar Contest
 
+[![Build Status](https://travis-ci.org/photojournalism/contest.svg?branch=master)](https://travis-ci.org/photojournalism/contest)  [![Coverage Status](https://img.shields.io/coveralls/photojournalism/contest.svg)](https://coveralls.io/r/photojournalism/contest?branch=master) [![Code Climate](https://codeclimate.com/github/photojournalism/contest/badges/gpa.svg)](https://codeclimate.com/github/photojournalism/contest) 
+
 This repository contains the Rails application used to register and enter the Atlanta Photojournalism Seminar's yearly international photo contest. It is currently a work in progress.
 
 ## System Dependencies
