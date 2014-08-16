@@ -9,6 +9,10 @@ class Image < ActiveRecord::Base
     end
   end
 
+  def self.find_by_unique_hash(unique_hash)
+    Image.where(:unique_hash => unique_hash).first
+  end
+
   def self.upload(image, entry)
     image_number = File.basename(image.original_filename, ".*")[-2..-1]
     if !(image_number =~ /\d\d/)
@@ -29,10 +33,7 @@ class Image < ActiveRecord::Base
     i.validate!
     if i.errors.empty?
       # Write to filesystem
-      FileUtils::mkdir_p upload_dir
-      f = File.open("#{i.location}/#{i.filename}",'wb')
-      f.write(image.read)
-      f.close
+      Image.write_to_filesystem(i.location, i.filename, image)
 
       # Get caption data
       exif = EXIFR::JPEG.new(i.path)
@@ -43,12 +44,8 @@ class Image < ActiveRecord::Base
         return { :success => false, :error => 'No caption data was found. Please ensure that the caption has been set using Photoshop or Photo Mechanic.' }
       end
 
-      # Reduce quality
-      image = Magick::Image::read(i.path).first
-      image.write(i.path) { self.quality = 50 }
-      i.size = image.filesize
-      image.destroy!
-
+      # Reduce quality to 50%
+      i.reduce_quality(50)
       i.save
       i.create_thumbnail
       return { :success => true, :image => i }
@@ -62,15 +59,6 @@ class Image < ActiveRecord::Base
 
   def extension
     File.extname(filename).downcase.gsub('.', '')
-  end
-
-  def create_thumbnail
-    FileUtils::mkdir_p "#{location}/thumbnails"
-    image = Magick::Image.read(path).first
-    image.change_geometry!('80x80') do |cols, rows, img|
-      img.resize!(cols,rows)
-    end
-    image.write("#{location}/thumbnails/#{filename}") { self.quality = 50 }
   end
 
   def thumbnail_path
@@ -103,14 +91,34 @@ class Image < ActiveRecord::Base
 
   def validate!
     file_type = FileType.where('lower(extension) = ?', extension).first
-    if file_type.blank?
-      errors.add(:filename, "Unsupported filetype. The #{entry.category} category requires one of the following: #{entry.category.file_types}")
-      return
-    end
-
-    if !entry.category.category_type.file_types.include? file_type
+    if file_type.blank? || !entry.category.category_type.file_types.include?(file_type)
       errors.add(:filename, "Unsupported filetype. The #{entry.category} category requires one of the following: #{entry.category.file_types}")
       return
     end
   end
+
+  def create_thumbnail
+    FileUtils::mkdir_p "#{location}/thumbnails"
+    image = Magick::Image.read(path).first
+    image.change_geometry!('80x80') do |cols, rows, img|
+      img.resize!(cols,rows)
+    end
+    image.write("#{location}/thumbnails/#{filename}") { self.quality = 50 }
+  end
+
+  def reduce_quality(quality)
+    image = Magick::Image::read(path).first
+    image.write(path) { quality = quality }
+    size = image.filesize
+    image.destroy!
+  end
+
+  private
+
+    def self.write_to_filesystem(location, filename, image)
+      FileUtils::mkdir_p location
+      f = File.open("#{location}/#{filename}", 'wb')
+      f.write(image.read)
+      f.close
+    end
 end

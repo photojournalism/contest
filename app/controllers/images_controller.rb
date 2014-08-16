@@ -4,13 +4,13 @@ class ImagesController < ApplicationController
   protect_from_forgery except: :upload
 
   def download
-    image = Image.where(:unique_hash => params[:hash]).first
-    send_data open(image.path, "rb") { |f| f.read }
+    image = Image.find_by_unique_hash(params[:hash])
+    download_image(image.path)
   end
 
   def thumbnail
-    image = Image.where(:unique_hash => params[:hash]).first
-    send_data open(image.thumbnail_path, "rb") { |f| f.read }
+    image = Image.find_by_unique_hash(params[:hash])
+    download_image(image.thumbnail_path)
   end
 
   def for_entry
@@ -39,7 +39,7 @@ class ImagesController < ApplicationController
   end
 
   def destroy
-    image = Image.where(:unique_hash => params[:hash]).first
+    image = Image.find_by_unique_hash(params[:hash])
 
     if image.entry.user == current_user || current_user.admin
       image.delete
@@ -48,4 +48,10 @@ class ImagesController < ApplicationController
     end
     render :nothing => true, :status => 404
   end
+
+  private
+  
+    def download_image(path)
+      send_data open(path, "rb") { |f| f.read }
+    end
 end

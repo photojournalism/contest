@@ -8,7 +8,9 @@ class EntriesController < ApplicationController
     if !@contest.has_started?
       flash.now[:notice] = t('contest.not_open', :contest => @contest, :open_date => @contest.formatted_open_date).html_safe
       return
-    elsif @contest.has_ended?
+    end
+
+    if @contest.has_ended?
       flash.now[:notice] = t('contest.ended', :contest => @contest).html_safe
       return
     end
@@ -42,10 +44,9 @@ class EntriesController < ApplicationController
   end
 
   def show
-    logger.debug "Looking up entry with hash: #{params[:hash]}"
     @entry = Entry.where(:unique_hash => params[:hash]).first
+    
     if @entry.blank?
-      logger.debug "Entry wasn't found. Redirecting..."
       redirect_to(:action => 'new')
       return
     end
@@ -58,7 +59,7 @@ class EntriesController < ApplicationController
 
   def update
     @entry = Entry.where(:unique_hash => params[:hash]).first
-    if (!@entry.blank? && (@entry.user == current_user || current_user.admin) && @entry.contest.is_open?)
+    if entry_is_modifiable(@entry)
       @entry.url = params[:url]
       @entry.save
       render :json => { :message => "Successfully updated entry." }, :status => 200
@@ -69,8 +70,7 @@ class EntriesController < ApplicationController
 
   def destroy
     @entry = Entry.where(:unique_hash => params[:hash]).first
-    if (!@entry.blank? && (@entry.user = current_user || current_user.admin) && @entry.contest.is_open?)
-      logger.info "Deleting entry with hash #{params[:hash]}"
+    if entry_is_modifiable(@entry)
       @entry.delete
       render :json => { :message => "Successfully deleted entry." }, :status => 200
       return
@@ -79,8 +79,12 @@ class EntriesController < ApplicationController
   end
 
   private
+  
+    def entry_is_modifiable(entry)
+      return !entry.blank? && (entry.user == current_user || current_user.admin) && entry.contest.is_open?
+    end
 
-  def entry_params
-    params.require(:entry).permit(:category, :order_number)
-  end
+    def entry_params
+      params.require(:entry).permit(:category, :order_number)
+    end
 end
