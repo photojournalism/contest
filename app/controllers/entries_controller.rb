@@ -58,7 +58,7 @@ class EntriesController < ApplicationController
 
   def update
     @entry = Entry.where(:unique_hash => params[:hash]).first
-    if ((@entry.user = current_user || current_user.admin) && @entry.contest.is_open?)
+    if (!@entry.blank? && (@entry.user == current_user || current_user.admin) && @entry.contest.is_open?)
       @entry.url = params[:url]
       @entry.save
       render :json => { :message => "Successfully updated entry." }, :status => 200
@@ -69,7 +69,7 @@ class EntriesController < ApplicationController
 
   def destroy
     @entry = Entry.where(:unique_hash => params[:hash]).first
-    if ((@entry.user = current_user || current_user.admin) && @entry.contest.is_open?)
+    if (!@entry.blank? && (@entry.user = current_user || current_user.admin) && @entry.contest.is_open?)
       logger.info "Deleting entry with hash #{params[:hash]}"
       @entry.delete
       render :json => { :message => "Successfully deleted entry." }, :status => 200

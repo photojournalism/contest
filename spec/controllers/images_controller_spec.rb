@@ -66,6 +66,16 @@ RSpec.describe ImagesController, :type => :controller do
       post :upload, :entry => entry.id, :files => [file]
       expect(response).to redirect_to(new_user_session_path)
     end
+
+    it 'should not upload if the filetype does not exist in the category' do
+      file_type.category_types = []
+      file_type.save
+      sign_in user
+
+      file = fixture_file_upload('files/rails_caption_01.jpg')
+      post :upload, :entry => entry.id, :files => [file]
+      expect(response.body).to include('Unsupported filetype')
+    end
   end
 
   describe 'GET download' do

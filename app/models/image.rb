@@ -56,10 +56,8 @@ class Image < ActiveRecord::Base
       i.save
       i.create_thumbnail
       return { :success => true, :image => i }
-    else
-      return { :success => false, :image => i, :error => i.errors.messages[:filename] }
     end
-    return false
+    return { :success => false, :image => i, :error => i.errors.messages[:filename] }
   end
 
   def path
