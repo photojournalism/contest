@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
@@ -8,11 +9,6 @@ Rails.application.routes.draw do
   # Override default Devise registrations controller
   devise_for :users, :controllers => {:registrations => 'registrations'}
 
-  scope '/admin' do
-    resources :users
-    resources :categories
-    resources :places
-  end
   resources :agreements
 
   get 'states/select/:country_id' => 'states#get_select_for_country'

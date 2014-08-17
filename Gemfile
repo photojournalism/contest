@@ -51,6 +51,7 @@ gem 'rmagick', :require => 'RMagick'
 gem 'exifr'
 gem 'humanize'
 gem 'coveralls', :require => false
+gem 'rails_admin'
 
 group :development do
   gem 'better_errors'
