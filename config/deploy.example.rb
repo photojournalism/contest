@@ -19,7 +19,9 @@ namespace :deploy do
     end
   end
 
+  after :publishing, 'deploy:compile_assets'
   after :publishing, :restart
+  after :deploy, 'deploy:migrate'
   after :finishing, 'deploy:cleanup'
 
   after :restart, :clear_cache do
