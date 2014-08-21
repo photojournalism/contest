@@ -5,6 +5,8 @@ feature 'sign up' do
   let(:user) { FactoryGirl.build(:user) }
   let(:state)   { FactoryGirl.create(:state) }
   let(:country) { FactoryGirl.create(:country)}
+  let(:contest) { FactoryGirl.create(:contest) }
+  before(:each) { contest.save }
 
   before(:each) do
     state.save

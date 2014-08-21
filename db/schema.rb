@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140814160347) do
+ActiveRecord::Schema.define(version: 20140821180940) do
 
   create_table "agreements", force: true do |t|
     t.integer  "user_id"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20140814160347) do
 
   create_table "categories", force: true do |t|
     t.string   "name"
-    t.string   "description"
+    t.text     "description"
     t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20140814160347) do
 
   create_table "category_types", force: true do |t|
     t.string   "name"
-    t.string   "description"
+    t.text     "description"
     t.integer  "minimum_files"
     t.integer  "maximum_files"
     t.boolean  "has_url"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20140814160347) do
   end
 
   create_table "contest_rules", force: true do |t|
-    t.string   "text"
+    t.text     "text"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

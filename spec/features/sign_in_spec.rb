@@ -3,6 +3,8 @@ require 'rails_helper'
 feature 'sign in' do
 
   let(:user) { FactoryGirl.create(:user) }
+  let(:contest) { FactoryGirl.create(:contest) }
+  before(:each) { contest.save }
 
   scenario 'visit home path' do
     visit root_path
@@ -16,12 +18,12 @@ feature 'sign in' do
 
   scenario 'with invalid email or password' do
     sign_in('123', '123')
-    expect(page).to have_content('Invalid email or password')
+    expect(html).to have_content('Invalid email or password')
   end
 
   scenario 'with blank email or password' do
     sign_in('', '')
-    expect(page).to have_content('Invalid email or password')
+    expect(html).to have_content('Invalid email or password')
   end
 
   def sign_in(email, password)
