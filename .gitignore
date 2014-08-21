@@ -17,6 +17,7 @@
 
 /test
 /config/email.yml
+/config/database.yml
 
 .rspec
 .idea/
