@@ -39,4 +39,10 @@ RailsAdmin.config do |config|
     # history_index
     # history_show
   end
+
+  config.model ContestRules do
+    edit do
+      field :text, :wysihtml5
+    end
+  end
 end

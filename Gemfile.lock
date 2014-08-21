@@ -47,6 +47,8 @@ GEM
       activerecord (>= 3.0)
     bootstrap-sass (3.2.0.1)
       sass (~> 3.2)
+    bootstrap-wysihtml5-rails (0.3.1.24)
+      railties (>= 3.0)
     builder (3.2.2)
     capistrano (3.1.0)
       i18n
@@ -287,6 +289,7 @@ DEPENDENCIES
   better_errors
   biggs
   bootstrap-sass (~> 3.2.0)
+  bootstrap-wysihtml5-rails (= 0.3.1.24)
   capistrano (~> 3.1.0)
   capistrano-bundler (~> 1.1.2)
   capistrano-rails (~> 1.1.1)
