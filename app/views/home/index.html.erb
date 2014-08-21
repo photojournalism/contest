@@ -4,7 +4,7 @@
 <div class="row">
 <div class="col-md-12">
   <div class="jumbotron">
-  <img src="http://www.photojournalism.org/images/logos/atlpj_logo_circle_text-dc279d57.png" alt="Atlanta Photojournalism Seminar Logo" style="max-width: 90%"><br><br>
+  <%= image_tag 'logos/atlpj_logo_circle_text.png', :alt => 'Atlanta Photojournalism Seminar Logo', :style => 'max-width: 90%' %><br><br>
   <h3>Welcome to the Atlanta Photojournalism Seminar Contest application.</h3>
   <% if !current_user %>
   <p>To enter the contest, begin by <%= link_to 'logging in', new_user_session_path %> or <%= link_to 'registering', new_user_registration_path %>.</p>
