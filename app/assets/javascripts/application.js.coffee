@@ -13,6 +13,5 @@
 #= require jquery
 #= require jquery_ujs
 #= require bootstrap-sprockets
-#= require hierapolis
 #= require main
 #= require_tree ./app
