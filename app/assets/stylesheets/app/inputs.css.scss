@@ -1,0 +1,21 @@
+@import "../variables";
+
+.btn-primary {
+  background-color: #6A98BF;
+  border: 2px solid $gray-blue-lighter;
+}
+
+input[type=text], input[type=email], input[type=password] {
+  box-shadow: none;
+  border: 2px solid $gray-blue-lighter;
+  border-radius: 3px;
+  outline: none;
+  -webkit-transition: all 0.3s ease-in-out;
+          transition: all 0.3s ease-in-out;
+
+  &:focus {
+    border: 2px solid $gray-blue-lighter;
+    -webkit-box-shadow: 0 0 10px #999;
+            box-shadow: 0 0 10px #999;
+  }
+}

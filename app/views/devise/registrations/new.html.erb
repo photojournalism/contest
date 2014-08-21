@@ -10,7 +10,7 @@
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
-
+      <h3>Account Information</h3>
       <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -25,6 +25,27 @@
           </div>
         </div>
       </div>
+
+      <div class="form-group">
+        <%= f.label :email, 'Email Address' %>
+        <%= f.email_field :email, class: 'form-control', required: 'required', placeholder: 'Email Address' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password %>
+        <%= f.password_field :password, autocomplete: "off", class: 'form-control', required: 'required', placeholder: 'Password' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :password_confirmation, 'Password Confirmation' %>
+        <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', required: 'required', placeholder: 'Password Confirmation' %>
+      </div>
+
+      <hr>
+
+      <h3>Contact Information</h3>
+
+      <p><em>The following information is used to contact you if necessary and to mail your awards to you.</em></p>
 
       <div class="form-group">
         <%= f.label :street %>
@@ -97,25 +118,8 @@
       </div>
 
       <div class="form-group">
-        <%= f.label :email, 'Email Address' %>
-        <%= f.email_field :email, class: 'form-control', required: 'required', placeholder: 'Email Address' %>
-      </div>
-
-      <div class="form-group">
-        <%= f.label :password %>
-        <%= f.password_field :password, autocomplete: "off", class: 'form-control', required: 'required', placeholder: 'Password' %>
-      </div>
-
-      <div class="form-group">
-        <%= f.label :password_confirmation, 'Password Confirmation' %>
-        <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control', required: 'required', placeholder: 'Password Confirmation' %>
-      </div>
-
-      <div class="form-group">
         <%= f.submit yield(:title), class: 'btn btn-primary' %>
       </div>
     <% end %>
-
-    <%= render "devise/shared/links" %>
   </div>
 </div>
