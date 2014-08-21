@@ -13,8 +13,8 @@ RSpec.describe Place, :type => :model do
       expect(place).to be_invalid
     end
 
-    it 'should be invalid without an order' do
-      place.order = nil
+    it 'should be invalid without a sequence number' do
+      place.sequence_number = nil
       expect(place).to be_invalid
     end
 

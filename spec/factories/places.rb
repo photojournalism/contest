@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :place do
     name "First Place"
-    order 1
+    sequence_number 1
   end
 end
