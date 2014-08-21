@@ -18,6 +18,23 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+@font-face {
+  font-family: 'FontAwesome';
+  src: url(font-path('fontawesome-webfont.eot'));
+  src: url(font-path('fontawesome-webfont.eot')) format('embedded-opentype');
+  src: url(font-path('fontawesome-webfont.woff')) format('woff');
+  src: url(font-path('fontawesome-webfont.ttf')) format('truetype');
+  src: url(font-path('fontawesome-webfont.svg#fontawesomeregular')) format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url(font-path('bootstrap/glyphicons-halflings-regular.eot'));
+  src: url(font-path('bootstrap/glyphicons-halflings-regular.eot?#iefix')) format('embedded-opentype'), url(font-path('bootstrap/glyphicons-halflings-regular.woff')) format('woff'), url(font-path('bootstrap/glyphicons-halflings-regular.ttf')) format('truetype'), url(font-path('bootstrap/glyphicons-halflings-regular.svg#glyphicons_halflingsregular')) format('svg');
+}
+
 h1.heading {
   margin-bottom: 20px;
   padding-bottom: 10px;
