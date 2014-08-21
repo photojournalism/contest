@@ -24,7 +24,7 @@ Rails.application.configure do
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
-  # config.assets.css_compressor = :sass
+  config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
@@ -56,7 +56,9 @@ Rails.application.configure do
 
   # Precompile additional assets.
   # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
-  # config.assets.precompile += %w( search.js )
+  config.assets.paths << Rails.root.join('app', 'assets', 'fonts')
+  config.assets.paths << Rails.root.join('vendor', 'assets')
+  config.assets.precompile += %w(rails_admin/rails_admin.css rails_admin/rails_admin.js jquery-fileupload.js jquery-fileupload.css *.css.erb *.wot *.eot *.svg *.ttf)
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
@@ -77,4 +79,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  config.action_mailer.default_url_options = { host: 'contest.atlantaseminar.org' }
+
 end
