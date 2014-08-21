@@ -5,7 +5,7 @@ set :application, 'my_app'
 set :repo_url, 'repo_url'
 
 set :linked_files, %w{config/database.yml config/email.yml}
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/images/contest}
 
 set :deploy_to, '/var/www/my_app'
 
