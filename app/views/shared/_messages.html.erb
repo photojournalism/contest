@@ -1,13 +1,9 @@
-<% if notice %>
-  <div class="alert alert-info alert-dismissable" role="status">
-    <button class="close" data-dismiss="alert">&times;</button>
-    <%= notice %>
-  </div>
-<% end %>
-
-<% if alert %>
-<div class="alert alert-danger alert-dismissable" role="status">
+<div id="alert-info" class="alert alert-info alert-dismissable" role="status" style="display:none">
   <button class="close" data-dismiss="alert">&times;</button>
-  <%= alert %>
+  <p id="alert-info-message"></p>
 </div>
-<% end %>
+
+<div id="alert-danger" class="alert alert-danger alert-dismissable" role="status" style="display:none">
+  <button class="close" data-dismiss="alert">&times;</button>
+  <p id="alert-danger-message"></p>
+</div>

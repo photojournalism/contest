@@ -9,7 +9,13 @@
   <% if !current_user %>
   <p>To enter the contest, begin by <%= link_to 'logging in', new_user_session_path %> or <%= link_to 'registering', new_user_registration_path %>.</p>
   <% else %>
-    <% if current_user.entries.length > 0 %>
+    <% if !@contest.is_open? %>
+      <% if !@contest.has_started? %>
+        <p>The <%= @contest.year %> contest will open on <%= @contest.formatted_open_date %>.</p>
+      <% elsif @contest.has_ended? %>
+        <p>The <%= @contest.year %> contest closed on <%= @contest.formatted_close_date %>. Good luck to all who entered!</p>
+      <% end %>
+    <% elsif current_user.entries.length > 0 %>
       <p>You have submitted the following entries:</p>
         <% current_user.entries.each do |entry| %>
           <p id="entry-<%= entry.unique_hash %>" class="entry">
@@ -23,7 +29,7 @@
           </p>
         <% end %>
     <% else %>
-      <p>You have not yet submitted any entries. Begin by <%= link_to 'submitting an entry', new_entry_path %>.</p>
+      <p>You have not yet submitted any entries for the <%= @contest.year %> contest. Begin by <%= link_to 'submitting an entry', new_entry_path %>.</p>
     <% end %>
   <% end %>
   </div>

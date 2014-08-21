@@ -45,6 +45,10 @@ h2, h3, h4 {
   margin-top: 25px;
 }
 
+a, a:visited {
+  color: #428bca;
+}
+
 .spin {
   -webkit-animation: spin 1s infinite linear;
   -moz-animation: spin 1s infinite linear;
