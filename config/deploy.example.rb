@@ -4,7 +4,7 @@ lock '3.1.0'
 set :application, 'my_app'
 set :repo_url, 'repo_url'
 
-set :linked_files, %w{config/database.yml}
+set :linked_files, %w{config/database.yml config/email.yml}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
 set :deploy_to, '/var/www/my_app'
@@ -19,9 +19,7 @@ namespace :deploy do
     end
   end
 
-  after :publishing, 'deploy:compile_assets'
   after :publishing, :restart
-  after :deploy, 'deploy:migrate'
   after :finishing, 'deploy:cleanup'
 
   after :restart, :clear_cache do
