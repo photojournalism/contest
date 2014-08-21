@@ -18,6 +18,8 @@
 /test
 /config/email.yml
 /config/database.yml
+/config/deploy/production.rb
+/config/deploy.rb
 
 .rspec
 .idea/
