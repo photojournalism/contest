@@ -20,20 +20,12 @@
 </div>
 
 <%= render partial: 'shared/footer' %>
+<script>
 <% if notice %>
-<script>
-$("#alert-info").hide();
-$("#alert-info-message").empty().append('<%= notice %>');
-$("#alert-info").fadeIn(300);
-</script>
+  fadeInMessage("#alert-info", '<%= notice %>');
+<% elsif alert %>
+  fadeInMessage("#alert-danger", '<%= alert %>');
 <% end %>
-
-<% if alert %>
-<script>
-$("#alert-danger").hide();
-$("#alert-danger-message").empty().append('<%= alert %>');
-$("#alert-danger").fadeIn(300);
 </script>
-<% end %>
 </body>
 </html>

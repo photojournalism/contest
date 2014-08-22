@@ -23,4 +23,12 @@ class User < ActiveRecord::Base
       :state      => state.name
     )
   end
+
+  def name
+    full_name
+  end
+
+  def to_s
+    full_name
+  end
 end

@@ -7,3 +7,8 @@
   button = $(selector)
   button.empty().append(text)
   button.removeAttr('disabled')
+
+@fadeInMessage = (selector, message) ->
+  $(selector).hide();
+  $("#{selector}-message").empty().append(message);
+  $(selector).fadeIn(300); 
