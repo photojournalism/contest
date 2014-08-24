@@ -18,8 +18,18 @@ RSpec.describe Image, :type => :model do
       expect(image).to be_invalid
     end
 
+    it 'should be invalid without a size' do
+      image.size = nil
+      expect(image).to be_invalid
+    end
+
     it 'should be invalid without a hash' do
       image.unique_hash = nil
+      expect(image).to be_invalid
+    end
+
+    it 'should be invalid without a location' do
+      image.location = nil
       expect(image).to be_invalid
     end
 
@@ -80,6 +90,7 @@ RSpec.describe Image, :type => :model do
       it 'should return the public url' do
         image = FactoryGirl.create(:image)
         expect(image.public_url).to eq("/images/contest/#{image.entry.contest.year}/#{image.entry.category.slug}/#{image.entry.unique_hash}/#{image.filename}")
+
       end
     end
   end
