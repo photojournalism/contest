@@ -41,9 +41,7 @@ class Image < ActiveRecord::Base
     i.validate!
     if i.errors.empty?
       # Write to filesystem
-      file = i.write_to_filesystem(image)
-      i.size = file.size
-      file.close
+      i.write_to_filesystem(image)
 
       # Get caption data
       exif = EXIFR::JPEG.new(i.path)
@@ -53,10 +51,10 @@ class Image < ActiveRecord::Base
         i.delete
         return { :success => false, :error => 'No caption data was found. Please ensure that the caption has been set using Photoshop or Photo Mechanic.' }
       end
+      i.save
 
       # Reduce quality to 50%
       i.reduce_quality(50)
-      i.save
       i.create_thumbnail
       return { :success => true, :image => i }
     end
@@ -129,8 +127,9 @@ class Image < ActiveRecord::Base
   # @param quality [Integer] The percent quality to be reduced to.
   def reduce_quality(quality)
     image = Magick::Image::read(path).first
-    image.write(path) { quality = quality }
-    size = image.filesize
+    image.write(path) { self.quality = quality }
+    self.size = image.filesize
+    self.save
     image.destroy!
   end
 
@@ -141,7 +140,7 @@ class Image < ActiveRecord::Base
     FileUtils::mkdir_p location
     f = File.open("#{location}/#{filename}", 'wb')
     f.write(image.read)
-    f
+    f.close
   end
     
 end
