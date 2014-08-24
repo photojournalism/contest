@@ -3,16 +3,25 @@ class Image < ActiveRecord::Base
 
   belongs_to :entry
 
+  # Deletes all image instances and files on the filesystem
   def self.delete_all
     Image.all.each do |image|
       image.delete
     end
   end
 
+  # Finds an image by a unique hash
+  #
+  # @param unique_hash [String] The unique hash of the image.
   def self.find_by_unique_hash(unique_hash)
     Image.where(:unique_hash => unique_hash).first
   end
 
+  # Creates the image instance and writes the image and thumbnail
+  # to the filesystem.
+  #
+  # @param image [ActionDispatch::Http::UploadedFile] The image from the client.
+  # @param entry [Entry] The entry to associate this image with.
   def self.upload(image, entry)
     image_number = File.basename(image.original_filename, ".*")[-2..-1]
     if !(image_number =~ /\d\d/)
@@ -26,14 +35,15 @@ class Image < ActiveRecord::Base
       :location => upload_dir,
       :entry => entry,
       :unique_hash => SecureRandom.hex,
-      :size => 0,
       :number => image_number.to_i
     )
 
     i.validate!
     if i.errors.empty?
       # Write to filesystem
-      Image.write_to_filesystem(i.location, i.filename, image)
+      file = i.write_to_filesystem(image)
+      i.size = file.size
+      file.close
 
       # Get caption data
       exif = EXIFR::JPEG.new(i.path)
@@ -53,24 +63,29 @@ class Image < ActiveRecord::Base
     return { :success => false, :image => i, :error => i.errors.messages[:filename] }
   end
 
-  def path
-    "#{location}/#{filename}"
-  end
-
+  # Returns the filename extension of the image
   def extension
     File.extname(filename).downcase.gsub('.', '')
   end
 
+  # The full path of the image on the filesystem
+  def path
+    "#{location}/#{filename}"
+  end
+
+  # The path to the image's thumbnail on the filesystem
   def thumbnail_path
     "#{location}/thumbnails/#{filename}"
   end
   
+  # Returns a Public URL to the image
   def public_url
     "/images/contest/#{entry.contest.year}/#{entry.category.slug}/#{entry.unique_hash}/#{filename}"
   end
 
+  # Used for the jQuery FileUpload plugin
   def to_hash
-    return {
+    {
       :name => filename,
       :size => size,
       :url => "/images/download/#{unique_hash}",
@@ -80,6 +95,7 @@ class Image < ActiveRecord::Base
     }
   end
 
+  # Deletes the image and its thumbnail, along with the database record
   def delete
     begin
       File.delete(path)
@@ -89,6 +105,7 @@ class Image < ActiveRecord::Base
     destroy!
   end
 
+  # Ensures that there are no errors in the image before it is saved
   def validate!
     file_type = FileType.where('lower(extension) = ?', extension).first
     if file_type.blank? || !entry.category.category_type.file_types.include?(file_type)
@@ -97,6 +114,7 @@ class Image < ActiveRecord::Base
     end
   end
 
+  # Writes the image's thumbnail to the filesystem at 80x80 and 50% quality
   def create_thumbnail
     FileUtils::mkdir_p "#{location}/thumbnails"
     image = Magick::Image.read(path).first
@@ -106,6 +124,9 @@ class Image < ActiveRecord::Base
     image.write("#{location}/thumbnails/#{filename}") { self.quality = 50 }
   end
 
+  # Reduces the quality of the image
+  #
+  # @param quality [Integer] The percent quality to be reduced to.
   def reduce_quality(quality)
     image = Magick::Image::read(path).first
     image.write(path) { quality = quality }
@@ -113,12 +134,14 @@ class Image < ActiveRecord::Base
     image.destroy!
   end
 
-  private
-
-    def self.write_to_filesystem(location, filename, image)
-      FileUtils::mkdir_p location
-      f = File.open("#{location}/#{filename}", 'wb')
-      f.write(image.read)
-      f.close
-    end
+  # Writes the image to the filesystem
+  #
+  # @param image [ActionDispatch::Http::UploadedFile] The image uploaded from the client.
+  def write_to_filesystem(image)
+    FileUtils::mkdir_p location
+    f = File.open("#{location}/#{filename}", 'wb')
+    f.write(image.read)
+    f
+  end
+    
 end
