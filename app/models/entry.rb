@@ -38,7 +38,7 @@ class Entry < ActiveRecord::Base
   end
 
   def is_valid?
-    if ((images.length >= category_type.minimum_files) && !(category_type.has_url? && url.blank?))
+    if (!(images.length < category_type.minimum_files) && !(category_type.has_url? && url.blank?))
       return true
     end
     pending = true
