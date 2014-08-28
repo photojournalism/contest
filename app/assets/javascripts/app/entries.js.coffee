@@ -62,31 +62,38 @@ Entries = do($ = jQuery) ->
       )
 
   obj.update = ->
+    
+    submit = (data) ->
+      initLoadingButton("#entry-save-button")
+      $.ajax "/entries/#{hash}",
+        type: 'put'
+        data: data
+        success: (response) ->
+          window.location.href = response.url
+        error: (response) ->
+          alert(response.responseJSON.message)
+      .done( ->
+        endLoadingButton("#entry-save-button", '<i class="glyphicon glyphicon-save"></i> Save Entry')
+      )
+
     hash = $("#entry-hash").html()
     url  = $("#entry-url")
+    data = {}
+
     if (!url.length)
       numberOfFiles = $("#fileupload .template-download:not('.ui-state-error')").length
       minumumNumberOfFiles = parseInt($("#minimum_files").val())
 
-      if (numberOfFiles >= minumumNumberOfFiles)
-        window.location.href = "/entries/#{hash}/confirmation"
+      if (numberOfFiles < minumumNumberOfFiles)
+        alert("You must upload at least #{minumumNumberOfFiles} file(s).")
         return
-      alert("You must upload at least #{minumumNumberOfFiles} file(s).")
-      return
     else if ($.trim(url.val()) != '')
-      initLoadingButton("#entry-save-button")
-      $.ajax "/entries/#{hash}",
-        type: 'put'
-        data: { url: url.val() }
-        error: (data) ->
-          alert(data.responseJSON.message)
-      .done( ->
-        endLoadingButton("#entry-save-button", '<i class="glyphicon glyphicon-save"></i> Save Entry')
-      )
+      data.url = url.val()
     else
       url.parent().addClass('has-error')
       url.focus()
-
+      return
+    submit(data)
   obj
 
 $(document).ready ->

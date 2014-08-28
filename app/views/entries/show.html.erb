@@ -4,6 +4,7 @@
 <div class="row">
 <div class="col-md-10 col-md-offset-1">
     <h1 class="heading"><%= @entry.contest.year %> <%= @entry.category %> Entry</h1>
+    <%= render :partial => 'shared/messages' %>
     <p class="entry-info">
         <span id="entry-hash" style="display:none"><%= @entry.unique_hash %></span>
         <label>Entrant</label>: <%= @entry.user.full_name %><br>

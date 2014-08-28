@@ -32,7 +32,8 @@ class EntriesController < ApplicationController
       :unique_hash => SecureRandom.hex,
       :order_number => entry_params[:order_number],
       :judged => false,
-      :contest => Contest.current
+      :contest => Contest.current,
+      :pending => true
     )
 
     if entry.valid?
@@ -60,6 +61,10 @@ class EntriesController < ApplicationController
   def confirmation
     @entry = Entry.where(:unique_hash => params[:hash]).first
     if !@entry.blank? && entry_access_is_allowed(@entry)
+      if @entry.pending
+        flash[:notice] = "This entry is still pending."
+        redirect_to "/entries/#{@entry.unique_hash}"
+      end
       return
     end
     redirect_to(:action => 'new')
@@ -68,9 +73,12 @@ class EntriesController < ApplicationController
   def update
     @entry = Entry.where(:unique_hash => params[:hash]).first
     if entry_is_modifiable(@entry)
-      @entry.url = params[:url]
+      @entry.pending = false
+      if (params[:url])
+        @entry.url = params[:url]
+      end
       @entry.save
-      render :json => { :message => "Successfully updated entry." }, :status => 200
+      render :json => { :message => "Successfully updated entry.", :url => @entry.confirmation_url }, :status => 200
       return
     end
     render :json => { :message => "This entry is no longer allowed to be updated." }, :status => 500

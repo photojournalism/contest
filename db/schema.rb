@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140821184116) do
+ActiveRecord::Schema.define(version: 20140828195541) do
 
   create_table "agreements", force: true do |t|
     t.integer  "user_id"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20140821184116) do
     t.string   "order_number"
     t.integer  "contest_id"
     t.string   "unique_hash"
+    t.boolean  "pending"
   end
 
   add_index "entries", ["category_id"], name: "index_entries_on_category_id"
