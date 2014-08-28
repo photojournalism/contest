@@ -1,0 +1,33 @@
+<%= render partial: 'shared/messages' %>
+
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+  <div class="jumbotron">
+  <%= image_tag 'logos/atlpj_logo_circle_text.png', :alt => 'Atlanta Photojournalism Seminar Logo', :style => 'max-width: 90%' %><br><br>
+  <h3>Welcome to the Atlanta Photojournalism Seminar Contest application.</h3>
+  <% if !current_user %>
+  <p>To enter the contest, begin by <%= link_to 'logging in', new_user_session_path %> or <%= link_to 'registering', new_user_registration_path %>.</p>
+  <% else %>
+    <% if !@contest.is_open? %>
+      <% if !@contest.has_started? %>
+        <p>The <%= @contest.year %> contest will open on <%= @contest.formatted_open_date %>.</p>
+      <% elsif @contest.has_ended? %>
+        <p>The <%= @contest.year %> contest closed on <%= @contest.formatted_close_date %>. Good luck to all who entered!</p>
+      <% end %>
+    <% elsif current_user.entries.length > 0 %>
+      <% if current_user.completed_entries.length > 0 %>
+      <p>You have submitted a total of <%= link_to "#{current_user.completed_entries.length.humanize} completed #{current_user.completed_entries.length == 1 ? 'entry' : 'entries'}", "/entries" %> for the <%= @contest %>.</p>
+      <% end %>
+
+      <% if current_user.pending_entries.length > 0 %>
+        <p>You currently have <%= link_to "#{current_user.pending_entries.length.humanize} pending #{current_user.pending_entries.length == 1 ? 'entry' : 'entries'}", "/entries" %> for the <%= @contest %>.</p>
+      <% end %>
+    <% else %>
+      <p>You have not yet submitted any entries for the <%= @contest.year %> contest. Begin by <%= link_to 'submitting an entry', new_entry_path %>.</p>
+    <% end %>
+  <% end %>
+  </div>
+</div>
+</div>
+</div>
