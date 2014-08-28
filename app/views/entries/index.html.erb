@@ -13,15 +13,7 @@
         <h4>Completed Entries</h4>
 
         <% @completed_entries.each do |entry| %>
-          <p id="entry-<%= entry.unique_hash %>" class="entry">
-            <%= link_to "#{entry.category}", entry.confirmation_url %><br>
-            <% if entry.category.category_type.maximum_files > 0 %>
-              <small>
-                <%= entry.images.length %> <%= entry.images.length == 1 ? 'image has' : 'images have' %> been uploaded for this category.
-                <% if entry.images.length < entry.category.category_type.minimum_files %> Please upload your images now.<% end %>
-              </small>
-            <% end %>
-            </p>
+          <%= render partial: 'entry', locals: {entry: entry} %>
         <% end %>
       <% end %>
 
@@ -29,18 +21,10 @@
         <h4>Pending Entries</h4>
 
         <% @pending_entries.each do |entry| %>
-          <p id="entry-<%= entry.unique_hash %>" class="entry">
-            <%= link_to "#{entry.category}", entry.confirmation_url %><br>
-            <% if entry.category.category_type.maximum_files > 0 %>
-              <small>
-                <%= entry.images.length %> <%= entry.images.length == 1 ? 'image has' : 'images have' %> have been uploaded for this category.
-                <% if entry.images.length < entry.category.category_type.minimum_files %> Please upload your images now.<% end %>
-              </small>
-            <% end %>
-            </p>
+          <%= render partial: 'entry', locals: {entry: entry} %>
         <% end %>
       <% end %>
+      
     <% end %>
-
   </div>
 </div>
