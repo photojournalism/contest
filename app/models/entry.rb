@@ -37,6 +37,19 @@ class Entry < ActiveRecord::Base
     "/entries/#{unique_hash}/confirmation"
   end
 
+  def is_valid?
+    if ((images.length >= category_type.minimum_files) && !(category_type.has_url? && url.blank?))
+      return true
+    end
+    pending = true
+    save
+    return false
+  end
+
+  def category_type
+    category.category_type
+  end
+
   def images_location
     "#{Rails.root}/public/images/contest/#{contest.year}/#{category.slug}/#{unique_hash}"
   end

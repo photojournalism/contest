@@ -61,8 +61,8 @@ class EntriesController < ApplicationController
   def confirmation
     @entry = Entry.where(:unique_hash => params[:hash]).first
     if !@entry.blank? && entry_access_is_allowed(@entry)
-      if @entry.pending
-        flash[:notice] = "This entry is still pending."
+      if !@entry.is_valid? || @entry.pending
+        flash[:notice] = "This entry is currently not complete."
         redirect_to "/entries/#{@entry.unique_hash}"
       end
       return
