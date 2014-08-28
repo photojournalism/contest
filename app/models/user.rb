@@ -24,6 +24,14 @@ class User < ActiveRecord::Base
     )
   end
 
+  def completed_entries
+    Entry.where(:user => self, :pending => false, :contest => Contest.current)
+  end
+
+  def pending_entries
+    Entry.where(:user => self, :pending => true, :contest => Contest.current)
+  end
+
   def name
     full_name
   end

@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get 'states/select/:country_id' => 'states#get_select_for_country'
   get 'entries/new' => 'entries#new', :as => :new_entry
   post 'entries' => 'entries#create'
+  get 'entries' => 'entries#index'
   get 'entries/:hash' => 'entries#show'
   delete 'entries/:hash' => 'entries#destroy'
   put 'entries/:hash' => 'entries#update'

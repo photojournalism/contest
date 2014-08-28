@@ -16,18 +16,13 @@
         <p>The <%= @contest.year %> contest closed on <%= @contest.formatted_close_date %>. Good luck to all who entered!</p>
       <% end %>
     <% elsif current_user.entries.length > 0 %>
-      <p>You have submitted the following entries:</p>
-        <% current_user.entries.each do |entry| %>
-          <p id="entry-<%= entry.unique_hash %>" class="entry">
-          <%= link_to "#{entry.category}", entry.confirmation_url %><br>
-          <% if entry.category.category_type.maximum_files > 0 %>
-            <small>
-              <%= entry.images.length %> <%= 'image'.pluralize(entry.images.length) %> have been uploaded for this category.
-              <% if entry.images.length < entry.category.category_type.minimum_files %> Please upload your images now.<% end %>
-            </small>
-          <% end %>
-          </p>
-        <% end %>
+      <% if current_user.completed_entries.length > 0 %>
+      <p>You have submitted a total of <%= link_to "#{current_user.completed_entries.length.humanize} completed #{current_user.completed_entries.length == 1 ? 'entry' : 'entries'}", "/entries" %> for the <%= @contest %>.</p>
+      <% end %>
+
+      <% if current_user.pending_entries.length > 0 %>
+        <p>You currently have <%= link_to "#{current_user.pending_entries.length.humanize} pending #{current_user.pending_entries.length == 1 ? 'entry' : 'entries'}", "/entries" %> for the <%= @contest %>.</p>
+      <% end %>
     <% else %>
       <p>You have not yet submitted any entries for the <%= @contest.year %> contest. Begin by <%= link_to 'submitting an entry', new_entry_path %>.</p>
     <% end %>

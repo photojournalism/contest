@@ -2,6 +2,12 @@ class EntriesController < ApplicationController
 
   before_action :authenticate_user!
 
+  def index
+    @contest = Contest.current
+    @completed_entries = current_user.completed_entries
+    @pending_entries = current_user.pending_entries
+  end
+
   def new
     @contest = Contest.current
 
