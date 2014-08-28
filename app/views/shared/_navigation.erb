@@ -14,9 +14,9 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="main-navbar-collapse">
       <ul class="nav navbar-nav">
-        <li><%= link_to 'Contest Home', root_path %></li>
-        <li><%= link_to 'Submit New Entry', new_entry_path %></li>
-        <li><%= link_to 'View Submitted Entries', "/entries" %></li>
+        <li<% if params[:controller] == 'home' %> class="active"<% end %>><%= link_to 'Contest Home', root_path %></li>
+        <li<% if params[:controller] == 'entries' && params[:action] == 'new' %> class="active"<% end %>><%= link_to 'Submit New Entry', new_entry_path %></li>
+        <li<% if params[:controller] == 'entries' && params[:action] == 'index' %> class="active"<% end %>><%= link_to 'View Submitted Entries', "/entries" %></li>
       </ul>
 
       <ul class="nav navbar-nav navbar-right">
