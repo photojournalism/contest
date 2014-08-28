@@ -86,11 +86,23 @@ class Image < ActiveRecord::Base
     {
       :name => filename,
       :size => size,
-      :url => "/images/download/#{unique_hash}",
-      :thumbnailUrl => "/images/thumbnail/#{unique_hash}",
-      :deleteUrl => "/images/#{unique_hash}",
+      :url => download_url,
+      :thumbnailUrl => thumbnail_url,
+      :deleteUrl => delete_url,
       :deleteType => "DELETE"
     }
+  end
+
+  def download_url
+    "/images/download/#{unique_hash}"
+  end
+
+  def thumbnail_url
+    "/images/thumbnail/#{unique_hash}"
+  end
+
+  def delete_url
+    "/images/#{unique_hash}"
   end
 
   # Deletes the image and its thumbnail, along with the database record

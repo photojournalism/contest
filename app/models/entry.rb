@@ -29,6 +29,14 @@ class Entry < ActiveRecord::Base
     destroy!
   end
 
+  def edit_url
+    "/entries/#{unique_hash}"
+  end
+
+  def confirmation_url
+    "/entries/#{unique_hash}/confirmation"
+  end
+
   def images_location
     "#{Rails.root}/public/images/contest/#{contest.year}/#{category.slug}/#{unique_hash}"
   end

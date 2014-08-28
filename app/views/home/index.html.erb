@@ -19,7 +19,7 @@
       <p>You have submitted the following entries:</p>
         <% current_user.entries.each do |entry| %>
           <p id="entry-<%= entry.unique_hash %>" class="entry">
-          <%= link_to "#{entry.category}", "/entries/#{entry.unique_hash}" %><br>
+          <%= link_to "#{entry.category}", entry.confirmation_url %><br>
           <% if entry.category.category_type.maximum_files > 0 %>
             <small>
               <%= entry.images.length %> <%= 'image'.pluralize(entry.images.length) %> have been uploaded for this category.

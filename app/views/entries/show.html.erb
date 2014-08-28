@@ -9,7 +9,7 @@
         <label>Entrant</label>: <%= @entry.user.full_name %><br>
         <label>Date Entered</label>: <%= @entry.formatted_created_at %><br>
         <label>Category Description</label><br>
-        <em><%= @entry.category.description %></em><br><br>
+        <em><%= @entry.category.description %></em><br>
         <em><%= @entry.category.category_type.description.html_safe %></em>
     </p>
 
@@ -24,11 +24,12 @@
             <label for="entry-url">Entry URL</label>
             <input type="text" id="entry-url" placeholder="Entry URL, i.e. http://vimeo.com/71135385" class="form-control" value="<%= @entry.url %>">
         </div>
-        
+    <% end %>
+    
+    <% if @entry.contest.is_open? %>
+        <hr>
         <button type="button" class="btn btn-danger pull-left" id="entry-delete-button"><i class="glyphicon glyphicon-remove"></i> Delete Entry</button>
-        
         <button type="button" class="btn btn-primary pull-right" id="entry-save-button"><i class="glyphicon glyphicon-save"></i> Save Entry</button>
-        
         <div class="clearfix"></div>
     <% end %>
 </div>

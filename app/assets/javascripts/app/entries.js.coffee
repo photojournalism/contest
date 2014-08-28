@@ -64,7 +64,16 @@ Entries = do($ = jQuery) ->
   obj.update = ->
     hash = $("#entry-hash").html()
     url  = $("#entry-url")
-    if ($.trim(url.val()) != '')
+    if (!url.length)
+      numberOfFiles = $("#fileupload .template-download:not('.ui-state-error')").length
+      minumumNumberOfFiles = parseInt($("#minimum_files").val())
+
+      if (numberOfFiles >= minumumNumberOfFiles)
+        window.location.href = "/entries/#{hash}/confirmation"
+        return
+      alert("You must upload at least #{minumumNumberOfFiles} file(s).")
+      return
+    else if ($.trim(url.val()) != '')
       initLoadingButton("#entry-save-button")
       $.ajax "/entries/#{hash}",
         type: 'put'

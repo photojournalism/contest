@@ -57,6 +57,14 @@ class EntriesController < ApplicationController
     end
   end
 
+  def confirmation
+    @entry = Entry.where(:unique_hash => params[:hash]).first
+    if !@entry.blank? && entry_access_is_allowed(@entry)
+      return
+    end
+    redirect_to(:action => 'new')
+  end
+
   def update
     @entry = Entry.where(:unique_hash => params[:hash]).first
     if entry_is_modifiable(@entry)
@@ -82,6 +90,10 @@ class EntriesController < ApplicationController
   
     def entry_is_modifiable(entry)
       return !entry.blank? && (entry.user == current_user || current_user.admin) && entry.contest.is_open?
+    end
+
+    def entry_access_is_allowed(entry)
+      return (entry.user == current_user || current_user.admin)
     end
 
     def entry_params

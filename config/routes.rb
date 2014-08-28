@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get 'entries/:hash' => 'entries#show'
   delete 'entries/:hash' => 'entries#destroy'
   put 'entries/:hash' => 'entries#update'
+  get 'entries/:hash/confirmation' => 'entries#confirmation'
   post 'images/upload' => 'images#upload'
   get 'images/upload' => 'images#for_entry'
   get 'images/download/:hash' => 'images#download'

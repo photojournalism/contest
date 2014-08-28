@@ -11,3 +11,15 @@
   border-radius: 6px;
   box-shadow: 0 0 3px #bbb;
 }
+
+.entry-image {
+  width: 100%;
+  padding: 10px;
+  background-color: #eee;
+  border-radius: 5px;
+  margin-bottom: 10px;
+
+  img {
+    margin-right: 20px;
+  }
+}
