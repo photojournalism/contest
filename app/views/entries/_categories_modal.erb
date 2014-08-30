@@ -1,0 +1,23 @@
+<div class="modal fade" id="categoriesModal" tabindex="-1" role="dialog" aria-labelledby="categoriesModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="categoriesModalLabel"><%= contest %> Categories</h4>
+      </div>
+      <div class="modal-body">
+        <% categories.each do |category| %>
+          <div class="modal-category">
+            <p>
+              <strong><%= category.name %></strong><br>
+              <%= category.description %> <em><%= category.category_type.description.html_safe %></em>
+            </p>
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
