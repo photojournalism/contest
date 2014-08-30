@@ -4,17 +4,6 @@ class EntriesController < ApplicationController
 
   def index
     @contest = Contest.current
-
-    # Check that entries are valid. This will update the invalid ones to pending.
-    current_user.entries.each do |entry|
-      if ((entry.images.length < entry.category_type.minimum_files) || (entry.category_type.has_url? && entry.url.blank?))
-        entry.pending = true
-      else
-        entry.pending = false
-      end
-      entry.save
-    end
-
     @completed_entries = current_user.completed_entries
     @pending_entries = current_user.pending_entries
   end
@@ -78,7 +67,7 @@ class EntriesController < ApplicationController
   def confirmation
     @entry = Entry.where(:unique_hash => params[:hash]).first
     if !@entry.blank? && entry_access_is_allowed(@entry)
-      if !@entry.is_valid? || @entry.pending
+      if @entry.pending
         flash[:notice] = "This entry is currently not complete."
         redirect_to "/entries/#{@entry.unique_hash}"
       end
