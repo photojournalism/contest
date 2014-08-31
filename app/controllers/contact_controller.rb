@@ -3,7 +3,7 @@ class ContactController < ApplicationController
   before_action :authenticate_user!
 
   def report_a_problem
-    if params[:message]
+    if !params[:message].blank?
       browser = Browser.new(:ua => request.headers["User-Agent"], :accept_language => "en-us")
       ContactMailer.report_a_problem(current_user, params[:message], browser).deliver
       render :json => { :message => 'Successfully delivered message.' }, :status => 200
