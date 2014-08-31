@@ -24,14 +24,14 @@
 
     <p>Here is the reported message:</p>
 
-    <p><%= @message %></p>
+    <ul><li><%= @message %></li></ul>
 
     <p>Browser information:</p>
 
     <ul>
       <li>Name: <%= @browser.name %></li>
-      <li>Version: <%= @broswer.version %></li>
-      <li>Meta: <%= @browser.meta %></li>
+      <li>Version: <%= @browser.full_version %></li>
+      <li>Platform: <%= @browser.platform %></li>
     </ul>
   </body>
 </html>

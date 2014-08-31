@@ -20,17 +20,17 @@
   border: 2px solid #BA863B;
 }
 
-input[type=text], input[type=email], input[type=password] {
-  box-shadow: none;
-  border: 2px solid $gray-blue-lighter;
-  border-radius: 3px;
-  outline: none;
-  -webkit-transition: all 0.3s ease-in-out;
-          transition: all 0.3s ease-in-out;
+input[type=text], input[type=email], input[type=password], textarea {
+  box-shadow: none !important;
+  border: 2px solid $gray-blue-lighter !important;
+  border-radius: 3px !important;
+  outline: none !important;
+  -webkit-transition: all 0.3s ease-in-out !important;
+          transition: all 0.3s ease-in-out !important;
 
   &:focus {
-    border: 2px solid $gray-blue-lighter;
-    -webkit-box-shadow: 0 0 10px #999;
-            box-shadow: 0 0 10px #999;
+    border: 2px solid $gray-blue-lighter !important;
+    -webkit-box-shadow: 0 0 10px #999 !important;
+            box-shadow: 0 0 10px #999 !important;
   }
 }

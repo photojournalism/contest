@@ -6,10 +6,16 @@
         <h4 class="modal-title" id="contactModalLabel">Having Problems?</h4>
       </div>
       <div class="modal-body">
-        If you have questions, or are experiencing any issues, please send an email to <a href="mailto:webmaster@photojournalism.org">webmaster@photojournalism.org</a>.
+        <p>Please use the following text area to describe the problem or suggestion that you have, and we will get back to you as quickly as possible.</p>
+
+        <div class="form-group">
+          <label for="problem-description">Problem Description</label>
+          <textarea class="form-control" placeholder="Describe the issue in detail here." id="problem-description"></textarea>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="problem-submit">Send</button>
       </div>
     </div>
   </div>

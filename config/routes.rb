@@ -24,6 +24,7 @@ Rails.application.routes.draw do
   get 'images/download/:hash' => 'images#download'
   get 'images/thumbnail/:hash' => 'images#thumbnail'
   delete 'images/:hash' => 'images#destroy'
+  post 'contact/report_a_problem' => 'contact#report_a_problem'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

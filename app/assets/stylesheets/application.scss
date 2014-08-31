@@ -53,6 +53,10 @@ a, a:visited {
   z-index: 999999999;
 }
 
+#problem-description {
+  height: 200px;
+}
+
 .spin {
   -webkit-animation: spin 1s infinite linear;
   -moz-animation: spin 1s infinite linear;

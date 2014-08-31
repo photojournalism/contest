@@ -33,7 +33,9 @@
             <small class="copyright">&copy; 2014 Atlanta Photojournalism Seminar</small><br>
             <p>
               <%= link_to raw('Return to the Main Website &raquo;'), 'http://photojournalism.org' %><br>
-              <a href="#" data-toggle="modal" data-target="#contactModal">Having problems?</a>
+              <% if user_signed_in? %>
+                <a href="#" data-toggle="modal" data-target="#contactModal">Having problems?</a>
+              <% end %>
             </p>
           </div>
         </div>
