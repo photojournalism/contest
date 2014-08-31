@@ -5,7 +5,7 @@ RSpec.describe ContactMailer, :type => :mailer do
   let(:browser) { Browser.new(:ua => "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/37.0.2062.94 Safari/537.36", :accept_language => "en-us") }
   let(:mail) { ContactMailer.report_a_problem(user, 'message', browser) }
 
-  describe 'report_a_problem' do
+  describe 'report_a_problem' do    
     it 'renders the subject' do
       expect(mail.subject).to eq('A problem has been reported.')
     end
