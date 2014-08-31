@@ -103,5 +103,12 @@ RSpec.describe Entry, :type => :model do
         expect(entry.formatted_created_at).to eq(entry.created_at.strftime("%A, %b. %-d, %Y at %-I:%M%P %Z"))
       end
     end
+
+    describe 'edit_url' do
+      it 'should return the edit url' do
+        entry = FactoryGirl.create(:entry)
+        expect(entry.edit_url).to eq("/entries/#{entry.unique_hash}")
+      end
+    end
   end
 end
