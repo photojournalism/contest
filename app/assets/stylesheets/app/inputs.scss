@@ -20,6 +20,10 @@
   border: 2px solid #BA863B;
 }
 
+.btn-default {
+  border: 2px solid #ccc;
+}
+
 input[type=text], input[type=email], input[type=password], textarea {
   box-shadow: none !important;
   border: 2px solid $gray-blue-lighter !important;
