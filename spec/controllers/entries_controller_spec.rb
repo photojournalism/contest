@@ -6,6 +6,43 @@ RSpec.describe EntriesController, :type => :controller do
   before(:all) { FactoryGirl.create(:contest) }
   after(:all) { Contest.delete_all }
 
+  describe 'GET index' do
+    let(:contest) { Contest.current }
+    let(:completed_entry) { FactoryGirl.create(:entry, :contest => contest, :pending => false, :user => user) }
+    let(:pending_entry) { FactoryGirl.create(:entry, :contest => contest, :pending => true, :user => user) }
+
+    describe 'with signed in user' do
+      before(:each) do
+        sign_in user
+        completed_entry.save
+        pending_entry.save
+      end
+
+      it 'should assign @contest' do
+        get :index
+        expect(assigns(:contest)).to eq(contest)
+      end
+
+      it 'should assign @completed_entries' do
+        get :index
+        expect(assigns(:completed_entries)).to eq([completed_entry])
+      end
+
+      it 'should assign @pending_entries' do
+        get :index
+        expect(assigns(:pending_entries)).to eq([pending_entry])
+      end
+    end
+
+    describe 'with not signed in user' do
+      it 'should redirect to login page' do
+        get :new
+        expect(response).to redirect_to(new_user_session_path)
+      end
+    end
+    
+  end
+
   describe "GET new" do
     let(:contest) { Contest.current }
     let(:category) { FactoryGirl.create(:category) }
@@ -136,6 +173,46 @@ RSpec.describe EntriesController, :type => :controller do
       sign_in user
       get :show, :hash => 'asdf'
       expect(response.body).to redirect_to(new_entry_path)
+    end
+  end
+
+  describe 'GET confirmation' do
+    let(:completed_entry) { FactoryGirl.create(:entry, :user => user, :pending => false) }
+    let(:pending_entry) { FactoryGirl.create(:entry, :user => user, :pending => true) }
+
+    describe 'with signed in user' do
+      before(:each) { sign_in user }
+
+      describe 'with completed entry' do
+        it 'assigns @entry' do
+          get :confirmation, :hash => completed_entry.unique_hash
+          expect(assigns(:entry)).to eq(completed_entry)
+        end
+
+        it 'should render the confirmation view' do
+          get :confirmation, :hash => completed_entry.unique_hash
+          expect(response.body).to match("Entry Submission Confirmation")
+        end
+      end
+
+      describe 'with pending entry' do
+        it 'assigns @entry' do
+          get :confirmation, :hash => pending_entry.unique_hash
+          expect(assigns(:entry)).to eq(pending_entry)
+        end
+
+        it 'should redirect to Entries#show' do
+          get :confirmation, :hash => pending_entry.unique_hash
+          expect(response).to redirect_to("/entries/#{pending_entry.unique_hash}")
+        end
+      end
+
+      describe 'with no entry' do
+        it 'should redirect to the new entry path' do
+          get :confirmation, :hash => ''
+          expect(response).to redirect_to(new_entry_path)
+        end
+      end
     end
   end
 
