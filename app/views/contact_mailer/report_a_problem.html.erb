@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <style>
+      body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.42857;
+        color: #333333;
+      }
+    </style>
+  </head>
+  <body>
+    <p><img src="http://www.photojournalism.org/images/logos/atlpj_logo_circle_text-dc279d57.png" width="300"></p>
+
+    <p>Dear webmaster,</p>
+
+    <p>The following user has reported a problem with the Atlanta Photojournalism Seminar Contest Application:</p>
+
+    <ul>
+      <li>Name: <%= @user.full_name %></li>
+      <li>ID: <%= @user.id %></li>
+      <li>Email: <%= @user.email %></li>
+    </ul>
+
+    <p>Here is the reported message:</p>
+
+    <p><%= @message %></p>
+
+    <p>Browser information:</p>
+
+    <ul>
+      <li>Name: <%= @browser.name %></li>
+      <li>Version: <%= @broswer.version %></li>
+      <li>Meta: <%= @browser.meta %></li>
+    </ul>
+  </body>
+</html>
