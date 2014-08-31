@@ -53,6 +53,7 @@ gem 'humanize'
 gem 'coveralls', :require => false
 gem 'rails_admin'
 gem 'bootstrap-wysihtml5-rails', '0.3.1.24'
+gem 'browser'
 
 # Capistrano for deployment
 gem 'capistrano', '~> 3.1.0'
