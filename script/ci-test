@@ -1,1 +1,2 @@
-rspec spec/controllers spec/helpers spec/mailers spec/models
+#!/bin/bash
+bundle exec rspec spec/controllers spec/helpers spec/mailers spec/models
