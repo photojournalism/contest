@@ -12,18 +12,25 @@ Rails.application.routes.draw do
   resources :agreements
 
   get 'states/select/:country_id' => 'states#get_select_for_country'
-  get 'entries/new' => 'entries#new', :as => :new_entry
-  post 'entries' => 'entries#create'
-  get 'entries' => 'entries#index'
-  get 'entries/:hash' => 'entries#show'
-  delete 'entries/:hash' => 'entries#destroy'
-  put 'entries/:hash' => 'entries#update'
-  get 'entries/:hash/confirmation' => 'entries#confirmation'
+
+  # Entry Routes
+  get  'entries/new' => 'entries#new', :as => :new_entry
+  get  'entries' => 'entries#index',  :as => :entries
+  post 'entries' => 'entries#create', :as => :create_entry
+
+  get    'entries/:hash/confirmation' => 'entries#confirmation', :as => :entry_confirmation
+  get    'entries/:hash' => 'entries#edit',    :as => :edit_entry
+  put    'entries/:hash' => 'entries#update',  :as => :update_entry
+  delete 'entries/:hash' => 'entries#destroy', :as => :delete_entry
+
+  # Image Routes
+  get  'images/upload' => 'images#for_entry'
   post 'images/upload' => 'images#upload'
-  get 'images/upload' => 'images#for_entry'
-  get 'images/download/:hash' => 'images#download'
-  get 'images/thumbnail/:hash' => 'images#thumbnail'
+  get  'images/download/:hash' => 'images#download'
+  get  'images/thumbnail/:hash' => 'images#thumbnail'
   delete 'images/:hash' => 'images#destroy'
+
+  # Contact Routes
   post 'contact/report_a_problem' => 'contact#report_a_problem'
 
   # Example of regular route:

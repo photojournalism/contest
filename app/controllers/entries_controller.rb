@@ -44,13 +44,13 @@ class EntriesController < ApplicationController
 
     if entry.valid?
       entry.save
-      render :json => { :url => "/entries/#{entry.unique_hash}" }
+      render :json => { :url => edit_entry_path(entry.unique_hash) }
     else
       render :json => { :message => entry.errors }, :status => 500
     end
   end
 
-  def show
+  def edit
     @entry = Entry.where(:unique_hash => params[:hash]).first
     
     if @entry.blank?
@@ -69,7 +69,7 @@ class EntriesController < ApplicationController
     if !@entry.blank? && entry_access_is_allowed(@entry)
       if @entry.pending
         flash[:notice] = "This entry is currently not complete."
-        redirect_to "/entries/#{@entry.unique_hash}"
+        redirect_to edit_entry_path(@entry.unique_hash)
       end
       return
     end
@@ -84,7 +84,7 @@ class EntriesController < ApplicationController
         @entry.url = params[:url]
       end
       @entry.save
-      render :json => { :message => "Successfully updated entry.", :url => @entry.confirmation_url }, :status => 200
+      render :json => { :message => "Successfully updated entry.", :url => entry_confirmation_path(@entry.unique_hash) }, :status => 200
       return
     end
     render :json => { :message => "This entry is no longer allowed to be updated." }, :status => 500

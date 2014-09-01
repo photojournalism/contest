@@ -136,17 +136,17 @@ RSpec.describe EntriesController, :type => :controller do
     end
   end
 
-  describe 'GET show' do
+  describe 'GET edit' do
     let(:entry) { FactoryGirl.create(:entry, :user => user) }
 
     it 'should redirect for not logged in user' do
-      get :show, :hash => entry.unique_hash
+      get :edit, :hash => entry.unique_hash
       expect(response).to redirect_to(new_user_session_path)
     end
 
     it 'should show for valid entry and user' do
       sign_in user
-      get :show, :hash => entry.unique_hash
+      get :edit, :hash => entry.unique_hash
       expect(response.body).to match entry.category.name
     end
 
@@ -155,7 +155,7 @@ RSpec.describe EntriesController, :type => :controller do
       entry.user = FactoryGirl.create(:user)
       entry.save
       
-      get :show, :hash => entry.unique_hash
+      get :edit, :hash => entry.unique_hash
       expect(response).to redirect_to(new_entry_path)
     end
 
@@ -165,13 +165,13 @@ RSpec.describe EntriesController, :type => :controller do
 
       sign_in user
       entry.user = FactoryGirl.create(:user)
-      get :show, :hash => entry.unique_hash
+      get :edit, :hash => entry.unique_hash
       expect(response.body).to match entry.category.name
     end
 
     it 'should redirect if the hash was wrong' do
       sign_in user
-      get :show, :hash => 'asdf'
+      get :edit, :hash => 'asdf'
       expect(response.body).to redirect_to(new_entry_path)
     end
   end

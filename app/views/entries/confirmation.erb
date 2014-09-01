@@ -41,7 +41,7 @@
     <% if @entry.contest.is_open? %>
       <hr>
       <button type="button" class="btn btn-danger pull-left" id="entry-delete-button"><i class="glyphicon glyphicon-remove"></i> Delete Entry</button>
-      <a href="<%= @entry.edit_url %>"><button type="button" class="btn btn-warning pull-right" id="entry-edit-button"><i class="glyphicon glyphicon-pencil"></i> Edit Entry</button></a>
+      <a href="<%= edit_entry_path(@entry.unique_hash) %>"><button type="button" class="btn btn-warning pull-right" id="entry-edit-button"><i class="glyphicon glyphicon-pencil"></i> Edit Entry</button></a>
       <div class="clearfix"></div>
     <% end %>
   </div>

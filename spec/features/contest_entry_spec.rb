@@ -6,6 +6,7 @@ feature 'contest entry' do
   let(:contest) { FactoryGirl.create(:contest) }
   let(:category1) { FactoryGirl.create(:category) }
   let(:category2) { FactoryGirl.create(:category) }
+  
   before(:each) do
     contest.categories << category1
     contest.categories << category2

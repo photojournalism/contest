@@ -17,11 +17,11 @@
       <% end %>
     <% elsif current_user.entries.length > 0 %>
       <% if current_user.completed_entries.length > 0 %>
-      <p>You have submitted a total of <%= link_to "#{current_user.completed_entries.length.humanize} completed #{current_user.completed_entries.length == 1 ? 'entry' : 'entries'}", "/entries" %> for the <%= @contest %>.</p>
+      <p>You have submitted a total of <%= link_to "#{current_user.completed_entries.length.humanize} completed #{current_user.completed_entries.length == 1 ? 'entry' : 'entries'}", entries_path %> for the <%= @contest %>.</p>
       <% end %>
 
       <% if current_user.pending_entries.length > 0 %>
-        <p>You currently have <%= link_to "#{current_user.pending_entries.length.humanize} pending #{current_user.pending_entries.length == 1 ? 'entry' : 'entries'}", "/entries" %> for the <%= @contest %>.</p>
+        <p>You currently have <%= link_to "#{current_user.pending_entries.length.humanize} pending #{current_user.pending_entries.length == 1 ? 'entry' : 'entries'}", entries_path %> for the <%= @contest %>.</p>
       <% end %>
     <% else %>
       <p>You have not yet submitted any entries for the <%= @contest.year %> contest. Begin by <%= link_to 'submitting an entry', new_entry_path %>.</p>

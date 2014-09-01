@@ -1,5 +1,5 @@
 <p id="entry-<%= entry.unique_hash %>" class="entry">
-  <%= link_to "#{entry.category}", entry.confirmation_url %><br>
+  <%= link_to "#{entry.category}", entry_confirmation_path(entry.unique_hash) %><br>
   <% if entry.category.category_type.maximum_files > 0 %>
     <small>
       <%= entry.images.length %> <%= entry.images.length == 1 ? 'image has' : 'images have' %> been uploaded for this category.
