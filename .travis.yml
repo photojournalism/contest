@@ -1,7 +1,7 @@
 language: ruby
 rvm:
   - 2.1.1
-script: bundle exec rspec spec/
+script: bash script/ci-test
 branches:
   only:
     - master
