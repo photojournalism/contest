@@ -24,11 +24,11 @@ Rails.application.routes.draw do
   delete 'entries/:hash' => 'entries#destroy', :as => :delete_entry
 
   # Image Routes
-  get  'images/upload' => 'images#for_entry'
-  post 'images/upload' => 'images#upload'
-  get  'images/download/:hash' => 'images#download'
-  get  'images/thumbnail/:hash' => 'images#thumbnail'
-  delete 'images/:hash' => 'images#destroy'
+  get  'images/upload' => 'images#for_entry', :as => :images_list
+  post 'images/upload' => 'images#upload',    :as => :upload_image
+  get  'images/download/:hash' => 'images#download',   :as => :download_image
+  get  'images/thumbnail/:hash' => 'images#thumbnail', :as => :image_thumbnail
+  delete 'images/:hash' => 'images#destroy', :as => :delete_image
 
   # Contact Routes
   post 'contact/report_a_problem' => 'contact#report_a_problem'

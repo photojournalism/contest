@@ -94,15 +94,15 @@ class Image < ActiveRecord::Base
   end
 
   def download_url
-    "/images/download/#{unique_hash}"
+    Rails.application.routes.url_helpers.download_image_path(unique_hash)
   end
 
   def thumbnail_url
-    "/images/thumbnail/#{unique_hash}"
+    Rails.application.routes.url_helpers.image_thumbnail_path(unique_hash)
   end
 
   def delete_url
-    "/images/#{unique_hash}"
+    Rails.application.routes.url_helpers.delete_image_path(unique_hash)
   end
 
   # Deletes the image and its thumbnail, along with the database record
