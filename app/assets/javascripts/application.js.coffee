@@ -15,3 +15,4 @@
 #= require bootstrap-sprockets
 #= require main
 #= require_tree ./app
+#= require_tree ./judging

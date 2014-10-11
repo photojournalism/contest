@@ -11,6 +11,19 @@
 
 <%= render partial: 'shared/judging/navigation' %>
 
+<div id="sidebar-entries">
+  <h4><%= @current_category %> Entries</h4>
+  <ul>
+  <% @entries.each do |entry| %>
+    <% if entry.images.size > 0 %>
+    <li class="sidebar-entry">
+      <a href="/judging/entry/<%= entry.unique_hash %>" class="sidebar-entry-hash" data-entry-hash="<%= entry.unique_hash %>">Entry #<%= entry.id %></a>
+    </li>
+    <% end %>
+  <% end %>
+  </ul>
+</div>
+
 <%= yield %>
 
 </body>
