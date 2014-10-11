@@ -11,6 +11,11 @@ Rails.application.routes.draw do
 
   resources :agreements
 
+  scope :module => 'judging' do
+    get '/judging/entries' => 'entries#index', :as => :judging_entries
+  end
+
+
   get 'states/select/:country_id' => 'states#get_select_for_country'
 
   # Entry Routes
