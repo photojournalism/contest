@@ -29,6 +29,10 @@ class Entry < ActiveRecord::Base
     destroy!
   end
 
+  def sorted_images
+    self.images.sort { |x,y| x.number <=> y.number }
+  end
+
   def category_type
     category.category_type
   end
