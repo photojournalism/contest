@@ -3,8 +3,7 @@
 
 <div id="entry-view">
 
-  <h1><%= @current_category %></h1>
-  <p><%= @current_category.description %></p>
+  <%= render :partial => 'shared/judging/category_description' %>
   <hr>
 
   <h3>Entry #<%= @entry.id %></h3>

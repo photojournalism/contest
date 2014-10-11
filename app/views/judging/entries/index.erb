@@ -1,5 +1,5 @@
 <div id="entry-view">
-  <h2><%= @current_category %></h2>
-  <p><%= @current_category.description %></p>
+  <%= render :partial => 'shared/judging/category_description' %>
+  <hr>
   <p>Please select an entry from the sidebar.</p>
 </div>

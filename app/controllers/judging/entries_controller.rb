@@ -17,6 +17,6 @@ class Judging::EntriesController < ApplicationController
     @contest = Contest.current
     @categories = @contest.categories
     @current_category = category ? category : (params[:category_id] ? Category.find(params[:category_id]) : @categories.first)
-    @entries = Entry.where(:contest => @contest, :category => @current_category)
+    @entries = Entry.where(:contest => @contest, :category => @current_category, :pending => false)
   end
 end
