@@ -1,3 +1,33 @@
 body.judging {
-	background: #282828;
+	background: #333;
+  color: #aaa;
+
+  a, a:visited {
+    color: #ccc;
+
+    &:hover {
+      color: #fff;
+    }
+  }
+
+  #sidebar-entries {
+    background: #222;
+    width: 15%;
+    height: 100vh;
+    padding: 20px;
+    margin-top: -20px;
+    float: left;
+
+    .sidebar-entry-hash {
+      cursor: pointer;
+    }
+  }
+
+  #entry-view {
+    width: 85%;
+    height: 100%;
+    float: right;
+    padding: 20px;
+    margin-top: -20px;
+  }
 }

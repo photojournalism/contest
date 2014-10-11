@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   scope :module => 'judging' do
     get '/judging/entries' => 'entries#index', :as => :judging_entries
+    get '/judging/entries/:category_id' => 'entries#index'
   end
 
 

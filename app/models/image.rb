@@ -81,6 +81,10 @@ class Image < ActiveRecord::Base
     "/images/contest/#{entry.contest.year}/#{entry.category.slug}/#{entry.unique_hash}/#{filename}"
   end
 
+  def public_thumbnail_url
+    "/images/contest/#{entry.contest.year}/#{entry.category.slug}/#{entry.unique_hash}/thumbnails/#{filename}"
+  end
+
   # Used for the jQuery FileUpload plugin
   def to_hash
     {

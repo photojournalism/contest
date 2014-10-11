@@ -1,0 +1,10 @@
+<div id="sidebar-entries">
+  <% @entries.each do |entry| %>
+    <div class="sidebar-entry">
+      <h4><a class="sidebar-entry-hash" data-entry-hash="<%= entry.unique_hash %>"><%= entry.unique_hash[0, 3] %></a></h4>
+    </div>
+  <% end %>
+</div>
+<div id="entry-view">
+  <h1>Judging <%= @current_category %></h1>
+</div>
