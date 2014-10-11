@@ -1,9 +1,9 @@
 <h1><%= @current_category %></h1>
 <div class="form-group">
   <label>Category Description</label>
-  <span><%= @current_category.description %></span>
+  <span><%= @current_category.description.html_safe %></span>
 </div>
 <div class="form-group">
   <label>Category Type Description</label>
-  <span><%= @current_category.category_type.description %></span>
+  <span><%= @current_category.category_type.description.html_safe %></span>
 </div>
