@@ -23,7 +23,7 @@
         <div class="form-group">
           <select id="judging-category" class="form-control">
           <% @categories.each do |category| %>
-            <option value="<%= category.id %>"><%= category.name %></option>
+            <option value="<%= category.id %>"<% if @current_category.id == category.id %> selected<% end %>><%= category.name %></option>
           <% end %>
           </select>
         </div>
