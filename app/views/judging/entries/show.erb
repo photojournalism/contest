@@ -2,7 +2,12 @@
 <link rel="stylesheet" href="/assets/bootstrap-image-gallery/bootstrap-image-gallery.css">
 
 <div id="entry-view">
-  <h1>Entry #<%= @entry.id %></h1>
+
+  <h1><%= @current_category %></h1>
+  <p><%= @current_category.description %></p>
+  <hr>
+
+  <h3>Entry #<%= @entry.id %></h3>
 
   <!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
   <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-use-bootstrap-modal="false">
@@ -39,18 +44,22 @@
     </div>
   </div>
 
-  <% if @entry.category.category_type.minimum_files > 0 %>
-  <div id="entry-images">
 
-    <% @entry.images.each do |image| %>
-      <div class="judging-entry-image">
-      <a href="<%= image.public_url %>" data-gallery>
-        <img src="<%= image.public_url %>">
-      </a>
-      </div>
+  <div id="links">
+
+    <% if @entry.category_type.has_url %>
+        <a href="<%= @entry.url %>" target="_blank"><%= @entry.url %></a>
+    <% elsif @entry.category_type.minimum_files > 0 %>
+      <% @entry.images.each do |image| %>
+        <div class="judging-entry-image">
+        <a href="<%= image.public_url %>" data-gallery>
+          <img src="<%= image.public_url %>">
+        </a>
+        </div>
+      <% end %>
     <% end %>
+
   </div>
-  <% end %>
 </div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -58,20 +67,3 @@
 <script src="/assets/bootstrap-image-gallery/bootstrap-image-gallery.js"></script>
 </body>
 </html>
-
-
-<%#<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-<link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
-<link rel="stylesheet" href="css/bootstrap-image-gallery.css">
-<link rel="stylesheet" href="css/demo.css">
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<!-- Bootstrap JS is not required, but included for the responsive demo navigation and button states -->
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
-<script src="http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
-<script src="js/bootstrap-image-gallery.js"></script>
-<script src="js/demo.js"></script>
-
-
-
-%>
