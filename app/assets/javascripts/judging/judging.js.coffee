@@ -1,5 +1,6 @@
 Judging = do($ = jQuery) ->
   obj = {}
+  viewCaptions = false
 
   obj.init = ->
     $("#judging-category").on("change", ->
@@ -11,19 +12,25 @@ Judging = do($ = jQuery) ->
       number = $(this).attr("data-index")
       $("#current-caption").empty().append($.trim($("#caption-#{number}").html()))
     )
-    $('#blueimp-gallery').on('closed', (event) ->
+
+    $('#blueimp-gallery').on('opened', (event) ->
+      if (viewCaptions)
+        $("#current-caption").show()
+    ).on('closed', (event) ->
       $("#current-caption").hide()
     ).on('slidecomplete', (event, index, slide) ->
       $("#current-caption").empty().append($.trim($("#caption-#{index}").html()))
     )
 
     document.addEventListener('keyup', (e) ->
-      if (e.altKey && e.keyCode == 67)
+      if (e.altKey && e.keyCode == 67 && $("#blueimp-gallery").is(":visible"))
         currentCaption = $("#current-caption")
         if (currentCaption.is(":visible"))
           currentCaption.hide()
+          viewCaptions = false
         else
           currentCaption.show()
+          viewCaptions = true
     , false)
 
   obj
