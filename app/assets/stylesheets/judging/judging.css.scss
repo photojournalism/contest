@@ -62,3 +62,17 @@ body.judging {
     }
   }
 }
+
+#current-caption {
+  display: none;
+  z-index: 999999;
+  position: absolute;
+  bottom: 0;
+  left: 300;
+  font-size: 16px;
+  padding: 30px;
+  margin: 0 auto;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+}

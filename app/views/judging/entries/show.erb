@@ -8,7 +8,7 @@
   <h3>Entry #<%= @entry.id %></h3>
 
   <!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
-  <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-use-bootstrap-modal="false">
+  <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-use-bootstrap-modal="false" data-slideshow-interval="2000">
     <!-- The container for the modal slides -->
     <div class="slides"></div>
     <!-- Controls for the borderless lightbox -->
@@ -48,17 +48,22 @@
     <% if @entry.category_type.has_url %>
         <a href="<%= @entry.url %>" target="_blank"><%= @entry.url %></a>
     <% elsif @entry.category_type.minimum_files > 0 %>
-      <% @entry.sorted_images.each do |image| %>
+      <% @entry.sorted_images.each_with_index do |image, index| %>
         <div class="judging-entry-image">
-        <a href="<%= image.public_url %>" data-gallery>
+        <a class="judging-entry-image-link" data-index="<%= index %>" href="<%= image.public_url %>" data-gallery>
           <img src="<%= image.public_url %>">
         </a>
+        <span class="judging-image-caption" style="display:none" id="caption-<%= index %>">
+          <%= image.caption %>
+        </span>
         </div>
       <% end %>
     <% end %>
 
   </div>
 </div>
+
+<div id="current-caption"></div>
 
 <%= javascript_include_tag 'bootstrap-image-gallery' %>
 </body>
