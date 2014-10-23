@@ -1,5 +1,6 @@
 class Judging::EntriesController < ApplicationController
 
+  before_action :require_admin
   layout "judging"
 
   def index
