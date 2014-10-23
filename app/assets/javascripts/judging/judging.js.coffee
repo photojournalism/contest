@@ -11,9 +11,7 @@ Judging = do($ = jQuery) ->
       number = $(this).attr("data-index")
       $("#current-caption").empty().append($.trim($("#caption-#{number}").html()))
     )
-    $('#blueimp-gallery').on('opened', (event) ->
-      $("#current-caption").show()
-    ).on('closed', (event) ->
+    $('#blueimp-gallery').on('closed', (event) ->
       $("#current-caption").hide()
     ).on('slidecomplete', (event, index, slide) ->
       $("#current-caption").empty().append($.trim($("#caption-#{index}").html()))
