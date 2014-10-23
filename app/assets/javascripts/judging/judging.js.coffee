@@ -19,9 +19,14 @@ Judging = do($ = jQuery) ->
       $("#current-caption").empty().append($.trim($("#caption-#{index}").html()))
     )
 
-    $("#current-caption").click( ->
-      $(this).hide()
-    )
+    document.addEventListener('keyup', (e) ->
+      if (e.altKey && e.keyCode == 67)
+        currentCaption = $("#current-caption")
+        if (currentCaption.is(":visible"))
+          currentCaption.hide()
+        else
+          currentCaption.show()
+    , false)
 
   obj
 
