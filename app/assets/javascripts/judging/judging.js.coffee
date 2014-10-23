@@ -8,17 +8,12 @@ Judging = do($ = jQuery) ->
       window.location.href = "/judging/entries/#{categoryId}"
     )
 
-    $(".judging-entry-image-link").click( ->
-      number = $(this).attr("data-index")
-      $("#current-caption").empty().append($.trim($("#caption-#{number}").html()))
-    )
-
     $('#blueimp-gallery').on('opened', (event) ->
       if (viewCaptions)
         $("#current-caption").show()
     ).on('closed', (event) ->
       $("#current-caption").hide()
-    ).on('slidecomplete', (event, index, slide) ->
+    ).on('slide', (event, index, slide) ->
       $("#current-caption").empty().append($.trim($("#caption-#{index}").html()))
     )
 
