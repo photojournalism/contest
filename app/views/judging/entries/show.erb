@@ -48,15 +48,30 @@
     <% if @entry.category_type.has_url %>
         <a href="<%= @entry.url %>" target="_blank"><%= @entry.url %></a>
     <% elsif @entry.category_type.minimum_files > 0 %>
-      <% @entry.sorted_images.each_with_index do |image, index| %>
-        <div class="judging-entry-image">
-        <a class="judging-entry-image-link" data-index="<%= index %>" href="<%= image.public_url %>" data-gallery>
-          <img src="<%= image.public_url %>">
-        </a>
-        <span class="judging-image-caption" style="display:none" id="caption-<%= index %>">
-          <%= image.caption %>
-        </span>
-        </div>
+      <% if @entry.category_type.maximum_files == 1 %>
+        <div class="judging-entry-single-image">
+          <a class="judging-entry-image-link" data-index="0" href="<%= @entry.images.first.public_url %>" data-gallery>
+            <img src="<%= @entry.images.first.public_url %>">
+          </a>
+          <span class="judging-image-caption" style="display:none" id="caption-0">
+            <%= @entry.images.first.caption %>
+          </span>
+          </div>
+        <p>
+          <h4>Caption:</h4>
+          <%= @entry.images.first.caption %>
+        </p>
+      <% else %>
+        <% @entry.sorted_images.each_with_index do |image, index| %>
+          <div class="judging-entry-image">
+            <a class="judging-entry-image-link" data-index="<%= index %>" href="<%= image.public_url %>" data-gallery>
+              <img src="<%= image.public_url %>">
+            </a>
+            <span class="judging-image-caption" style="display:none" id="caption-<%= index %>">
+              <%= image.caption %>
+            </span>
+          </div>
+        <% end %>
       <% end %>
     <% end %>
 
