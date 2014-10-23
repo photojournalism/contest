@@ -7,5 +7,5 @@ Rails.application.config.assets.version = '1.0'
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 # Rails.application.config.assets.precompile += %w( search.js )
 
-Rails.application.config.assets.precompile += %w( jquery-fileupload.js )
-Rails.application.config.assets.precompile += %w( jquery-fileupload.css )
+Rails.application.config.assets.precompile += %w( jquery-fileupload.js jquery-fileupload.css )
+Rails.application.config.assets.precompile += %w( bootstrap-image-gallery.js bootstrap-image-gallery.css )
