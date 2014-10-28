@@ -42,9 +42,8 @@ class Image < ActiveRecord::Base
     if i.errors.empty?
       i.write_to_filesystem(image)
 
-      # See http://www.imagemagick.org/RMagick/doc/image2.html#get_iptc_dataset
       magick = Magick::Image.read(i.path).first
-      i.caption = magick.get_iptc_dataset("2:120")
+      i.caption = magick.get_iptc_dataset(Magick::IPTC::Application::Caption)
 
       if i.caption.blank?
         i.delete
