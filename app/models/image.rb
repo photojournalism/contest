@@ -48,8 +48,14 @@ class Image < ActiveRecord::Base
       i.caption = "#{exif.image_description.to_s}".force_encoding("utf-8")
 
       if i.caption.blank?
-        i.delete
-        return { :success => false, :error => 'No caption data was found. Please ensure that the caption has been set using Photoshop or Photo Mechanic.' }
+        temp_img = Magick::Image.read(i.path).first
+        # See http://www.imagemagick.org/RMagick/doc/image2.html#get_iptc_dataset
+        i.caption = temp_img.get_iptc_dataset("2:120")
+
+        if i.caption.blank?
+          i.delete
+          return { :success => false, :error => 'No caption data was found. Please ensure that the caption has been set using Photoshop or Photo Mechanic.' }
+        end
       end
       i.save
 
