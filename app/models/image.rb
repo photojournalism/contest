@@ -40,28 +40,30 @@ class Image < ActiveRecord::Base
 
     i.validate!
     if i.errors.empty?
-      # Write to filesystem
       i.write_to_filesystem(image)
 
-      # Get caption data
-      exif = EXIFR::JPEG.new(i.path)
-      i.caption = "#{exif.image_description.to_s}".force_encoding("utf-8")
+      # See http://www.imagemagick.org/RMagick/doc/image2.html#get_iptc_dataset
+      magick = Magick::Image.read(i.path).first
+      i.caption = magick.get_iptc_dataset("2:120")
 
       if i.caption.blank?
-        temp_img = Magick::Image.read(i.path).first
-        # See http://www.imagemagick.org/RMagick/doc/image2.html#get_iptc_dataset
-        i.caption = temp_img.get_iptc_dataset("2:120")
-
-        if i.caption.blank?
-          i.delete
-          return { :success => false, :error => 'No caption data was found. Please ensure that the caption has been set using Photoshop or Photo Mechanic.' }
-        end
+        i.delete
+        return { :success => false, :error => 'No caption data was found. Please ensure that the caption has been set using Photoshop or Photo Mechanic.' }
       end
       i.save
 
-      # Reduce quality to 50%
-      i.reduce_quality(50)
-      i.create_thumbnail
+      # Reduce quality
+      magick.write(i.path) { self.quality = 50 }
+      i.size = magick.filesize
+      i.save
+
+      # Create thumbnail
+      FileUtils::mkdir_p "#{i.location}/thumbnails"
+      magick.change_geometry!('80x80') do |cols, rows, img|
+        img.resize!(cols,rows)
+      end
+      magick.write("#{i.location}/thumbnails/#{i.filename}") { self.quality = 50 }
+
       return { :success => true, :image => i }
     end
     return { :success => false, :image => i, :error => i.errors.messages[:filename] }
@@ -132,27 +134,6 @@ class Image < ActiveRecord::Base
       errors.add(:filename, "Unsupported filetype. The #{entry.category} category requires one of the following: #{entry.category.file_types}")
       return
     end
-  end
-
-  # Writes the image's thumbnail to the filesystem at 80x80 and 50% quality
-  def create_thumbnail
-    FileUtils::mkdir_p "#{location}/thumbnails"
-    image = Magick::Image.read(path).first
-    image.change_geometry!('80x80') do |cols, rows, img|
-      img.resize!(cols,rows)
-    end
-    image.write("#{location}/thumbnails/#{filename}") { self.quality = 50 }
-  end
-
-  # Reduces the quality of the image
-  #
-  # @param quality [Integer] The percent quality to be reduced to.
-  def reduce_quality(quality)
-    image = Magick::Image::read(path).first
-    image.write(path) { self.quality = quality }
-    self.size = image.filesize
-    self.save
-    image.destroy!
   end
 
   # Writes the image to the filesystem
