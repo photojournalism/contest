@@ -48,7 +48,6 @@ gem 'devise'
 # Biggs for address formatting
 gem 'biggs'
 gem 'rmagick', :require => 'RMagick'
-gem 'exifr'
 gem 'humanize'
 gem 'coveralls', :require => false
 gem 'rails_admin'
