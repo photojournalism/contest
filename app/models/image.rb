@@ -43,7 +43,9 @@ class Image < ActiveRecord::Base
       i.write_to_filesystem(image)
 
       magick = Magick::Image.read(i.path).first
-      i.caption = magick.get_iptc_dataset(Magick::IPTC::Application::Caption)
+      caption = magick.get_iptc_dataset(Magick::IPTC::Application::Caption)
+
+      i.caption = caption.nil? ? "" : caption.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
 
       if i.caption.blank?
         i.delete
