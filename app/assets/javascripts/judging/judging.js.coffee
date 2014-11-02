@@ -4,8 +4,14 @@ Judging = do($ = jQuery) ->
   hash = null
 
   _updatePrevAndNextLinks = ->
-    $("#previous-entry").attr("href", $("#entry-#{hash}").attr("data-previous-entry"))
-    $("#next-entry").attr("href", $("#entry-#{hash}").attr("data-next-entry"))
+    prevHash = $("#entry-#{hash}").attr("data-previous-entry")
+    nextHash = $("#entry-#{hash}").attr("data-next-entry")
+
+    if (!nextHash)
+      nextHash = $(".sidebar-entry-hash").first().attr("data-entry-hash")
+
+    $("#previous-entry").attr("href", prevHash)
+    $("#next-entry").attr("href", nextHash)
 
   obj.init = ->
     params = location.pathname.split("/")

@@ -5,7 +5,7 @@
   <%= render :partial => 'shared/judging/category_description' %>
   <hr>
 
-  <h3>Entry #<%= @entry.id %></h3>
+  <h3>Entry <%= @entry.unique_hash[0..6].upcase %></h3>
   <div>
     <a href="" id="previous-entry">Previous</a> &middot; <a href="" id="next-entry">Next</a>
   </div>

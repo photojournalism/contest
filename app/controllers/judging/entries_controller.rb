@@ -20,5 +20,6 @@ class Judging::EntriesController < ApplicationController
     @current_category = category ? category : (params[:category_id] ? Category.find(params[:category_id]) : @categories.first)
     @entries = Entry.where(:contest => @contest, :category => @current_category, :pending => false)
     @entries.each { |e| if !e.category_type.has_url && e.images.size == 0 then @entries.delete(e) end }
+    @entries = @entries.sort_by { |e| e.unique_hash }
   end
 end
