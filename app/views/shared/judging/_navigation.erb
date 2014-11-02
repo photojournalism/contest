@@ -17,6 +17,7 @@
       
       <ul class="nav navbar-nav navbar-right">
         <li><%= link_to (session[:hide_entries] ? 'Show' : 'Hide') + ' Non-Placing Entries', toggle_hidden_entries_path %></li>
+        <li><a href="" data-toggle="modal" data-target="#helpModal">Help</a></li>
         <li><%= link_to 'Return Home', root_path %></li>
       </ul>
 
@@ -33,3 +34,41 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+
+<!-- Modal -->
+<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="helpModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="helpModalLabel">Help</h4>
+      </div>
+      <div class="modal-body">
+        <h5>Category Selection</h5>
+        <p>Use the select dropdown box in the navigation bar to select the category to judge.</p>
+
+        <h5>Viewing Images</h5>
+        <p>For categories with multiple images, click the first image to bring up the gallery, and use the arrow keys to move the slideshow. Press the C key to view the captions.</p>
+
+        <h5>Hiding Non-Placing Entries</h5>
+        <p>Click the link "Hide Non-Placing Entries" in the navigation bar to hide entries that have been marked as Did Not Place. This makes it easier to see the images that are still relevant to judging.</p>
+
+        <h5>Keyboard Shortcuts</h5>
+        <ul>
+          <li>C - Show captions in gallery</li>
+          <li>Left Arrow - Previous Entry</li>
+          <li>Right Arrow - Next Entry</li>
+          <li>1 - Mark entry as First Place</li>
+          <li>2 - Mark entry as Second Place</li>
+          <li>3 - Mark entry as Third Place</li>
+          <li>4 - Mark entry as Honorable Mention</li>
+          <li>0 - Mark entry as Did Not Place</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -49,7 +49,7 @@ Judging = do($ = jQuery) ->
 
     document.addEventListener('keyup', (e) ->
       if ($("#blueimp-gallery").is(":visible"))
-        if (e.altKey && e.keyCode == 67)
+        if (e.keyCode == 67)
           currentCaption = $("#current-caption")
           if (currentCaption.is(":visible"))
             currentCaption.hide()
