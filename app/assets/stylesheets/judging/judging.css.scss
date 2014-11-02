@@ -89,6 +89,14 @@ body.judging {
       max-height: 100%;
     }
   }
+
+  .modal-content {
+    background: #333;
+  }
+
+  .modal-header, .modal-footer {
+    border-color: #555;
+  }
 }
 
 #current-caption {
