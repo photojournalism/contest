@@ -35,7 +35,7 @@ Judging = do($ = jQuery) ->
     )
 
     $(".place-button").click( ->
-      _setPlace($(this).attr("data-place-id"))
+      _setPlace($(this).attr("data-place-number"))
     )
 
     $('#blueimp-gallery').on('opened', (event) ->

@@ -33,11 +33,11 @@ portfolio = CategoryType.create(:name => 'Portfolio', :description => 'This cate
 portfolio.file_types << jpeg
 
 puts "Creating places..."
-Place.create(:name => "First Place", :sequence_number => 1)
-Place.create(:name => "Second Place", :sequence_number => 2)
-Place.create(:name => "Third Place", :sequence_number => 3)
-Place.create(:name => "Honorable Mention", :sequence_number => 4)
-Place.create(:name => "Did Not Place", :sequence_number => 99)
+Place.create(:name => "First Place", :sequence_number => 1, :css_class => 'btn btn-success')
+Place.create(:name => "Second Place", :sequence_number => 2, :css_class => 'btn btn-info')
+Place.create(:name => "Third Place", :sequence_number => 3, :css_class => 'btn btn-primary')
+Place.create(:name => "Honorable Mention", :sequence_number => 4, :css_class => 'btn btn-warning')
+Place.create(:name => "Did Not Place", :sequence_number => 99, :css_class => 'btn btn-danger')
 
 puts "Creating categories..."
 Category.delete_all
