@@ -62,6 +62,10 @@ Judging = do($ = jQuery) ->
           window.location.href = prevHash
         else if (e.keyCode == 39)
           window.location.href = nextHash
+        else if (e.keyCode >= 49 && e.keyCode <= 52)
+          _setPlace(e.keyCode - 48)
+        else if (e.keyCode == 48)
+          _setPlace(99)
     , false)
 
     _setPrevAndNextLinks()

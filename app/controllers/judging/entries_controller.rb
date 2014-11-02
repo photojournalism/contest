@@ -15,7 +15,7 @@ class Judging::EntriesController < ApplicationController
 
   def place
     entry = Entry.where(:unique_hash => params[:hash]).first
-    place = Place.find(params[:id])
+    place = Place.where(:sequence_number => params[:id]).first
     if entry && place
       entry.place = place
       entry.save
