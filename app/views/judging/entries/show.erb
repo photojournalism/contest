@@ -5,10 +5,18 @@
   <%= render :partial => 'shared/judging/category_description' %>
   <hr>
 
-  <h3>Entry <%= @entry.unique_hash[0..6].upcase %></h3>
-  <div>
-    <a href="" id="previous-entry">Previous</a> &middot; <a href="" id="next-entry">Next</a>
+  <div style="float:left">
+    <h3>Entry <%= @entry.unique_hash[0..3].upcase %><%= " - #{@entry.place.name}" if @entry.place %></h3>
+    <div>
+      <a href="" id="previous-entry">Previous</a> &middot; <a href="" id="next-entry">Next</a>
+    </div>
   </div>
+  <div style="float:right">
+    <% @places.each do |place| %>
+      <button class="btn btn-default place-button" data-place-id="<%= place.id %>" <%= "disabled" if @entry.place && @entry.place.id == place.id %>><%= place.name %></button>
+    <% end %>
+  </div>
+  <div class="clearfix"></div>
 
   <!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
   <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-use-bootstrap-modal="false" data-slideshow-interval="2000">

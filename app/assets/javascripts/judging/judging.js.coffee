@@ -13,6 +13,15 @@ Judging = do($ = jQuery) ->
     $("#previous-entry").attr("href", prevHash)
     $("#next-entry").attr("href", nextHash)
 
+  _setPlace = (placeId) ->
+    $.ajax "/judging/entry/#{hash}/place",
+      type: 'put'
+      data: { id: placeId }
+      success: (data) ->
+        location.reload()
+      error: (data) ->
+        alert(data.responseJSON.message)
+
   obj.init = ->
     params = location.pathname.split("/")
     hash = params[params.length - 1]
@@ -20,6 +29,10 @@ Judging = do($ = jQuery) ->
     $("#judging-category").on("change", ->
       categoryId = $(this).val()
       window.location.href = "/judging/entries/#{categoryId}"
+    )
+
+    $(".place-button").click( ->
+      _setPlace($(this).attr("data-place-id"))
     )
 
     $('#blueimp-gallery').on('opened', (event) ->

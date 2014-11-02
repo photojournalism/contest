@@ -24,7 +24,7 @@
     
     <% elsif entry.images.size > 0 %>
       <li class="sidebar-entry">
-        <a id="entry-<%= entry.unique_hash %>" href="/judging/entry/<%= entry.unique_hash %>" data-previous-entry="<%= @entries[index-1].unique_hash if @entries[index-1] %>" data-next-entry="<%= @entries[index+1].unique_hash if @entries[index+1] %>" class="sidebar-entry-hash <%= "active" if @entry && entry.unique_hash == @entry.unique_hash %>" data-entry-hash="<%= entry.unique_hash %>">Entry <%= entry.unique_hash[0..6].upcase %></a>
+        <a id="entry-<%= entry.unique_hash %>" href="/judging/entry/<%= entry.unique_hash %>" data-previous-entry="<%= @entries[index-1].unique_hash if @entries[index-1] %>" data-next-entry="<%= @entries[index+1].unique_hash if @entries[index+1] %>" class="sidebar-entry-hash <%= "active" if @entry && entry.unique_hash == @entry.unique_hash %>" data-entry-hash="<%= entry.unique_hash %>">Entry <%= entry.unique_hash[0..3].upcase %><%= " - #{entry.place.name}" if entry.place %></a>
       </li>
     <% else %>
       <li><%= entry.id %></li>

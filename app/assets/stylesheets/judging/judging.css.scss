@@ -26,15 +26,20 @@ body.judging {
 
   #sidebar-entries {
     background: #222;
-    width: 15%;
+    width: 17%;
     min-height: calc(100% - 52px);
     padding: 20px;
     margin-top: -20px;
     float: left;
 
+    ul {
+      margin-left: -20px;
+    }
+
     .sidebar-entry-hash {
       cursor: pointer;
       font-family: Consolas, Monaco, monospace;
+      font-size: 12px;
 
       &.active {
         font-weight: bold;
@@ -43,7 +48,7 @@ body.judging {
   }
 
   #entry-view {
-    width: 85%;
+    width: 83%;
     float: right;
     padding: 20px;
     margin-top: -20px;
