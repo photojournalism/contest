@@ -2,16 +2,15 @@ Judging = do($ = jQuery) ->
   obj = {}
   viewCaptions = false
   hash = null
+  nextHash = null
+  prevHash = null
 
-  _updatePrevAndNextLinks = ->
+  _setPrevAndNextLinks = ->
     prevHash = $("#entry-#{hash}").attr("data-previous-entry")
     nextHash = $("#entry-#{hash}").attr("data-next-entry")
 
     if (!nextHash)
       nextHash = $(".sidebar-entry-hash").first().attr("data-entry-hash")
-
-    $("#previous-entry").attr("href", prevHash)
-    $("#next-entry").attr("href", nextHash)
 
   _setPlace = (placeId) ->
     $.ajax "/judging/entry/#{hash}/place",
@@ -49,17 +48,25 @@ Judging = do($ = jQuery) ->
     )
 
     document.addEventListener('keyup', (e) ->
-      if (e.altKey && e.keyCode == 67 && $("#blueimp-gallery").is(":visible"))
-        currentCaption = $("#current-caption")
-        if (currentCaption.is(":visible"))
-          currentCaption.hide()
-          viewCaptions = false
-        else
-          currentCaption.show()
-          viewCaptions = true
+      if ($("#blueimp-gallery").is(":visible"))
+        if (e.altKey && e.keyCode == 67)
+          currentCaption = $("#current-caption")
+          if (currentCaption.is(":visible"))
+            currentCaption.hide()
+            viewCaptions = false
+          else
+            currentCaption.show()
+            viewCaptions = true
+      else
+        if (e.keyCode == 37)
+          window.location.href = prevHash
+        else if (e.keyCode == 39)
+          window.location.href = nextHash
     , false)
 
-    _updatePrevAndNextLinks()
+    _setPrevAndNextLinks()
+    $("#previous-entry").click( -> $("#previous-entry").attr("href", prevHash))
+    $("#next-entry").click( -> $("#next-entry").attr("href", nextHash))
   obj
 
 $(document).ready ->

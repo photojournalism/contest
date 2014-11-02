@@ -5,6 +5,7 @@ class Judging::EntriesController < ApplicationController
 
   def index
     get_shared_fields
+    redirect_to :action => 'show', :hash => @entries.first.unique_hash
   end
 
   def show
