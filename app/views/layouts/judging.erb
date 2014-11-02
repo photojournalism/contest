@@ -24,7 +24,7 @@
     
     <% elsif entry.images.size > 0 %>
       <li class="sidebar-entry">
-        <a href="/judging/entry/<%= entry.unique_hash %>" class="sidebar-entry-hash" data-entry-hash="<%= entry.unique_hash %>">Entry #<%= entry.id %></a>
+        <a href="/judging/entry/<%= entry.unique_hash %>" class="sidebar-entry-hash <%= "active" if @entry && entry.unique_hash == @entry.unique_hash %>" data-entry-hash="<%= entry.unique_hash %>">Entry #<%= entry.id %></a>
       </li>
     <% end %>
 
