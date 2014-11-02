@@ -1,8 +1,16 @@
 Judging = do($ = jQuery) ->
   obj = {}
   viewCaptions = false
+  hash = null
+
+  _updatePrevAndNextLinks = ->
+    $("#previous-entry").attr("href", $("#entry-#{hash}").attr("data-previous-entry"))
+    $("#next-entry").attr("href", $("#entry-#{hash}").attr("data-next-entry"))
 
   obj.init = ->
+    params = location.pathname.split("/")
+    hash = params[params.length - 1]
+
     $("#judging-category").on("change", ->
       categoryId = $(this).val()
       window.location.href = "/judging/entries/#{categoryId}"
@@ -28,6 +36,7 @@ Judging = do($ = jQuery) ->
           viewCaptions = true
     , false)
 
+    _updatePrevAndNextLinks()
   obj
 
 $(document).ready ->
