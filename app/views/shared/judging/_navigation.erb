@@ -16,6 +16,7 @@
       <ul class="nav navbar-nav"></ul>
       
       <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to (session[:hide_entries] ? 'Show' : 'Hide') + ' Non-Placing Entries', toggle_hidden_entries_path %></li>
         <li><%= link_to 'Return Home', root_path %></li>
       </ul>
 

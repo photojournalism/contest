@@ -18,7 +18,11 @@ Judging = do($ = jQuery) ->
       type: 'put'
       data: { id: placeId }
       success: (data) ->
-        location.reload()
+        console.log(data)
+        if (data.next)
+          window.location.href = $("#entry-#{hash}").attr("data-next-entry")
+        else
+          window.location.reload()
       error: (data) ->
         alert(data.responseJSON.message)
 

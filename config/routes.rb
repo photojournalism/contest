@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   scope :module => 'judging' do
     get '/judging/entries' => 'entries#index', :as => :judging_entries
+    get '/judging/entries/toggle_hidden' => 'entries#toggle_hidden_entries', :as => :toggle_hidden_entries
     get '/judging/entries/:category_id' => 'entries#index'
     get '/judging/entry/:hash' => 'entries#show', :as => :judging_entry
     put '/judging/entry/:hash/place' => 'entries#place', :as => :placing_entry
