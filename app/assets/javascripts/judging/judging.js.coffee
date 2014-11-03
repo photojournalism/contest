@@ -1,4 +1,4 @@
-Judging = do($ = jQuery) ->
+@Judging = do($ = jQuery) ->
   obj = {}
   viewCaptions = false
   hash = null
@@ -72,6 +72,3 @@ Judging = do($ = jQuery) ->
     $("#previous-entry").click( -> $("#previous-entry").attr("href", prevHash))
     $("#next-entry").click( -> $("#next-entry").attr("href", nextHash))
   obj
-
-$(document).ready ->
-  Judging.init()
