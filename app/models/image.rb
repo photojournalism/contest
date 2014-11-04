@@ -99,8 +99,8 @@ class Image < ActiveRecord::Base
     {
       :name => filename,
       :size => size,
-      :url => download_url,
-      :thumbnailUrl => thumbnail_url,
+      :url => public_url,
+      :thumbnailUrl => public_thumbnail_url,
       :deleteUrl => delete_url,
       :deleteType => "DELETE"
     }
