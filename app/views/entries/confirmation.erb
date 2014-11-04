@@ -27,7 +27,7 @@
       <% @entry.images.each do |image| %>
         <div>
           <div class="entry-image pull-left">
-            <img src="<%= image.thumbnail_url %>" class="pull-left">
+            <img src="<%= image.public_thumbnail_url %>" class="pull-left">
             <div class="entry-image-info" class="pull-left">
               <label>Filename</label> <a href="<%= image.download_url %>"><%= image.filename %></a><br>
               <label>Caption:</label> <%= image.caption %>
