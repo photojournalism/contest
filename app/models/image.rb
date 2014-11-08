@@ -60,7 +60,7 @@ class Image < ActiveRecord::Base
 
       # Create thumbnail
       FileUtils::mkdir_p "#{i.location}/thumbnails"
-      magick.change_geometry!('80x80') do |cols, rows, img|
+      magick.change_geometry!('500x500') do |cols, rows, img|
         img.resize!(cols,rows)
       end
       magick.write("#{i.location}/thumbnails/#{i.filename}") { self.quality = 50 }
