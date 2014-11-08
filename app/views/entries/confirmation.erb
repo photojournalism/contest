@@ -24,7 +24,7 @@
       </p>
     <% elsif @entry.category.category_type.minimum_files > 0 %>
       <h3>Images</h3>
-      <% @entry.images.each do |image| %>
+      <% @entry.images.sort_by { |i| i.number }.each do |image| %>
         <div>
           <div class="entry-image pull-left">
             <a href="<%= image.public_url %>"><img src="<%= image.public_thumbnail_url %>" class="pull-left"></a>
