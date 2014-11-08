@@ -22,4 +22,4 @@
 en:
   contest:
     not_open: 'The <strong>%{contest}</strong> will open on <strong>%{open_date}</strong>.'
-    ended: 'The <strong>%{contest}</strong> has ended.'
+    ended: 'The <strong>%{contest}</strong> is no longer accepting entries.'
