@@ -76,7 +76,7 @@
         <% @entry.sorted_images.each_with_index do |image, index| %>
           <div class="judging-entry-image">
             <a class="judging-entry-image-link" data-index="<%= index %>" href="<%= image.public_url %>" data-gallery>
-              <img src="<%= image.public_url %>">
+              <img src="<%= image.public_thumbnail_url %>">
             </a>
             <span class="judging-image-caption" style="display:none" id="caption-<%= index %>">
               <%= image.caption %>

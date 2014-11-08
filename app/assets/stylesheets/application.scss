@@ -62,6 +62,10 @@ a, a:visited {
   height: 200px;
 }
 
+.preview img, .entry-image img {
+  width: 80px;
+}
+
 .spin {
   -webkit-animation: spin 1s infinite linear;
   -moz-animation: spin 1s infinite linear;

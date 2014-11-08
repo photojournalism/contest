@@ -5,7 +5,17 @@ class Judging::EntriesController < ApplicationController
 
   def index
     get_shared_fields
-    redirect_to :action => 'show', :hash => @entries.first.unique_hash
+    if @current_category.category_type.maximum_files > 1
+      redirect_to :action => 'show', :hash => @entries.first.unique_hash
+      return
+    end
+
+    @images = []
+    if @current_category.category_type.maximum_files == 1  
+      @entries.each do |entry|
+        @images << entry.images.first
+      end
+    end
   end
 
   def show
