@@ -64,7 +64,7 @@ RSpec.describe EntriesController, :type => :controller do
       sign_in user
       set_contest_dates(3.days.ago, 1.day.ago)
       get :new
-      expect(response.body).to match 'ended'
+      expect(response.body).to match 'no longer accepting entries'
       sign_out user
     end
 
