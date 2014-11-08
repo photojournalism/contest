@@ -5,7 +5,7 @@
     <h1 class="heading"><%= yield(:title) %></h1>
     <%= render :partial => 'shared/messages' %>
 
-    <% if @contest.is_open? %>
+    <% if @contest.is_open? || current_user.admin %>
       <p>The following form is used to create a new entry for the <strong><%= @contest %></strong>.</p>
       <p><strong>If you are entering multiple entries, you will need to repeat this process for each category entry, even if you have multiple entries in the same category.</strong></p>
 
