@@ -10,6 +10,14 @@ class User < ActiveRecord::Base
   has_many :entries
   has_one :country, :through => :state
 
+  before_save do |user|
+    user.first_name.strip!
+    user.last_name.strip!
+
+    user.first_name.capitalize!
+    user.last_name.capitalize!
+  end
+
   def full_name
     "#{first_name} #{last_name}"
   end
