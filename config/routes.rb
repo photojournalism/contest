@@ -42,6 +42,9 @@ Rails.application.routes.draw do
   # Contact Routes
   post 'contact/report_a_problem' => 'contact#report_a_problem'
 
+  get 'export/winners/:year' => 'export#winners'
+  get 'export/winners' => 'export#winners'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
