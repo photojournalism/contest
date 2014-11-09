@@ -11,7 +11,9 @@
     <% else %>
       <% if @completed_entries.length > 0 %>
         <h4>Completed Entries</h4>
-
+        
+        <p>You have <%= pluralize(@completed_entries.length, 'completed entry') %>.</p>
+        
         <% @completed_entries.each do |entry| %>
           <%= render partial: 'entry', locals: {entry: entry} %>
         <% end %>
@@ -19,6 +21,8 @@
 
       <% if @pending_entries.length > 0 %>
         <h4>Pending Entries</h4>
+
+        <p>You have <%= pluralize(@completed_entries.length, 'pending entry') %>.</p>
 
         <% @pending_entries.each do |entry| %>
           <%= render partial: 'entry', locals: {entry: entry} %>
