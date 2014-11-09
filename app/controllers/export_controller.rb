@@ -125,8 +125,7 @@ comments: on
         eos
       end
 
-      zip_exported_directory(contest.year)
-      download_exported_zip(contest.year)
+      export(contest.year)
     else
       render :plain => "There is no contest for the year #{params[:year]}"
     end
@@ -134,14 +133,20 @@ comments: on
 
   private
 
+  def export(year)
+    zip_exported_directory(year)
+    download_exported_zip(year)
+
+    FileUtils.rm("/tmp/contest-#{year}-export.zip")
+    FileUtils.rm_rf("/tmp/contest-#{year}-export")
+  end
+
   def zip_exported_directory(year)
     directory = "/tmp/contest-#{year}-export"
-    zipfile_name = "/tmp/contest-#{year}-export.zip"
+    zipfile_name = "#{directory}.zip"
     options = { "directories-recursively" => true }
 
-    if File.exists?(zipfile_name)
-      FileUtils.rm(zipfile_name)
-    end
+    FileUtils.rm(zipfile_name) if File.exists?(zipfile_name)
 
     Zip::File.open(zipfile_name, Zip::File::CREATE) do |zipfile|
       puts "zipper: archiving directory: #{directory}"
