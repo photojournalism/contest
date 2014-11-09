@@ -16,12 +16,11 @@ class ExportController < ApplicationController
     contest = if params[:year] then Contest.where(:year => params[:year]).first else Contest.current end
 
     if contest
-      current_timestamp = Time.now.to_i
       base_path = "/tmp/contest-#{contest.year}-export"
       FileUtils.rm_rf(base_path)
       FileUtils.mkdir_p(base_path)
       
-      output = {
+      winners_yaml = {
         :year => contest.year,
         :info => "Below is a list of the winners from the Atlanta Photojournalism Seminar's #{contest.year} photo contest. Thank you to everyone who entered and participated in the contest, and congratulations to the winners!",
         :categories => []
@@ -77,7 +76,7 @@ class ExportController < ApplicationController
             end
           end
         end
-        output[:categories] << { :name => category.name, :url => "#{slug}/", :winners => winners }
+        winners_yaml[:categories] << { :name => category.name, :url => "#{slug}/", :winners => winners }
 
         erb_header = <<-eos
 ---
@@ -110,7 +109,7 @@ comments: on
       end
 
       # Write base winners YAML file
-      File.open("#{base_path}/contest/winners/#{contest.year}/winners.yml", 'w') { |f| f.write output.to_yaml }
+      File.open("#{base_path}/contest/winners/#{contest.year}/winners.yml", 'w') { |f| f.write winners_yaml.to_yaml }
 
       # Write main slideshow file for contest
       File.open("#{base_path}/contest/winners/#{contest.year}/slideshow.yml", 'w') { |f| f.write main_slideshow_yaml.to_yaml }
@@ -138,34 +137,31 @@ comments: on
   private
 
   def export(year)
-    zip_exported_directory(year)
-    download_exported_zip(year)
+    exported_directory = "/tmp/contest-#{year}-export"
+    zip_exported_directory(exported_directory)
+    download_exported_zip("#{exported_directory}.zip")
 
-    FileUtils.rm("/tmp/contest-#{year}-export.zip")
-    FileUtils.rm_rf("/tmp/contest-#{year}-export")
+    FileUtils.rm("#{exported_directory}.zip")
+    FileUtils.rm_rf(exported_directory)
   end
 
-  def zip_exported_directory(year)
-    directory = "/tmp/contest-#{year}-export"
+  def zip_exported_directory(directory)
     zipfile_name = "#{directory}.zip"
     options = { "directories-recursively" => true }
 
     FileUtils.rm(zipfile_name) if File.exists?(zipfile_name)
 
     Zip::File.open(zipfile_name, Zip::File::CREATE) do |zipfile|
-      puts "zipper: archiving directory: #{directory}"
-      directory_chosen_pathname = options["directories-recursively-splat"] ? directory : File.dirname(directory)  
-      directory_pathname = Pathname.new(directory_chosen_pathname)
+      directory_pathname = Pathname.new(File.dirname(directory))
       Dir[File.join(directory, '**', '**')].each do |file|                
-        file_pathname = Pathname.new(file)
-        file_relative_pathname = file_pathname.relative_path_from(directory_pathname)
+        file_relative_pathname = Pathname.new(file).relative_path_from(directory_pathname)
         zipfile.add(file_relative_pathname,file)
       end
     end
   end
 
-  def download_exported_zip(year)
-    zip_data = File.read("/tmp/contest-#{year}-export.zip") 
-    send_data(zip_data, :type => 'application/zip', :filename => "contest-#{year}-export.zip")
+  def download_exported_zip(filename)
+    zip_data = File.read(filename) 
+    send_data(zip_data, :type => 'application/zip', :filename => filename.split("/")[-1])
   end
 end
