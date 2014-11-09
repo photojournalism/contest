@@ -4,6 +4,10 @@ class ExportController < ApplicationController
 
   before_action :require_admin
 
+  def index
+    @contests = Contest.all.sort_by { |c| c.year }
+  end
+
   # This endpoint will export the winners of the contest into
   # the format to be used on the seminar's main website.
   #

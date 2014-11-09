@@ -1,0 +1,46 @@
+<% title 'Export Winners to Website' %>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h1><%= yield(:title) %></h1>
+
+    <p>Click the contest below that you would like to export the winners for.</p>
+
+    <ul>
+    <% @contests.each do |contest| %>
+      <li><%= link_to contest, "/export/winners/#{contest.year}" %></li>
+    <% end %>
+    </ul>
+
+    <h3>Help</h3>
+
+    <p>
+      This page will export the contest winners into the format that is needed for the main website.
+      A ZIP file will be downloaded with the following structure:
+    </p>
+
+    <pre>
+contest/
+  winners/
+    year/
+      category/
+        index.html.erb
+        slideshow.yml
+        ...
+      index.html.erb
+      winners.yml
+      slideshow.yml
+      ...
+images/
+  year/
+    contest-winners/
+      category/
+        image-1.jpg
+        image-2.jpg
+        ...
+      ...
+    </pre>
+
+    <p>You can then copy and paste the <code>contest</code> and <code>images</code> directories into the source folder of the main website, and "Merge" the folders.</p>
+  </div>
+</div>

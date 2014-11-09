@@ -44,6 +44,7 @@ Rails.application.routes.draw do
 
   get 'export/winners/:year' => 'export#winners'
   get 'export/winners' => 'export#winners'
+  get 'export' => 'export#index', :as => :export
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
