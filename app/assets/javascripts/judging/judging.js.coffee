@@ -47,6 +47,8 @@
       $("#current-caption").empty().append($.trim($("#caption-#{index}").html()))
     )
 
+    $("#sidebar-entries").height($("#entry-view").height() + 100)
+
     document.addEventListener('keyup', (e) ->
       if ($("#blueimp-gallery").is(":visible"))
         if (e.keyCode == 67)
