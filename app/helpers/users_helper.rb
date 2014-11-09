@@ -9,7 +9,7 @@ module UsersHelper
   def gravatar_url_for(user)
     md5 = Digest::MD5.new
     md5 << user.email.downcase
-    "http://www.gravatar.com/avatar/#{gravatar_id_for(user)}?s=400"
+    "https://www.gravatar.com/avatar/#{gravatar_id_for(user)}?s=400"
   end
 
   def gravatar_for(user, width=400, css_class='')
