@@ -27,7 +27,7 @@
     </div>
   <% end %>
   
-  <% if @entry.contest.is_open? %>
+  <% if @entry.contest.is_open? || current_user.admin %>
     <hr>
     <button type="button" class="btn btn-danger pull-left" id="entry-delete-button"><i class="glyphicon glyphicon-remove"></i> Delete Entry</button>
     <button type="button" class="btn btn-primary pull-right" id="entry-save-button"><i class="glyphicon glyphicon-save"></i> Save Entry</button>
