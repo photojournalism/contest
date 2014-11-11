@@ -51,6 +51,16 @@ class Contest < ActiveRecord::Base
     close_date.strftime(DATE_FORMAT)
   end
 
+  def winning_entries
+    entries_count = 0
+    entries.each do |entry|
+      if entry.place && entry.place != 99
+        entries_count += 1
+      end
+    end
+    entries_count
+  end
+
   def self.current
     Contest.all.order('year DESC').first
   end
