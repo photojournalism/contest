@@ -1,6 +1,6 @@
 @Judging = do($ = jQuery) ->
   obj = {}
-  viewCaptions = false
+  viewCaptions = true
   hash = null
   nextHash = null
   prevHash = null
@@ -47,7 +47,7 @@
       $("#current-caption").empty().append($.trim($("#caption-#{index}").html()))
     )
 
-    $("#sidebar-entries").height(6000)
+    $("#sidebar-entries").height($("#entry-view").height() + 100)
 
     slider = $("#slider")
     slider.slider({
@@ -84,7 +84,7 @@
         else if (e.keyCode >= 49 && e.keyCode <= 52)
           _setPlace(e.keyCode - 48)
         else if (e.keyCode == 48)
-          _setPlace(99)
+          _setPlace(5)
     , false)
 
     _setPrevAndNextLinks()
