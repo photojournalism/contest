@@ -106,7 +106,7 @@ body.judging {
 #current-caption {
   display: none;
   z-index: 999999;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 300;
   font-size: 16px;
@@ -120,7 +120,7 @@ body.judging {
 #single-image-buttons {
   z-index: 999999;
   display: none;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 30%;
   margin-left: auto;

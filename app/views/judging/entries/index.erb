@@ -58,9 +58,9 @@
 <div id="current-caption"></div>
 <div id="single-image-buttons">
   <% @places.each do |place| %>
-    <button id="place-<%= place.id %>" class="single-image-place-button <%= place.css_class %>" data-place-number="<%= place.id %>"><%= place.name %></button>
+    <button id="place-<%= place.id %>" class="single-image-place-button <%= place.css_class %> btn-sm" data-place-number="<%= place.id %>"><%= place.name %></button>
   <% end %>
-  <button class="btn btn-default" id="place-clear">Undo</button>
+  <button class="btn btn-default btn-sm" id="place-clear">Undo</button>
 </div>
 
 <%= javascript_include_tag 'bootstrap-image-gallery' %>
