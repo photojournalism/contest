@@ -83,7 +83,7 @@
       min: 200,
       max: 500,
       step: 25,
-      value: 300,
+      value: 350,
       formatter: (value) ->
         "#{value}px"
     })
