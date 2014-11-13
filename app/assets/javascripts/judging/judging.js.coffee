@@ -64,6 +64,9 @@
       height = width * (2.0/3.0)
       $(".judging-entry-image").css('width', "#{width}px")
       $(".judging-entry-image").css('height', "#{height}px")
+      setTimeout( ->
+        $("#sidebar-entries").height($("#entry-view").height() + 100)
+      , 300)
     )
 
     document.addEventListener('keyup', (e) ->
