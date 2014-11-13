@@ -134,6 +134,30 @@ comments: on
     end
   end
 
+  def images
+    contest = Contest.current
+    base_dir = "/tmp/contest-#{contest.year}-images"
+    FileUtils.mkdir_p(base_dir)
+    Category.all.each do |c|
+      slug = c.name.downcase.gsub(' ', '-').gsub('/', '-')
+      FileUtils.mkdir_p("#{base_dir}/#{slug}")
+    end
+    Entry.all.each do |e|
+      if !e.place && e.category_type.maximum_files > 0
+        slug = e.category.name.downcase.gsub(' ', '-').gsub('/', '-')
+        if e.category_type.maximum_files == 1
+          FileUtils.cp(e.images.first.path, "#{base_dir}/#{slug}/#{e.images.first.filename}") if e.images.first
+        else
+          FileUtils.mkdir_p("#{base_dir}/#{slug}/#{e.unique_hash[0..6]}")
+          e.images.each do |i|
+            FileUtils.cp(i.path, "#{base_dir}/#{slug}/#{e.unique_hash[0..6]}/#{i.filename}")
+          end
+        end
+      end
+    end
+    zip_exported_directory("/tmp/contest-#{contest.year}-images")
+  end
+
   private
 
   def export(year)
