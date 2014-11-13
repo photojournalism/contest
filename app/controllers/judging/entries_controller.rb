@@ -41,6 +41,14 @@ class Judging::EntriesController < ApplicationController
     end
   end
 
+  def clear_place
+    entry = Entry.where(:unique_hash => params[:hash]).first
+    entry.place = nil
+    entry.save
+
+    render :json => { :status => 'success' }
+  end
+
   # Hides hidden entries
   def toggle_hidden_entries
     session[:hide_entries] = !session[:hide_entries]

@@ -37,6 +37,16 @@
       error: (data) ->
         alert(data.responseJSON.message)
 
+  _clearPlace = (entryHash) ->
+    $.ajax "/judging/entry/#{entryHash}/clear_place",
+      type: 'put'
+      success: (data) ->
+        $(".single-image-place-button").removeAttr("disabled")
+        $(".place-button").removeAttr("disabled")
+      error: (data) ->
+        alert(data.responseJSON.message)
+
+
   obj.init = ->
     params = location.pathname.split("/")
     hash = params[params.length - 1]
@@ -60,10 +70,10 @@
     ).on('slide', (event, index, slide) ->
       $("#current-caption").empty().append($.trim($("#caption-#{index}").html()))
       $(".single-image-place-button").attr("data-index", index)
+      $("#place-clear").attr("data-index", index)
       $(".single-image-place-button").removeAttr("disabled")
       place = $("#single-image-#{index}").attr("data-place")
       $("#place-#{place}").attr("disabled", "disabled")
-      console.log(place)
     )
 
     $("#sidebar-entries").height($("#entry-view").height() + 100)
@@ -124,6 +134,15 @@
       index = $(this).attr("data-index")
       entry_hash = $("#single-image-#{index}").attr("data-entry")
       _setPlaceAjax($(this).attr("data-place-number"), entry_hash, index)
+    )
+
+    $("#place-clear").click( ->
+      if ($("#blueimp-gallery").is(":visible"))
+        index = $(this).attr("data-index")
+        entry_hash = $("#single-image-#{index}").attr("data-entry")
+        _clearPlace(entry_hash)
+      else
+        _clearPlace(hash)
     )
 
     _setPrevAndNextLinks()

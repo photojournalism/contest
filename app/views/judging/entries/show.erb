@@ -15,6 +15,7 @@
     <% @places.each do |place| %>
       <button class="place-button <%= place.css_class %>" data-place-number="<%= place.id %>" <%= "disabled" if @entry.place && @entry.place.id == place.id %>><%= place.name %></button>
     <% end %>
+    <button class="btn btn-default" id="place-clear">Undo</button>
   </div>
   <div class="clearfix"></div>
 

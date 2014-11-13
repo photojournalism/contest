@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     get '/judging/entries/:category_id' => 'entries#index'
     get '/judging/entry/:hash' => 'entries#show', :as => :judging_entry
     put '/judging/entry/:hash/place' => 'entries#place', :as => :placing_entry
+    put '/judging/entry/:hash/clear_place' => 'entries#clear_place', :as => :clear_place_entry
   end
 
 
