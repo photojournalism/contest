@@ -146,11 +146,19 @@ comments: on
       if !e.place && e.category_type.maximum_files > 0
         slug = e.category.name.downcase.gsub(' ', '-').gsub('/', '-')
         if e.category_type.maximum_files == 1
-          FileUtils.cp(e.images.first.path, "#{base_dir}/#{slug}/#{e.images.first.filename}") if e.images.first
+          begin
+            FileUtils.cp(e.images.first.path, "#{base_dir}/#{slug}/#{e.images.first.filename}") if e.images.first
+          rescue
+            puts "Could not find image: #{e.images.first.id}"
+          end
         else
           FileUtils.mkdir_p("#{base_dir}/#{slug}/#{e.unique_hash[0..6]}")
           e.images.each do |i|
-            FileUtils.cp(i.path, "#{base_dir}/#{slug}/#{e.unique_hash[0..6]}/#{i.filename}")
+            begin
+              FileUtils.cp(i.path, "#{base_dir}/#{slug}/#{e.unique_hash[0..6]}/#{i.filename}")
+            rescue
+              puts "Could not find image: #{i.id}"
+            end
           end
         end
       end
