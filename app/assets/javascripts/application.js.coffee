@@ -13,6 +13,7 @@
 #= require jquery
 #= require jquery_ujs
 #= require bootstrap-sprockets
+#= require bootstrap-slider/bootstrap-slider.min
 #= require main
 #= require_tree ./app
 #= require_tree ./judging

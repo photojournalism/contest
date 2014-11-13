@@ -47,7 +47,24 @@
       $("#current-caption").empty().append($.trim($("#caption-#{index}").html()))
     )
 
-    $("#sidebar-entries").height($("#entry-view").height() + 100)
+    $("#sidebar-entries").height(6000)
+
+    slider = $("#slider")
+    slider.slider({
+      min: 200,
+      max: 500,
+      step: 25,
+      value: 300,
+      formatter: (value) ->
+        "#{value}px"
+    })
+
+    slider.on('slideStop', ->
+      width = slider.slider('getValue')
+      height = width * (2.0/3.0)
+      $(".judging-entry-image").css('width', "#{width}px")
+      $(".judging-entry-image").css('height', "#{height}px")
+    )
 
     document.addEventListener('keyup', (e) ->
       if ($("#blueimp-gallery").is(":visible"))
