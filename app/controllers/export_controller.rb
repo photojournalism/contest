@@ -163,7 +163,7 @@ comments: on
         end
       end
     end
-    zip_exported_directory("/tmp/contest-#{contest.year}-images")
+    # zip_exported_directory("/tmp/contest-#{contest.year}-images")
   end
 
   private
