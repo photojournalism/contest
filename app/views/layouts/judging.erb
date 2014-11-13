@@ -15,8 +15,8 @@
   <h4><%= @current_category %> Entries</h4>
   
   <ul>
-  <span style="color:green"><%= @entries.size %> Total</span> &middot;
-  <span style="color:yellow"><%= @left_to_judge %> Left </span> &middot;
+  <span style="color:green"><%= @total_entries_count %> Total</span> &middot;
+  <span style="color:yellow"><%= @entries_left_count %> Left </span> &middot;
   <span style="color:red"><%= @out_entries_count %> Out</span>
   <% @entries.each_with_index do |entry, index| %>   
     <% if entry.images.size > 0 || entry.category_type.has_url %>

@@ -62,9 +62,15 @@ class Judging::EntriesController < ApplicationController
     @categories = @contest.categories
     @current_category = category ? category : (params[:category_id] ? Category.find(params[:category_id]) : @categories.first)
     @entries = Entry.where(:contest => @contest, :category => @current_category, :pending => false).to_a.reject { |e| !e.category_type.has_url && e.images.size == 0 }.sort_by! { |e| e.unique_hash }
-    @out_entries_count = Entry.where(:contest => @contest, :category => @current_category, :pending => false).to_a.reject { |e| (e.place && e.place.sequence_number != 99) || !e.place }.size
-    @left_to_judge = Entry.where(:contest => @contest, :category => @current_category, :place => nil, :pending => false).size
     @entries.reject! { |e| (e.place && e.place.sequence_number == 99 if session[:hide_entries]) || (e.place && e.place.name == 'Disqualified') } 
     @places = Place.all.sort_by { |p| p.sequence_number }
+    get_counts
+  end
+
+  def get_counts
+    total_entries = Entry.where(:contest => @contest, :category => @current_category, :pending => false)
+    @total_entries_count = total_entries.size
+    @out_entries_count = total_entries.to_a.reject { |e| (e.place && e.place.sequence_number != 99) || !e.place }.size
+    @entries_left_count = Entry.where(:contest => @contest, :category => @current_category, :place => nil, :pending => false).size
   end
 end
