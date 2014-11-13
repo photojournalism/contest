@@ -13,7 +13,7 @@
   </div>
   <div style="float:right">
     <% @places.each do |place| %>
-      <button class="place-button <%= place.css_class %>" data-place-number="<%= place.sequence_number %>" <%= "disabled" if @entry.place && @entry.place.sequence_number == place.sequence_number %>><%= place.name %></button>
+      <button class="place-button <%= place.css_class %>" data-place-number="<%= place.sequence_number %>" <%= "disabled" if @entry.place && @entry.place.id == place.id %>><%= place.name %></button>
     <% end %>
   </div>
   <div class="clearfix"></div>
