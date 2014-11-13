@@ -98,7 +98,7 @@
           else
             currentCaption.show()
             viewCaptions = true
-        if (e.keyCode == 66)
+        else if (e.keyCode == 66)
           buttons = $("#single-image-buttons")
           if (buttons.is(":visible"))
             buttons.fadeOut(200)
@@ -106,6 +106,8 @@
           else
             buttons.fadeIn(200)
             viewButtons = true
+        else if (e.keyCode == 48)
+          $("#place-5").trigger("click")
 
       else
         if (e.keyCode == 37)
