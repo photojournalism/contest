@@ -1,6 +1,7 @@
 @Judging = do($ = jQuery) ->
   obj = {}
   viewCaptions = true
+  viewButtons = true
   hash = null
   nextHash = null
   prevHash = null
@@ -25,6 +26,17 @@
       error: (data) ->
         alert(data.responseJSON.message)
 
+  _setPlaceAjax = (placeId, entry_hash, index) ->
+    $.ajax "/judging/entry/#{entry_hash}/place",
+      type: 'put'
+      data: { id: placeId }
+      success: (data) ->
+        $("#single-image-#{index}").attr("data-place", placeId)
+        $(".single-image-place-button").removeAttr("disabled")
+        $("#place-#{placeId}").attr("disabled", "disabled")
+      error: (data) ->
+        alert(data.responseJSON.message)
+
   obj.init = ->
     params = location.pathname.split("/")
     hash = params[params.length - 1]
@@ -41,10 +53,17 @@
     $('#blueimp-gallery').on('opened', (event) ->
       if (viewCaptions)
         $("#current-caption").show()
+      $("#single-image-buttons").fadeIn(200)
     ).on('closed', (event) ->
       $("#current-caption").hide()
+      $("#single-image-buttons").hide()
     ).on('slide', (event, index, slide) ->
       $("#current-caption").empty().append($.trim($("#caption-#{index}").html()))
+      $(".single-image-place-button").attr("data-index", index)
+      $(".single-image-place-button").removeAttr("disabled")
+      place = $("#single-image-#{index}").attr("data-place")
+      $("#place-#{place}").attr("disabled", "disabled")
+      console.log(place)
     )
 
     $("#sidebar-entries").height($("#entry-view").height() + 100)
@@ -79,6 +98,15 @@
           else
             currentCaption.show()
             viewCaptions = true
+        if (e.keyCode == 66)
+          buttons = $("#single-image-buttons")
+          if (buttons.is(":visible"))
+            buttons.fadeOut(200)
+            viewButtons = false
+          else
+            buttons.fadeIn(200)
+            viewButtons = true
+
       else
         if (e.keyCode == 37)
           window.location.href = prevHash
@@ -89,6 +117,12 @@
         else if (e.keyCode == 48)
           _setPlace(5)
     , false)
+
+    $(".single-image-place-button").click( ->
+      index = $(this).attr("data-index")
+      entry_hash = $("#single-image-#{index}").attr("data-entry")
+      _setPlaceAjax($(this).attr("data-place-number"), entry_hash, index)
+    )
 
     _setPrevAndNextLinks()
     $("#previous-entry").click( -> $("#previous-entry").attr("href", prevHash))

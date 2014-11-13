@@ -116,3 +116,13 @@ body.judging {
   background-color: rgba(0, 0, 0, 0.5);
   width: 100%;
 }
+
+#single-image-buttons {
+  z-index: 999999;
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 30%;
+  margin-left: auto;
+  margin-right: auto;
+}

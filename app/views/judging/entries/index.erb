@@ -41,10 +41,9 @@
 
 
   <div id="links">
-
       <% @images.each_with_index do |image, index| %>
         <div class="judging-entry-image">
-          <a class="judging-entry-image-link" data-index="<%= index %>" href="<%= image.public_url %>" data-gallery>
+          <a id="single-image-<%= index %>" data-place="<%= image.entry.place.id if image.entry.place %>" data-entry="<%= image.entry.unique_hash %>" class="judging-entry-image-link" data-index="<%= index %>" href="<%= image.public_url %>" data-gallery>
             <img src="<%= image.public_thumbnail_url %>">
           </a>
           <span class="judging-image-caption" style="display:none" id="caption-<%= index %>">
@@ -57,5 +56,10 @@
 </div>
 
 <div id="current-caption"></div>
+<div id="single-image-buttons">
+  <% @places.each do |place| %>
+    <button id="place-<%= place.id %>" class="single-image-place-button <%= place.css_class %>" data-place-number="<%= place.id %>"><%= place.name %></button>
+  <% end %>
+</div>
 
 <%= javascript_include_tag 'bootstrap-image-gallery' %>
