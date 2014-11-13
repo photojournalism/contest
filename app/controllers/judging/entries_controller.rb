@@ -4,6 +4,7 @@ class Judging::EntriesController < ApplicationController
   layout "judging"
 
   def index
+    session[:hide_entries] == true if session[:hide_entries].nil?
     get_shared_fields
     if @current_category.category_type.maximum_files > 1
       redirect_to :action => 'show', :hash => @entries.first.unique_hash
