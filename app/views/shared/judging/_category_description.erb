@@ -3,15 +3,14 @@
   <label>Category Description</label>
   <span><%= @current_category.description.html_safe %></span>
 </div>
-<% if @current_category.category_type.maximum_files == 1 && @entry %>
 <div class="pull-right">
-  <a href="/judging/entries/<%= @current_category.id %>">View all entries for this category</a>
+  <% if @current_category.category_type.maximum_files == 1 && @entry %>
+    <a href="/judging/entries/<%= @current_category.id %>">View all entries for this category</a>
+  <% else %>
+    <input id="slider" type="text">
+  <% end %>
 </div>
-<% end %>
 <div class="form-group">
   <label>Category Type Description</label>
   <span><%= @current_category.category_type.description.html_safe %></span>
-</div>
-<div class="pull-right">
-  <input id="slider" type="text"></div>
 </div>
