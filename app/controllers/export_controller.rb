@@ -136,6 +136,7 @@ comments: on
 
   def images
     contest = Contest.current
+    failed_images = "The following images failed:"
     base_dir = "/tmp/contest-#{contest.year}-images"
     FileUtils.mkdir_p(base_dir)
     Category.all.each do |c|
@@ -149,6 +150,7 @@ comments: on
           begin
             FileUtils.cp(e.images.first.path, "#{base_dir}/#{slug}/#{e.images.first.filename}") if e.images.first
           rescue
+            failed_images << "\ni.id"
             puts "Could not find image: #{e.images.first.id}"
           end
         else
@@ -158,12 +160,13 @@ comments: on
               FileUtils.cp(i.path, "#{base_dir}/#{slug}/#{e.unique_hash[0..6]}/#{i.filename}")
             rescue
               puts "Could not find image: #{i.id}"
+              failed_images << "\ni.id"
             end
           end
         end
       end
     end
-    # zip_exported_directory("/tmp/contest-#{contest.year}-images")
+    render :plain => failed_images
   end
 
   private
