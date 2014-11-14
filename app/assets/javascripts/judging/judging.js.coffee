@@ -118,7 +118,6 @@
             viewButtons = true
         else if (e.keyCode == 48)
           $("#place-5").trigger("click")
-
       else
         if (e.keyCode == 37)
           window.location.href = prevHash
