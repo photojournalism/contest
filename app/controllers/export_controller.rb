@@ -53,10 +53,10 @@ class ExportController < ApplicationController
               filename = "#{contest.year}-#{slug}-#{place}-#{ident}.jpg"
               FileUtils.mkdir_p(image_directory)
               FileUtils.cp("/home/deploy/contest.photojournalism.org/shared/public#{image.public_url}", "#{image_directory}/#{filename}")
-              yaml_data << { :title => "#{entry.place.name} Winner - #{contest.year} #{category.name}", :credit => "#{winner}", :caption => "#{image.caption}", :url => "#{image_directory.gsub(/#{base_path}/, '')}/#{filename}" }
+              yaml_data << { :title => "#{entry.place.name} - #{contest.year} #{category.name}", :credit => "#{winner}", :caption => "#{image.caption}", :url => "#{image_directory.gsub(/#{base_path}/, '')}/#{filename}" }
 
               if entry.place.sequence_number == 1
-                main_slideshow_yaml << { :title => "#{entry.place.name} Winner - #{contest.year} #{category.name}", :credit => "#{winner}", :caption => "#{image.caption}", :url => "#{image_directory.gsub(/#{base_path}/, '')}/#{filename}" }
+                main_slideshow_yaml << { :title => "#{entry.place.name} - #{contest.year} #{category.name}", :credit => "#{winner}", :caption => "#{image.caption}", :url => "#{image_directory.gsub(/#{base_path}/, '')}/#{filename}" }
               end
 
             # Copies images for multi-image category
@@ -66,7 +66,7 @@ class ExportController < ApplicationController
               entry.images.sort_by { |i| i.number }.each do |image|
                 filename = "#{contest.year}-#{slug}-#{place}-#{image.number}-#{ident}.jpg"
                 FileUtils.cp("/home/deploy/contest.photojournalism.org/shared/public#{image.public_url}", "#{image_directory}/#{filename}")
-                yaml_data << { :title => "#{entry.place.name} Winner - #{contest.year} #{category.name}", :credit => "#{winner}", :caption => "#{image.caption}", :url => "#{image_directory.gsub(/#{base_path}/, '')}/#{filename}" }
+                yaml_data << { :title => "#{entry.place.name} - #{contest.year} #{category.name}", :credit => "#{winner}", :caption => "#{image.caption}", :url => "#{image_directory.gsub(/#{base_path}/, '')}/#{filename}" }
               end
               File.open("#{source_directory}/slideshow-#{place}-#{ident}.yml", 'w') { |f| f.write yaml_data.to_yaml }
               yaml_data = []
