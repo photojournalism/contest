@@ -38,6 +38,7 @@ class Entry < ActiveRecord::Base
   end
 
   def images_location
-    "#{Rails.root}/public/images/contest/#{contest.year}/#{category.slug}/#{unique_hash}"
+    # Uses capistrano's shared path for image uploads
+    "#{Rails.root}/../../shared/public/images/contest/#{contest.year}/#{category.slug}/#{unique_hash}"
   end
 end
