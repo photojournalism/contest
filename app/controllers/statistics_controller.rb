@@ -2,8 +2,15 @@ class StatisticsController < ApplicationController
 
   before_action :require_admin
 
-  def index
-    @contest = Contest.current
+  def index(year=nil)
+    if year
+      @contest = Contest.where(:year => year).first
+      if !@contest
+        @contest = Contest.current
+      end
+    else
+      @contest = Contest.current
+    end
 
     @number_of_entries = @contest.entries.size
     @number_of_images = 0

@@ -10,15 +10,19 @@
       <li>Number of Entries: <%= @number_of_entries %></li>
       <li>Number of Unique Users: <%= @number_of_users %></li>
       <li>Number of Images: <%= @number_of_images %></li>
-      <li>Average Number of Entries Per User: <%= @number_of_entries / @number_of_users.to_f %></li>
-      <li>Average Number of Images Per Entry: <%= @number_of_images / @number_of_entries.to_f %></li>
+      <li>Average Number of Entries Per User: <%= if @number_of_users > 0 then @number_of_entries / @number_of_users.to_f else 0 end %></li>
+      <li>Average Number of Images Per Entry: <%= if @number_of_images > 0 then @number_of_images / @number_of_entries.to_f else 0 end %></li>
     </ul>
 
     <p>Category Entry Counts:</p>
+    <% if @category_counts.length > 0 %>
     <ul>
       <% @category_counts.sort.each do |name,count| %>
         <li><%= name %> - <%= count %></li>
       <% end %>
     </ul>
+    <% else %>
+      <p>No entries yet.</p>
+    <% end %>
   </div>
 </div>
