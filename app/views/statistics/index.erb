@@ -1,0 +1,15 @@
+<% title 'Statistics' %>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h1 class="heading"><%= yield(:title) %></h1>
+    <%= render :partial => 'shared/messages' %>
+
+    <p>The following are some statistics for the <strong><%= @contest %></strong>.</p>
+    <ul>
+      <li>Number of Entries: <%= @number_of_entries %></li>
+      <li>Number of Unique Users: <%= @number_of_users %></li>
+      <li>Number of Images: <%= @number_of_images %></li>
+    </ul>
+  </div>
+</div>
