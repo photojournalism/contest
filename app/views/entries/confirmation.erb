@@ -4,11 +4,10 @@
   <div class="col-md-8 col-md-offset-2">
     <h1 class="heading"><%= yield(:title) %></h1>
     <%= render :partial => 'shared/messages' %>
-    <p>This is the confirmation page for your entry. If you'd like to submit another entry, click <%= link_to 'here', new_entry_path %>, or the <em>Submit New Entry</em> link in the navigation bar.</p>
+    <h3><%= current_user.name %> - <%= @entry.category %></h3>
+    <p>This is the confirmation page for your entry. Your submission has successfully been submitted. If you'd like to submit another entry, click <%= link_to 'here', new_entry_path %>, or the <em>Submit New Entry</em> link in the navigation bar.</p>
 
-    <h3>Summary</h3>
-
-    <p>Your submission has successfully been submitted. The following is a summary of your submission.</p>
+    <p> The following is a summary of your submission.</p>
 
     <p>
       <label>Contest:</label> <%= @entry.contest %><br>
@@ -37,7 +36,7 @@
         <div class="clearfix"></div>
       <% end %>
     <% end %>
-    
+
     <% if @entry.contest.is_open? || current_user.admin %>
       <hr>
       <button type="button" class="btn btn-danger pull-left" id="entry-delete-button"><i class="glyphicon glyphicon-remove"></i> Delete Entry</button>
