@@ -2,9 +2,9 @@ class StatisticsController < ApplicationController
 
   before_action :require_admin
 
-  def index(year=nil)
-    if year
-      @contest = Contest.where(:year => year).first
+  def index
+    if params[:year]
+      @contest = Contest.where(:year => params[:year]).first
       if !@contest
         @contest = Contest.current
       end
