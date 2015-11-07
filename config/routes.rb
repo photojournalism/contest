@@ -49,7 +49,7 @@ Rails.application.routes.draw do
   get 'export' => 'export#index', :as => :export
 
   # Statistics
-  get 'statistics' => 'statistics#index'
+  get 'statistics' => 'statistics#index', :as => :statistics
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
