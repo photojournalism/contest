@@ -10,8 +10,10 @@ class StatisticsController < ApplicationController
     users = []
 
     @contest.entries.each do |entry|
-      users << entry.user.name
-      @number_of_images += entry.images.length
+      if !entry.pending
+        users << entry.user.name
+        @number_of_images += entry.images.length
+      end
     end
 
     @number_of_users = users.uniq.length
