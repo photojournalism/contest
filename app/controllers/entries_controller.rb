@@ -26,8 +26,8 @@ class EntriesController < ApplicationController
       redirect_to controller: 'agreements', action: 'new'
       return
     end
-    
-    @categories = @contest.categories
+
+    @categories = @contest.categories.order(:id)
   end
 
   def create
@@ -52,7 +52,7 @@ class EntriesController < ApplicationController
 
   def edit
     @entry = Entry.where(:unique_hash => params[:hash]).first
-    
+
     if @entry.blank?
       redirect_to(:action => 'new')
       return
@@ -101,7 +101,7 @@ class EntriesController < ApplicationController
   end
 
   private
-  
+
     def entry_is_modifiable(entry)
       return !entry.blank? && entry_access_is_allowed(entry) && entry.contest.is_open?
     end
