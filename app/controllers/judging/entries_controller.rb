@@ -59,7 +59,7 @@ class Judging::EntriesController < ApplicationController
 
   def get_shared_fields(category=nil)
     @contest = Contest.current
-    @categories = @contest.categories
+    @categories = @contest.categories.order(:id)
     @current_category = category ? category : (params[:category_id] ? Category.find(params[:category_id]) : @categories.first)
     @entries = Entry.where(:contest => @contest, :category => @current_category, :pending => false).to_a.reject { |e| !e.category_type.has_url && e.images.size == 0 }.sort_by! { |e| e.unique_hash }
     @entries.reject! { |e| (e.place && e.place.sequence_number == 99 if session[:hide_entries]) || (e.place && e.place.name == 'Disqualified') } 
