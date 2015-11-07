@@ -10,6 +10,8 @@
       <li>Number of Entries: <%= @number_of_entries %></li>
       <li>Number of Unique Users: <%= @number_of_users %></li>
       <li>Number of Images: <%= @number_of_images %></li>
+      <li>Average Number of Entries Per User: <%= @number_of_entries / @number_of_users.to_f %></li>
+      <li>Average Number of Images Per Entry: <%= @number_of_images / @number_of_entries.to_f %></li>
     </ul>
   </div>
 </div>
