@@ -13,5 +13,12 @@
       <li>Average Number of Entries Per User: <%= @number_of_entries / @number_of_users.to_f %></li>
       <li>Average Number of Images Per Entry: <%= @number_of_images / @number_of_entries.to_f %></li>
     </ul>
+
+    <p>Category Entry Counts:</p>
+    <ul>
+      <% @category_counts.sort.each do |name,count| %>
+        <li><%= name %> - <%= count %></li>
+      <% end %>
+    </ul>
   </div>
 </div>
