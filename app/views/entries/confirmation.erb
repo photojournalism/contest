@@ -4,7 +4,7 @@
   <div class="col-md-8 col-md-offset-2">
     <h1 class="heading"><%= yield(:title) %></h1>
     <%= render :partial => 'shared/messages' %>
-    <h3><%= current_user.name %> - <%= @entry.category %></h3>
+    <h3><%= @entry.user.name %> - <%= @entry.category %></h3>
     <p>This is the confirmation page for your entry. Your submission has successfully been submitted. If you'd like to submit another entry, click <%= link_to 'here', new_entry_path %>, or the <em>Submit New Entry</em> link in the navigation bar.</p>
 
     <p> The following is a summary of your submission.</p>
