@@ -103,7 +103,7 @@ class EntriesController < ApplicationController
   private
 
     def entry_is_modifiable(entry)
-      return !entry.blank? && entry_access_is_allowed(entry) && entry.contest.is_open?
+      return !entry.blank? && entry_access_is_allowed(entry) && (entry.contest.is_open? || current_user.admin)
     end
 
     def entry_access_is_allowed(entry)
