@@ -16,26 +16,17 @@ class Contest < ActiveRecord::Base
 
   def is_open?
     now = Time.now
-    if open_date < now && close_date > now
-      return true
-    end
-    return false
+    open_date < now && close_date > now
   end
 
   def has_started?
     now = Time.now
-    if open_date < now
-      return true
-    end
-    return false
+    open_date < now
   end
 
   def has_ended?
     now = Time.now
-    if close_date < now
-      return true
-    end
-    return false
+    close_date < now
   end
 
   def has_agreement_for?(user)
