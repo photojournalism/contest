@@ -10,7 +10,7 @@ class EntriesController < ApplicationController
 
   def new
     @contest = Contest.current
-    @categories = @contest.categories.order(:id)
+    @categories = @contest.categories.order(:category_type_id => :asc, :id => :asc)
 
     if !@contest.has_started?
       flash.now[:notice] = t('contest.not_open', :contest => @contest, :open_date => @contest.formatted_open_date).html_safe
