@@ -10,6 +10,7 @@ class EntriesController < ApplicationController
 
   def new
     @contest = Contest.current
+    @categories = @contest.categories.order(:id)
 
     if !@contest.has_started?
       flash.now[:notice] = t('contest.not_open', :contest => @contest, :open_date => @contest.formatted_open_date).html_safe
@@ -26,8 +27,6 @@ class EntriesController < ApplicationController
       redirect_to controller: 'agreements', action: 'new'
       return
     end
-
-    @categories = @contest.categories.order(:id)
   end
 
   def create
