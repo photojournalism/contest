@@ -2,7 +2,12 @@ Entries = do($ = jQuery) ->
   
   obj = {}
 
-  _updateCategoryDescription = (name, description, typeDescription) ->
+  _updateCategoryDescription = () ->
+    selected = $("#category-select option:selected")
+    name = selected.text()
+    description = selected.attr("data-category-description")
+    typeDescription = selected.attr("data-category-type-description")
+
     categoryDescription = $("#category-description")
     categoryDescription.hide()
     $("#category-description-title").html(name)
@@ -11,14 +16,10 @@ Entries = do($ = jQuery) ->
     categoryDescription.fadeIn(400)
 
   obj.init = ->
-    $("#category-select").change ->
-      selected = $("#category-select option:selected")
+    _updateCategoryDescription()
 
-      id = $(this).val()
-      name = selected.text()
-      description = selected.attr("data-category-description")
-      typeDescription = selected.attr("data-category-type-description")
-      _updateCategoryDescription(name, description, typeDescription)
+    $("#category-select").change ->
+      _updateCategoryDescription()
 
     $("#entry-continue-button").click -> obj.create()
     $("#entry-delete-button").click -> obj.delete()
