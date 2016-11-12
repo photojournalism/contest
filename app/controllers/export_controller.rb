@@ -65,8 +65,12 @@ class ExportController < ApplicationController
               FileUtils.mkdir_p(image_directory)
               entry.images.sort_by { |i| i.number }.each do |image|
                 filename = "#{contest.year}-#{slug}-#{place}-#{image.number}-#{ident}.jpg"
-                FileUtils.cp("/home/deploy/contest.photojournalism.org/shared/public#{image.public_url}", "#{image_directory}/#{filename}")
-                yaml_data << { :title => "#{entry.place.name} - #{contest.year} #{category.name}", :credit => "#{winner}", :caption => "#{image.caption}", :url => "#{image_directory.gsub(/#{base_path}/, '')}/#{filename}" }
+                begin
+                  FileUtils.cp("/home/deploy/contest.photojournalism.org/shared/public#{image.public_url}", "#{image_directory}/#{filename}")
+                  yaml_data << { :title => "#{entry.place.name} - #{contest.year} #{category.name}", :credit => "#{winner}", :caption => "#{image.caption}", :url => "#{image_directory.gsub(/#{base_path}/, '')}/#{filename}" }
+                rescue
+                  puts "Could not find file #{filename}"
+                end
               end
               File.open("#{source_directory}/slideshow-#{place}-#{ident}.yml", 'w') { |f| f.write yaml_data.to_yaml }
               yaml_data = []
