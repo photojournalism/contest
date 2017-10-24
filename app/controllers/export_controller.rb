@@ -26,7 +26,7 @@ class ExportController < ApplicationController
         :categories => []
       }
       main_slideshow_yaml = []
-      contest.categories.each do |category|
+      contest.categories.order(:category_type_id => :asc, :id => :asc).each do |category|
         # Make the base category directory        
         slug = category.name.downcase.gsub(' ', '-').gsub('/', '-')
         winners = []        
@@ -89,8 +89,6 @@ navigation: Contest
 comments: on
 ---
 
-<h1>#{contest.year} #{category}</h1>
-
 <%= partial 'layouts/return_to_winners' %>
         eos
 
@@ -108,7 +106,7 @@ comments: on
 
         # Write the ERB file for the multiple image categories
         if category.category_type.maximum_files > 1
-          File.open("#{source_directory}/index.html.erb", 'w') { |f| f.write "#{erb_header}\n#{erb}" }
+          File.open("#{source_directory}/index.html.erb", 'w') { |f| f.write "#{erb_header}#{erb}" }
         end
       end
 
