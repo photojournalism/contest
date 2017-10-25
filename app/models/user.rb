@@ -4,10 +4,12 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  validates_presence_of :email, :first_name, :last_name, :street, :city, :state_id, :day_phone, :evening_phone
+  validates_presence_of :first_name, :last_name
   belongs_to :state
+  belongs_to :user
   has_many :agreements
   has_many :entries
+  has_many :users
   has_one :country, :through => :state
 
   before_save do |user|
@@ -38,6 +40,17 @@ class User < ActiveRecord::Base
 
   def pending_entries
     Entry.where(:user => self, :pending => true, :contest => Contest.current)
+  end
+
+  def managed_entries
+    entries = []
+    self.users.each do |user|
+      user_entries = Entry.where(:user => user, :contest => Contest.current)
+      user_entries.each do |entry|
+        entries << entry
+      end
+    end
+    entries
   end
 
   def name

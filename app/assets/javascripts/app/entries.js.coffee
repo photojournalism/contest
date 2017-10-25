@@ -35,7 +35,8 @@ Entries = do($ = jQuery) ->
         type: 'post',
         data: {
           'entry[category]': $("#category-select").val(),
-          'entry[order_number]': orderNumber.val()
+          'entry[order_number]': orderNumber.val(),
+          'entry[user]': $("#user-select").val()
         },
         success: (data) ->
           window.location.href = data.url;

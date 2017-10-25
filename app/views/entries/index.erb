@@ -4,7 +4,7 @@
   <div class="col-md-8 col-md-offset-2">
     <h1 class="heading"><%= yield(:title) %></h1>
 
-    <% if (@completed_entries.length == 0 && @pending_entries.length == 0) %>
+    <% if (@completed_entries.length == 0 && @pending_entries.length == 0 && @managed_entries == 0) %>
       <div id="alert-info" class="alert alert-info" role="status">
         <p id="alert-info-message">You have not yet submitted any entries. Begin by <%= link_to "submitting a new entry", new_entry_path, :class => 'alert-link' %>.</p>
       </div>
@@ -22,9 +22,19 @@
       <% if @pending_entries.length > 0 %>
         <h4>Pending Entries</h4>
 
-        <p>You have <%= pluralize(@completed_entries.length, 'pending entry') %>.</p>
+        <p>You have <%= pluralize(@pending_entries.length, 'pending entry') %>.</p>
 
         <% @pending_entries.each do |entry| %>
+          <%= render partial: 'entry', locals: {entry: entry} %>
+        <% end %>
+      <% end %>
+
+      <% if @managed_entries.length > 0 && current_user.can_parent_others %>
+        <h4>Managed Entries</h4>
+
+        <p>You have <%= pluralize(@managed_entries.length, 'managed entry') %> (for other users).</p>
+
+        <% @managed_entries.each do |entry| %>
           <%= render partial: 'entry', locals: {entry: entry} %>
         <% end %>
       <% end %>

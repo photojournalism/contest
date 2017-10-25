@@ -10,6 +10,23 @@
       <p><strong>If you are entering multiple entries, you will need to repeat this process for each category entry, even if you have multiple entries in the same category.</strong></p>
 
       <hr>
+
+      <% if @current_user.can_parent_others %>
+        <h4>Who is this entry for?</h4>
+        
+        <% if current_user.users.size == 0 %>
+          You have not currently added any users to submit an entry for. If you would like to add users to manage, then you can <%= link_to 'click here', '/users/manage' %>. Otherwise you will receive credit for this entry.
+        <% else %>
+          <select class="form-control" id="user-select">
+          <option value="<%= @current_user.id %>">Me</option>
+          <% @current_user.users.each do |user| %>
+            <option value="<%= user.id %>"><%= user.name %></option>
+          <% end %>
+          </select>
+        <% end %>
+
+        <hr>
+      <% end %>
       
       <h4>Order Number</h4>
       <p>Use the box below to enter your order number from your <strong>Photo Contest</strong> payment on <a href="http://photojournalism.eventbrite.com" target="_blank">EventBrite</a>. If someone paid on your behalf, please enter the name of the person or company that paid on your behalf.</p>

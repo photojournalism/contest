@@ -6,11 +6,13 @@ class EntriesController < ApplicationController
     @contest = Contest.current
     @completed_entries = current_user.completed_entries
     @pending_entries = current_user.pending_entries
+    @managed_entries = current_user.managed_entries
   end
 
   def new
     @contest = Contest.current
     @categories = @contest.categories.order(:category_type_id => :asc, :id => :asc)
+    @current_user = current_user
 
     if !@contest.has_started?
       flash.now[:notice] = t('contest.not_open', :contest => @contest, :open_date => @contest.formatted_open_date).html_safe
@@ -31,8 +33,18 @@ class EntriesController < ApplicationController
 
   def create
     category = Category.find(entry_params[:category])
+    user = current_user
+
+    if entry_params[:user] && current_user.can_parent_others
+      submitted_user = User.find(entry_params[:user])
+
+      if submitted_user && submitted_user.user == current_user
+        user = submitted_user
+      end
+    end
+
     entry = Entry.new(
-      :user => current_user,
+      :user => user,
       :category => category,
       :unique_hash => SecureRandom.hex,
       :order_number => entry_params[:order_number],
@@ -57,7 +69,7 @@ class EntriesController < ApplicationController
       return
     end
 
-    if @entry.user != current_user && !current_user.admin
+    if @entry.user != current_user && @entry.user.user != current_user && !current_user.admin
       flash[:alert] = "An error has occurred processing your request. Please try again."
       redirect_to(:action => 'new')
     end
@@ -106,10 +118,10 @@ class EntriesController < ApplicationController
     end
 
     def entry_access_is_allowed(entry)
-      return (entry.user == current_user || current_user.admin)
+      return (entry.user == current_user || entry.user.user == current_user || current_user.admin)
     end
 
     def entry_params
-      params.require(:entry).permit(:category, :order_number)
+      params.require(:entry).permit(:user, :category, :order_number)
     end
 end

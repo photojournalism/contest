@@ -52,6 +52,10 @@ Rails.application.routes.draw do
   get 'statistics/:year' => 'statistics#index'
   get 'statistics' => 'statistics#index', :as => :statistics
 
+  # Users
+  get 'users/manage' => 'users#manage', :as => :manage_users
+  post 'users/add' => 'users#add_child'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
