@@ -16,7 +16,7 @@ class UsersController < ApplicationController
       :email => SecureRandom.hex + '@fake.com',
       :password => SecureRandom.hex,
       :user => current_user,
-      :employer => current_user.employer
+      :employer => params[:employer]
     )
     if user.valid?
       user.save

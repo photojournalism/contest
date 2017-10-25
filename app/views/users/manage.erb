@@ -21,12 +21,22 @@
     <div class="row">
       <div class="col-md-6">
           <div class="form-group">
+            <label for="first-name">First Name</label>
             <input type="text" class="form-control" placeholder="First Name" id="first-name">
           </div>
       </div>
       <div class="col-md-6">
         <div class="form-group">
+            <label for="last-name">Last Name</label>
             <input type="text" class="form-control" placeholder="Last Name" id="last-name">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="form-group">
+            <label for="affiliation">Affiliation</label>
+            <input type="text" class="form-control" placeholder="Affiliation" id="affiliation" data-original-affiliation="<%= current_user.employer %>" value="<%= current_user.employer %>">
         </div>
       </div>
     </div>
