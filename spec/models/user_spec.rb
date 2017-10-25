@@ -24,29 +24,29 @@ describe 'User' do
       expect(user).to be_invalid
     end
 
-    it 'should be invalid without a street' do
+    it 'should be valid without a street' do
       user.street = nil
-      expect(user).to be_invalid
+      expect(user).to be_valid
     end
 
-    it 'should be invalid without a city' do
+    it 'should be valid without a city' do
       user.city = nil
-      expect(user).to be_invalid
+      expect(user).to be_valid
     end
 
-    it 'should be invalid without a state' do
+    it 'should be valid without a state' do
       user.state = nil
-      expect(user).to be_invalid
+      expect(user).to be_valid
     end
 
-    it 'should be invalid without a day phone' do
+    it 'should be valid without a day phone' do
       user.day_phone = nil
-      expect(user).to be_invalid
+      expect(user).to be_valid
     end 
 
-    it 'should be invalid without a evening phone' do
+    it 'should be valid without a evening phone' do
       user.evening_phone = nil
-      expect(user).to be_invalid
+      expect(user).to be_valid
     end
 
     it 'should be valid without an employer' do

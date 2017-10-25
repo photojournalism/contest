@@ -42,7 +42,7 @@ feature 'sign up' do
   scenario 'with blank street' do
     user.street = nil
     sign_up(user)
-    expect(page).to have_content("Street can't be blank")
+    expect(page).to have_content("Welcome, #{user.first_name}!")
   end
 
   scenario 'with blank zip' do
@@ -55,13 +55,13 @@ feature 'sign up' do
   scenario 'with blank day phone' do
     user.day_phone = nil
     sign_up(user)
-    expect(page).to have_content("Day phone can't be blank")
+    expect(page).to have_content("Welcome, #{user.first_name}!")
   end
 
   scenario 'with blank evening phone' do
     user.evening_phone = nil
     sign_up(user)
-    expect(page).to have_content("Evening phone can't be blank")
+    expect(page).to have_content("Welcome, #{user.first_name}!")
   end
 
   scenario 'with blank email' do
