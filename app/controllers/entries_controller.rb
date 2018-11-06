@@ -19,7 +19,7 @@ class EntriesController < ApplicationController
       return
     end
 
-    if @contest.has_ended? && !current_user.admin
+    if @contest.has_ended? && !current_user.admin && session[:previous_user] == nil
       flash.now[:notice] = t('contest.ended', :contest => @contest).html_safe
       return
     end
