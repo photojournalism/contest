@@ -4,9 +4,21 @@ class UsersController < ApplicationController
 
   def impersonate
     if current_user.admin
-      @user = User.find(params[:id])
-      sign_in(@user)
-      render :json => { :success => true, :user => @user }, :status => 200
+      session[:previous_user] = current_user.id
+      user = User.find(params[:id])
+      sign_in(user)
+      redirect_to controller: 'home', action: 'index'
+    else
+      render :nothing => true, :status => 404
+    end
+  end
+
+  def unimpersonate
+    if session[:previous_user]
+      user = User.find(session[:previous_user])
+      session[:previous_user] = nil
+      sign_in(user)
+      redirect_to controller: 'home', action: 'index'
     else
       render :nothing => true, :status => 404
     end

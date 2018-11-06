@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   get 'users/manage' => 'users#manage', :as => :manage_users
   post 'users/add' => 'users#add_child'
   get 'users/impersonate/:id' => 'users#impersonate'
+  get 'users/unimpersonate' => 'users#unimpersonate', :as => :unimpersonate
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

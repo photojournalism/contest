@@ -39,6 +39,9 @@
                 <li><%= link_to 'Export Winners', export_path %></li>
                 <li><%= link_to 'Statistics', statistics_path %></li>
               <% end %>
+              <% if session[:previous_user] %>
+                <li><%= link_to 'Unimpersonate', unimpersonate_path %></li>
+              <% end %>
             </ul>
           </li>
           <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
