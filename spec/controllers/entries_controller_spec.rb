@@ -139,6 +139,12 @@ RSpec.describe EntriesController, :type => :controller do
   describe 'GET edit' do
     let(:entry) { FactoryGirl.create(:entry, :user => user) }
 
+    before(:each) do
+      entry.contest.open_date = 3.days.ago
+      entry.contest.close_date = 3.days.from_now
+      entry.contest.save
+    end
+
     it 'should redirect for not logged in user' do
       get :edit, :hash => entry.unique_hash
       expect(response).to redirect_to(new_user_session_path)
@@ -169,6 +175,14 @@ RSpec.describe EntriesController, :type => :controller do
       expect(response.body).to match entry.category.name
     end
 
+    it 'should show if the user is impersonating another user' do
+      sign_in user
+      entry.user = FactoryGirl.create(:user)
+      @request.session[:previous_user] = 1
+      get :edit, :hash => entry.unique_hash
+      expect(response.body).to match entry.category.name
+    end
+
     it 'should redirect if the hash was wrong' do
       sign_in user
       get :edit, :hash => 'asdf'
@@ -181,7 +195,9 @@ RSpec.describe EntriesController, :type => :controller do
     let(:pending_entry) { FactoryGirl.create(:entry, :user => user, :pending => true) }
 
     describe 'with signed in user' do
-      before(:each) { sign_in user }
+      before(:each) do
+        sign_in user
+      end
 
       describe 'with completed entry' do
         it 'assigns @entry' do
@@ -287,6 +303,18 @@ RSpec.describe EntriesController, :type => :controller do
         user.admin = true
         user.save
 
+        put :update, :hash => entry.unique_hash, :url => 'https://github.com'
+        expect(response.body).to match('Success')
+        entry.reload
+        expect(entry.url).to eq('https://github.com')
+      end
+
+      it 'should update the entry if the user is impersonating another user' do
+        sign_in user
+        entry.user = FactoryGirl.create(:user)
+        entry.save
+        
+        @request.session[:previous_user] = 1
         put :update, :hash => entry.unique_hash, :url => 'https://github.com'
         expect(response.body).to match('Success')
         entry.reload

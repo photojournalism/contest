@@ -64,12 +64,7 @@ class EntriesController < ApplicationController
   def edit
     @entry = Entry.where(:unique_hash => params[:hash]).first
 
-    if @entry.blank?
-      redirect_to(:action => 'new')
-      return
-    end
-
-    if @entry.user != current_user && @entry.user.user != current_user && !current_user.admin
+    if !entry_is_modifiable(@entry)
       flash[:alert] = "An error has occurred processing your request. Please try again."
       redirect_to(:action => 'new')
     end
@@ -114,11 +109,11 @@ class EntriesController < ApplicationController
   private
 
     def entry_is_modifiable(entry)
-      return !entry.blank? && entry_access_is_allowed(entry) && (entry.contest.is_open? || current_user.admin)
+      return !entry.blank? && entry_access_is_allowed(entry) && (entry.contest.is_open? || current_user.admin || session[:previous_user])
     end
 
     def entry_access_is_allowed(entry)
-      return (entry.user == current_user || entry.user.user == current_user || current_user.admin)
+      return (entry.user == current_user || entry.user.user == current_user || current_user.admin || session[:previous_user])
     end
 
     def entry_params
