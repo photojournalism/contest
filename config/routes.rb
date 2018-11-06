@@ -20,7 +20,6 @@ Rails.application.routes.draw do
     put '/judging/entry/:hash/clear_place' => 'entries#clear_place', :as => :clear_place_entry
   end
 
-
   get 'states/select/:country_id' => 'states#get_select_for_country'
 
   # Entry Routes
@@ -55,6 +54,7 @@ Rails.application.routes.draw do
   # Users
   get 'users/manage' => 'users#manage', :as => :manage_users
   post 'users/add' => 'users#add_child'
+  get 'users/impersonate/:id' => 'users#impersonate'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
