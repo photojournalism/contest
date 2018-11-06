@@ -30,7 +30,7 @@
           <div class="footer-logo col-md-5">
           <%= image_tag 'logos/atlpj_logo_circle.png', :class => 'img-circle' %>
             <p><h4>Atlanta Photojournalism Seminar</h4></p>
-            <small class="copyright">&copy; 2014 Atlanta Photojournalism Seminar</small><br>
+            <small class="copyright">&copy; <%= Date.current.year %> Atlanta Photojournalism Seminar</small><br>
             <p>
               <%= link_to raw('Return to the Main Website &raquo;'), 'http://photojournalism.org' %><br>
               <% if user_signed_in? %>
