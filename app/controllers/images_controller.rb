@@ -17,7 +17,7 @@ class ImagesController < ApplicationController
     entry = Entry.where(:unique_hash => params[:hash]).first
     if entry.user == current_user || current_user.admin
       output = { :files => [] }
-      entry.images.each do |image|
+      entry.images.sort_by { |image| image.number }.each do |image|
         output[:files] << image.to_hash
       end
       render :json => output
