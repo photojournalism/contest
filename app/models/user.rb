@@ -42,6 +42,10 @@ class User < ActiveRecord::Base
     Entry.where(:user => self, :pending => true, :contest => Contest.current)
   end
 
+  def current_entries
+    Entry.where(:user => self, :contest => Contest.current)
+  end
+
   def managed_entries
     entries = []
     self.users.each do |user|
@@ -59,5 +63,13 @@ class User < ActiveRecord::Base
 
   def to_s
     full_name
+  end
+
+  def current_order_number
+    entries = current_entries.select { |e| e.order_number && e.order_number != '' }
+    if entries.size > 0
+      return entries[0].order_number
+    end
+    return ''
   end
 end

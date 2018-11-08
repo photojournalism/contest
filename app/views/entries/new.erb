@@ -20,7 +20,7 @@
           <select class="form-control" id="user-select">
           <option value="<%= @current_user.id %>">Me</option>
           <% @current_user.users.each do |user| %>
-            <option value="<%= user.id %>"><%= user.name %></option>
+            <option value="<%= user.id %>"><%= user.name %><% if user.employer && user.employer != '' %> / <%= user.employer %><% end %></option>
           <% end %>
           </select>
         <% end %>
@@ -35,7 +35,7 @@
 
 
       <div class="form-group">
-        <input type="text" class="form-control" placeholder="Order Number, e.g., 123456789" id="entry-order-number">
+        <input type="text" class="form-control" placeholder="Order Number, e.g., 123456789" id="entry-order-number" value="<%= current_user.current_order_number %>">
       </div>
 
       <hr>
