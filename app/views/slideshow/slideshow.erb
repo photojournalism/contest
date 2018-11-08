@@ -1,0 +1,45 @@
+<html>
+<head>
+  <%= favicon_link_tag       'favicon.png' %>
+  <title><%= @contest.year %> Slideshow</title>
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+</head>
+<body<% if @slideshow_images.size > 0 %> class='black'<% end %>>
+
+<% if @slideshow_images.size > 0 %>
+
+  <div id="carousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner" role="listbox">
+      <% @slideshow_images.each_with_index do |image, index| %>
+      <div class="item <% if index == 0 %>active<% end %>">
+        <img src="https://contest.photojournalism.org<%= image.public_url %>">
+        <div class="carousel-caption">
+          <h3 class="carousel title"><%= @contest.year %> <%= image.entry.category.name %> - <%= image.entry.place.name %><% if image.entry.category_type.maximum_files > 1 %> (Excerpt)<% end %></h3>
+          <p><%= image.caption %></p>
+          <p>Photo by <%= image.entry.user.name %><% if image.entry.user.affiliation %> / <%= image.entry.user.affiliation %><% end %></p>
+        </div>
+      </div>
+      <% end %>
+    </div>
+
+    <!-- Controls -->
+    <a class="left carousel-control" href="#carousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#carousel" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+  
+<% else %>
+
+  <div class="container">
+    <p><h3>No winning entries have been chosen yet for the <%= @contest.year %> contest. Please check back a little later.</h3></p>
+  </div>
+
+<% end %>
+</body>
+</html>

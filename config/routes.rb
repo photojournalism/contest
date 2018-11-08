@@ -51,8 +51,8 @@ Rails.application.routes.draw do
   get 'export' => 'export#index', :as => :export
 
   # Slideshow Routes
-  get 'slideshow/:year' => 'slideshow#index'
-  get 'slideshow' => 'slideshow#index'
+  get 'slideshow/:year' => 'slideshow#slideshow'
+  get 'slideshow' => 'slideshow#index', :as => :slideshow
 
   # Statistics
   get 'statistics/:year' => 'statistics#index'

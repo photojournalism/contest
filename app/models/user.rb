@@ -20,6 +20,15 @@ class User < ActiveRecord::Base
     user.last_name.capitalize!
   end
 
+  def affiliation
+    if employer && employer != ''
+      return employer
+    elsif school && school != ''
+      return school
+    end
+    return nil
+  end
+
   def full_name
     "#{first_name} #{last_name}"
   end

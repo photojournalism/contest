@@ -1,0 +1,20 @@
+.carousel-inner > .item > img {
+  max-height: 100vh;
+  margin: 0 auto;
+}
+
+.carousel-inner, .black {
+  background: black;
+}
+
+.carousel-caption {
+    font-size: 14px;
+    padding-bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: left;
+    padding: 5px 20px;
+    background: rgba(0,0,0,0.4);
+    text-shadow: 0 0 5px #000;
+    bottom: 10px;
+}

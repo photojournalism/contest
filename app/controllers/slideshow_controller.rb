@@ -3,18 +3,19 @@ class SlideshowController < ApplicationController
   before_action :require_admin
 
   def index
-    @contest = if params[:year] then Contest.where(:year => params[:year]).first else Contest.current end
-    @slideshow_images = []
-    if @contest.winning_entries > 0
-      @contest.entries.each do |entry|
-        if !entry.place || entry.place.sequence_number.to_i == 99
-          next
-        end
+    @contests = Contest.all
+  end
 
-        image = entry.sorted_images[0]
-        if image
-          @slideshow_images << image
-        end
+  def slideshow
+    @contest = Contest.where(:year => params[:year]).first
+    @slideshow_images = []
+    @contest.entries
+      .select { |e| e.place && e.place.sequence_number.to_i != 99 && !e.category.name.include?('Portfolio') }
+      .sort { |a,b| [a.category.name, a.place.sequence_number.to_i] <=> [b.category.name, b.place.sequence_number.to_i] }
+      .each do |entry|
+      image = entry.sorted_images[0]
+      if image
+        @slideshow_images << image
       end
     end
     render :layout => false
