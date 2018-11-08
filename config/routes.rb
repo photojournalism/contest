@@ -42,12 +42,17 @@ Rails.application.routes.draw do
   # Contact Routes
   post 'contact/report_a_problem' => 'contact#report_a_problem'
 
+  # Export Routes
   get 'export/website/:year' => 'export#website'
   get 'export/website' => 'export#website'
   get 'export/tsv/:year' => 'export#tsv'
   get 'export/tsv' => 'export#tsv'
   get 'export/images' => 'export#images'
   get 'export' => 'export#index', :as => :export
+
+  # Slideshow Routes
+  get 'slideshow/:year' => 'slideshow#index'
+  get 'slideshow' => 'slideshow#index'
 
   # Statistics
   get 'statistics/:year' => 'statistics#index'

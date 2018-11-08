@@ -138,7 +138,7 @@ class ExportController < ApplicationController
               image = entry.images.first
               filename = "#{contest.year}-#{slug}-#{place}-#{ident}.jpg"
               FileUtils.mkdir_p(image_directory)
-              FileUtils.cp("/home/deploy/contest.photojournalism.org/shared/public#{image.public_url}", "#{image_directory}/#{filename}")
+              FileUtils.cp("#{Dir.home}/contest.photojournalism.org/shared/public#{image.public_url}", "#{image_directory}/#{filename}")
               yaml_data << { :title => "#{entry.place.name} - #{contest.year} #{category.name}", :credit => "#{winner}", :caption => "#{image.caption}", :url => "#{image_directory.gsub(/#{base_path}/, '')}/#{filename}" }
 
               if entry.place.sequence_number == 1
@@ -152,7 +152,7 @@ class ExportController < ApplicationController
               entry.images.sort_by { |i| i.number }.each do |image|
                 filename = "#{contest.year}-#{slug}-#{place}-#{image.number}-#{ident}.jpg"
                 begin
-                  FileUtils.cp("/home/deploy/contest.photojournalism.org/shared/public#{image.public_url}", "#{image_directory}/#{filename}")
+                  FileUtils.cp("#{Dir.home}/contest.photojournalism.org/shared/public#{image.public_url}", "#{image_directory}/#{filename}")
                   yaml_data << { :title => "#{entry.place.name} - #{contest.year} #{category.name}", :credit => "#{winner}", :caption => "#{image.caption}", :url => "#{image_directory.gsub(/#{base_path}/, '')}/#{filename}" }
                 rescue
                   puts "Could not find file #{filename}"
