@@ -55,5 +55,10 @@ images/
       <li><%= link_to contest, "/export/tsv/#{contest.year}" %> - <%= pluralize(contest.winning_entries, 'winning entry') %></li>
     <% end %>
     </ul>
+    <h3>Help</h3>
+    <p>You can import this file into FileMaker Pro by opening the <strong>contest_winners_template.fmp12</strong> file, and going to <code>File</code> > <code>Import Records</code> > <code>File...</code>. In the <strong>Show</strong> dropdown, select <code>Tab-Separated Text Files</code> and open the file you just downloaded.</p>
+    <p>In the Import Field Mapping screen, you should choose <code>matching names</code> for the <strong>Arrange By</strong> field, and ensure the <strong>Don't import first record</strong> box is checked. The import window should appear like the following:</p>
+
+    <img src="/images/filemaker_import.png">
   </div>
 </div>
