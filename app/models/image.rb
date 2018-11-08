@@ -39,35 +39,42 @@ class Image < ActiveRecord::Base
     )
 
     i.validate!
-    if i.errors.empty?
-      i.write_to_filesystem(image)
-
-      magick = Magick::Image.read(i.path).first
-      caption = magick.get_iptc_dataset(Magick::IPTC::Application::Caption)
-
-      i.caption = caption.nil? ? "" : caption.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
-
-      if i.caption.blank?
-        i.delete
-        return { :success => false, :error => 'No caption data was found. Please ensure that the caption has been set using Photoshop or Photo Mechanic.' }
-      end
-      i.save
-
-      # Reduce quality
-      magick.write(i.path) { self.quality = 50 }
-      i.size = magick.filesize
-      i.save
-
-      # Create thumbnail
-      FileUtils::mkdir_p "#{i.location}/thumbnails"
-      magick.change_geometry!('500x500') do |cols, rows, img|
-        img.resize!(cols,rows)
-      end
-      magick.write("#{i.location}/thumbnails/#{i.filename}") { self.quality = 50 }
-
-      return { :success => true, :image => i }
+    if !i.errors.empty?
+      return { :success => false, :image => i, :error => i.errors.messages[:filename] }
     end
-    return { :success => false, :image => i, :error => i.errors.messages[:filename] }
+
+    numbers = i.entry.images.map { |i| i.number }
+    if numbers.include? i.number
+      return { :success => false, :image => i, :error => "It appears that this entry already contains an image that is numbered #{i.number}. Please ensure that all images for this entry are numbered in sequential order." }
+    end
+
+    i.save
+    i.write_to_filesystem(image)
+
+    magick = Magick::Image.read(i.path).first
+    caption = magick.get_iptc_dataset(Magick::IPTC::Application::Caption)
+
+    i.caption = caption.nil? ? "" : caption.encode('UTF-8', 'binary', invalid: :replace, undef: :replace, replace: '')
+
+    if i.caption.blank?
+      i.delete
+      return { :success => false, :error => 'No caption data was found. Please ensure that the caption has been set using Photoshop or Photo Mechanic.' }
+    end
+    i.save
+
+    # Reduce quality
+    magick.write(i.path) { self.quality = 50 }
+    i.size = magick.filesize
+    i.save
+
+    # Create thumbnail
+    FileUtils::mkdir_p "#{i.location}/thumbnails"
+    magick.change_geometry!('500x500') do |cols, rows, img|
+      img.resize!(cols,rows)
+    end
+    magick.write("#{i.location}/thumbnails/#{i.filename}") { self.quality = 50 }
+
+    return { :success => true, :image => i }
   end
 
   # Returns the filename extension of the image
