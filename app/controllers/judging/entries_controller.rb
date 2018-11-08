@@ -63,7 +63,11 @@ class Judging::EntriesController < ApplicationController
     @current_category = category ? category : (params[:category_id] ? Category.find(params[:category_id]) : @categories.first)
     @entries = Entry.where(:contest => @contest, :category => @current_category, :pending => false).to_a.reject { |e| !e.category_type.has_url && e.images.size == 0 }.sort_by! { |e| e.unique_hash }
     @entries.reject! { |e| (e.place && e.place.sequence_number == 99 if session[:hide_entries]) || (e.place && e.place.name == 'Disqualified') } 
-    @places = Place.all.sort_by { |p| p.sequence_number }
+    if @current_category.category_type.name == 'Portfolio'
+      @places = Place.all.select { |p| p.sequence_number == 1 || p.sequence_number == 99 }
+    else
+      @places = Place.all.sort_by { |p| p.sequence_number }
+    end
 
     if params[:first] == 'true'
       session[:first] = true
