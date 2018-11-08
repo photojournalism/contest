@@ -10,7 +10,7 @@ class ExportController < ApplicationController
 
   def tsv
     contest = if params[:year] then Contest.where(:year => params[:year]).first else Contest.current end
-    output = "Unique Hash\tCategory\tEmail\tName\tShipping Name\tStreet\tCity\tState\tZip\tCountry\tDay Phone\tEvening Phone\tEmployer\tSchool\tPlace\n"
+    output = "Unique Hash\tCategory\tPlace\tEmail\tName\tShipping Name\tStreet\tCity\tState\tZip\tCountry\tDay Phone\tEvening Phone\tEmployer\tSchool\n"
 
     contest.categories.order(:category_type_id => :asc, :id => :asc).each do |category|
       entries = Entry.where(:contest => contest, :category => category)
@@ -62,6 +62,8 @@ class ExportController < ApplicationController
         output += "\t"
         output += entry.category.name
         output += "\t"
+        output += entry.place.name
+        output += "\t"
         output += email
         output += "\t"
         output += user.name
@@ -85,8 +87,6 @@ class ExportController < ApplicationController
         output += employer
         output += "\t"
         output += school
-        output += "\t"
-        output += entry.place.name
         output += "\n"
       end
     end
