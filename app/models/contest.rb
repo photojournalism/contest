@@ -45,7 +45,7 @@ class Contest < ActiveRecord::Base
   def winning_entries
     entries_count = 0
     entries.each do |entry|
-      if entry.place && entry.place != 99
+      if entry.place && entry.place.sequence_number.to_i != 99
         entries_count += 1
       end
     end

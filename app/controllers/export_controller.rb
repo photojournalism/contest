@@ -14,8 +14,11 @@ class ExportController < ApplicationController
 
     contest.categories.order(:category_type_id => :asc, :id => :asc).each do |category|
       entries = Entry.where(:contest => contest, :category => category)
+        .select { |entry| entry.place && entry.place.sequence_number.to_i != 99 }
+        .sort_by { |entry| entry.place.sequence_number }
+
       entries.each do |entry|
-        if !entry.place || entry.place == 99
+        if !entry.place || entry.place.sequence_number.to_i == 99
           next
         end
 
