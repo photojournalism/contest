@@ -8,11 +8,94 @@ class ExportController < ApplicationController
     @contests = Contest.all.sort_by { |c| c.year }
   end
 
+  def tsv
+    contest = if params[:year] then Contest.where(:year => params[:year]).first else Contest.current end
+    output = "Unique Hash\tCategory\tEmail\tName\tShipping Name\tStreet\tCity\tState\tZip\tCountry\tDay Phone\tEvening Phone\tEmployer\tSchool\tPlace\n"
+
+    contest.categories.order(:category_type_id => :asc, :id => :asc).each do |category|
+      entries = Entry.where(:contest => contest, :category => category)
+      entries.each do |entry|
+        if !entry.place || entry.place == 99
+          next
+        end
+
+        user = entry.user
+        parent_user = entry.user.user ? entry.user.user : nil
+
+        email = ''
+        street = ''
+        city = ''
+        state = ''
+        zip = ''
+        country = ''
+        day_phone = ''
+        evening_phone = ''
+        employer = ''
+        school = ''
+
+        if parent_user
+          email = parent_user.email ? parent_user.email : ''
+          street = parent_user.street ? parent_user.street : ''
+          city = parent_user.city ? parent_user.city : ''
+          state = parent_user.state ? parent_user.state.name : ''
+          zip = parent_user.zip ? parent_user.zip : ''
+          country = parent_user.country ? parent_user.country.name : ''
+          day_phone = parent_user.day_phone ? parent_user.day_phone : ''
+          evening_phone = parent_user.evening_phone ? parent_user.evening_phone : ''
+          employer = user.employer ? user.employer : ''
+        else
+          email = user.email ? user.email : ''
+          street = user.street ? user.street : ''
+          city = user.city ? user.city : ''
+          state = user.state ? user.state.name : ''
+          zip = user.zip ? user.zip : ''
+          country = user.country ? user.country.name : ''
+          day_phone = user.day_phone ? user.day_phone : ''
+          evening_phone = user.evening_phone ? user.evening_phone : ''
+          employer = user.employer ? user.employer : ''
+          school = user.school ? user.school : ''
+        end
+        output += entry.unique_hash
+        output += "\t"
+        output += entry.category.name
+        output += "\t"
+        output += email
+        output += "\t"
+        output += user.name
+        output += "\t"
+        output += parent_user ? parent_user.name : user.name
+        output += "\t"
+        output += street
+        output += "\t"
+        output += city
+        output += "\t"
+        output += state
+        output += "\t"
+        output += zip
+        output += "\t"
+        output += country
+        output += "\t"
+        output += day_phone
+        output += "\t"
+        output += evening_phone
+        output += "\t"
+        output += employer
+        output += "\t"
+        output += school
+        output += "\t"
+        output += entry.place.name
+        output += "\n"
+      end
+    end
+
+    send_data(output, :type => 'text/tsv', :filename => "aps_#{contest.year}_certificates.txt")
+  end
+
   # This endpoint will export the winners of the contest into
   # the format to be used on the seminar's main website.
   #
   # Yes, this is the worst, most un-maintainable mess ever.
-  def winners
+  def website
     contest = if params[:year] then Contest.where(:year => params[:year]).first else Contest.current end
 
     if contest

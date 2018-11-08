@@ -42,8 +42,10 @@ Rails.application.routes.draw do
   # Contact Routes
   post 'contact/report_a_problem' => 'contact#report_a_problem'
 
-  get 'export/winners/:year' => 'export#winners'
-  get 'export/winners' => 'export#winners'
+  get 'export/website/:year' => 'export#website'
+  get 'export/website' => 'export#website'
+  get 'export/tsv/:year' => 'export#tsv'
+  get 'export/tsv' => 'export#tsv'
   get 'export/images' => 'export#images'
   get 'export' => 'export#index', :as => :export
 

@@ -8,7 +8,7 @@
 
     <ul>
     <% @contests.each do |contest| %>
-      <li><%= link_to contest, "/export/winners/#{contest.year}" %> - <%= pluralize(contest.winning_entries, 'winning entry') %></li>
+      <li><%= link_to contest, "/export/website/#{contest.year}" %> - <%= pluralize(contest.winning_entries, 'winning entry') %></li>
     <% end %>
     </ul>
 
@@ -41,5 +41,19 @@ images/
       ...</pre>
 
     <p>You can then copy and paste the <code>contest</code> and <code>images</code> directories into the source folder of the main website, and "Merge" the folders.</p>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <h1>Export to FileMaker Pro</h1>
+
+    <p>Choose the contest that you want to export to FileMaker Pro using the <strong>Tab Separated Text File</strong> option.</p>
+
+    <ul>
+    <% @contests.each do |contest| %>
+      <li><%= link_to contest, "/export/tsv/#{contest.year}" %> - <%= pluralize(contest.winning_entries, 'winning entry') %></li>
+    <% end %>
+    </ul>
   </div>
 </div>
