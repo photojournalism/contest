@@ -60,6 +60,12 @@ class Image < ActiveRecord::Base
       i.delete
       return { :success => false, :error => 'No caption data was found. Please ensure that the caption has been set using Photoshop or Photo Mechanic.' }
     end
+
+    if i.caption.downcase.include? i.entry.user.name.downcase
+      i.delete
+      return { :success => false, :error => "It appears the caption on this image contains your name. Please ensure that your name does not appear in any of the IPTC fields." }
+    end
+
     i.save
 
     # Reduce quality
