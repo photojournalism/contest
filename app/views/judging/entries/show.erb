@@ -11,12 +11,14 @@
       <a href="" id="previous-entry">Previous</a> &middot; <a href="" id="next-entry">Next</a>
     </div>
   </div>
+  <% if @current_category.name != 'Best in Show' %>
   <div style="float:right">
     <% @places.each do |place| %>
       <button class="place-button <%= place.css_class %>" data-place-number="<%= place.id %>" <%= "disabled" if @entry.place && @entry.place.id == place.id %>><%= place.name %></button>
     <% end %>
     <button class="btn btn-default" id="place-clear">Undo</button>
   </div>
+  <% end %>
   <div class="clearfix"></div>
 
   <!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->

@@ -5,13 +5,18 @@ class Judging::EntriesController < ApplicationController
 
   def index
     session[:hide_entries] == true if session[:hide_entries].nil?
+    session[:best_in_show] = false
     get_shared_fields
-    if @current_category.category_type.maximum_files > 1
+    @images = []
+    if @entries.length == 0
+      return
+    end
+
+    if @current_category.category_type.maximum_files > 1 && @current_category.name != 'Best in Show'
       redirect_to :action => 'show', :hash => @entries.first.unique_hash
       return
     end
 
-    @images = []
     if @current_category.category_type.maximum_files == 1  
       @entries.each do |entry|
         @images << entry.images.first
@@ -60,24 +65,27 @@ class Judging::EntriesController < ApplicationController
   def get_shared_fields(category=nil)
     @contest = Contest.current
     @categories = @contest.categories.order(:id)
+    best_in_show = Category.where(:name => 'Best in Show').first
+    @categories << best_in_show
     @current_category = category ? category : (params[:category_id] ? Category.find(params[:category_id]) : @categories.first)
-    @entries = Entry.where(:contest => @contest, :category => @current_category, :pending => false).to_a.reject { |e| !e.category_type.has_url && e.images.size == 0 }.sort_by! { |e| e.unique_hash }
+
+    if @current_category.name == 'Best in Show' || session[:best_in_show] == true
+      @current_category = best_in_show
+      first_place = Place.where(:name => 'First Place').first
+      @entries = Entry.where(:contest => @contest, :place => first_place).to_a.sort_by! { |e| e.unique_hash }
+      @entries = [] if !@entries
+      session[:best_in_show] = true
+    else
+      @entries = Entry.where(:contest => @contest, :category => @current_category, :pending => false).to_a.reject { |e| !e.category_type.has_url && e.images.size == 0 }.sort_by! { |e| e.unique_hash }
+    end
     @entries.reject! { |e| (e.place && e.place.sequence_number == 99 if session[:hide_entries]) || (e.place && e.place.name == 'Disqualified') } 
-    if @current_category.category_type.name == 'Portfolio'
+
+    if @current_category.name == 'Best in Show' || session[:best_in_show] == true
+      @places = []
+    elsif @current_category.category_type.name == 'Portfolio'
       @places = Place.all.select { |p| p.sequence_number == 1 || p.sequence_number == 99 }
     else
       @places = Place.all.sort_by { |p| p.sequence_number }
-    end
-
-    if params[:first] == 'true'
-      session[:first] = true
-    elsif params[:first] == 'false'
-      session[:first] = false
-    end
-
-    if session[:first]
-      place = Place.where(:name => 'First Place')
-      @entries = Entry.where(:contest => @contest, :place => place)
     end
 
     get_counts
