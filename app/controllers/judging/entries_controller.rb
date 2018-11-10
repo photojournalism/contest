@@ -72,7 +72,7 @@ class Judging::EntriesController < ApplicationController
     if @current_category.name == 'Best in Show' || session[:best_in_show] == true
       @current_category = best_in_show
       first_place = Place.where(:name => 'First Place').first
-      @entries = Entry.where(:contest => @contest, :place => first_place).to_a.sort_by! { |e| e.unique_hash }
+      @entries = Entry.where(:contest => @contest, :place => first_place).to_a.sort_by! { |e| e.category.id }
       @entries = [] if !@entries
       session[:best_in_show] = true
     else
